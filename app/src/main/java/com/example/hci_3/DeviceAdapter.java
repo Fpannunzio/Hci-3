@@ -12,6 +12,19 @@ import com.example.hci_3.api.Device;
 import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
+    private enum dispTypes{
+        AC(1), BLIND(2), FAUCET(3), OVEN(4),
+        VACUUM(5), DOOR(6), SPEAKER(7), LAMP(8);
+
+        private int numVal;
+
+        dispTypes(int numVal){
+            this.numVal = numVal;
+        }
+        public int getNumVal() {
+            return numVal;
+        }
+    }
 
     private List<Device> devices;
 
@@ -22,7 +35,10 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
     @NonNull
     @Override
     public DeviceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        DeviceView v = new DeviceView(parent.getContext());
+        Log.v("message1","onCreateViewHolder");
+        DeviceView v = getView(parent, viewType);
+        if(v == null)
+            throw new RuntimeException("Invalid device");
         return new DeviceViewHolder(v);
     }
 
@@ -30,6 +46,21 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
     public void onBindViewHolder(DeviceViewHolder holder, int position) {
         Device device = devices.get(position);
         holder.setDevice(device);
+    }
+    @Override
+    public int getItemViewType(int position) {
+        switch (devices.get(position).getTypeName()) {
+           case "ac": return dispTypes.AC.getNumVal();
+           case "blinds": return dispTypes.BLIND.getNumVal();
+           case "faucet": return dispTypes.FAUCET.getNumVal();
+           case "oven": return dispTypes.OVEN.getNumVal();
+           case "vacuum": return dispTypes.VACUUM.getNumVal();
+           case "door": return dispTypes.DOOR.getNumVal();
+           case "speaker": return dispTypes.SPEAKER.getNumVal();
+           case "lamp": return dispTypes.LAMP.getNumVal();
+           default: throw new RuntimeException("Invalid or unsupported type");
+       }
+
     }
 
     @Override
@@ -41,10 +72,24 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
 
         public DeviceViewHolder(@NonNull View itemView) {
             super(itemView);
+            
         }
 
         public void setDevice(Device device) {
             ((DeviceView) itemView).setDevice(device);
         }
+    }
+
+    private DeviceView getView(@NonNull ViewGroup parent, int viewType ){
+        Log.v("message3","onCreateViewHolder");
+        return new ACView(parent.getContext());
+        /*switch(viewType) {
+            case 1:
+                return new ACView(parent.getContext());
+            case 2:
+                return null;
+            default:
+                throw new RuntimeException("Invalid or unsupported device");
+        }*/
     }
 }

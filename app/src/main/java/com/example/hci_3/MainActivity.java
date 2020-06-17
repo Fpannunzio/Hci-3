@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.v("hola", "holaaa");
 
-        ApiClient.getInstance().getDevicesByType("li6cbv5sdlatti0j", new Callback<Result<List<Device>>>(){
+        ApiClient.getInstance().getDevices(new Callback<Result<List<Device>>>(){
+
 
             @Override
             public void onResponse(@NonNull Call<Result<List<Device>>> call, @NonNull Response<Result<List<Device>>> response){
