@@ -46,24 +46,6 @@ public class ApiClient {
         }
     }
 
-    public Call<Result<Room>> addRoom(Room room, Callback<Result<Room>> callback) {
-        Call<Result<Room>> call = this.service.addRoom(room);
-        call.enqueue(callback);
-        return call;
-    }
-
-    public Call<Result<Boolean>> modifyRoom(Room room, Callback<Result<Boolean>> callback) {
-        Call<Result<Boolean>> call = this.service.modifyRoom(room.getId(), room);
-        call.enqueue(callback);
-        return call;
-    }
-
-    public Call<Result<Boolean>> deleteRoom(String roomId, Callback<Result<Boolean>> callback) {
-        Call<Result<Boolean>> call = this.service.deleteRoom(roomId);
-        call.enqueue(callback);
-        return call;
-    }
-
     public Call<Result<Room>> getRoom(String roomId, Callback<Result<Room>> callback) {
         Call<Result<Room>> call = this.service.getRoom(roomId);
         call.enqueue(callback);
@@ -72,6 +54,24 @@ public class ApiClient {
 
     public Call<Result<List<Room>>> getRooms(Callback<Result<List<Room>>> callback) {
         Call<Result<List<Room>>> call = this.service.getRooms();
+        call.enqueue(callback);
+        return call;
+    }
+
+    public Call<Result<List<Device>>> getDevices(Callback<Result<List<Device>>> callback){
+        Call<Result<List<Device>>> call = service.getDevices();
+        call.enqueue(callback);
+        return call;
+    }
+
+    public Call<Result<Device>> getDevice(String deviceId, Callback<Result<Device>> callback){
+        Call<Result<Device>> call = service.getDevice(deviceId);
+        call.enqueue(callback);
+        return call;
+    }
+
+    public Call<Result<List<Device>>> getDevicesByType(String deviceTypeId, Callback<Result<List<Device>>> callback){
+        Call<Result<List<Device>>> call = service.getDevicesByType(deviceTypeId);
         call.enqueue(callback);
         return call;
     }
