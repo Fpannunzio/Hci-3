@@ -13,22 +13,31 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-    @POST("rooms")
-    @Headers("Content-Type: application/json")
-    Call<Result<Room>> addRoom(@Body Room room);
-
-    @PUT("rooms/{roomId}")
-    @Headers("Content-Type: application/json")
-    Call<Result<Boolean>> modifyRoom(@Path("roomId") String roomId, @Body Room room);
-
-    @DELETE("rooms/{roomId}")
-    Call<Result<Boolean>> deleteRoom(@Path("roomId") String roomId);
+//    @POST("rooms")
+//    @Headers("Content-Type: application/json")
+//    Call<Result<Room>> addRoom(@Body Room room);
+//
+//    @PUT("rooms/{roomId}")
+//    @Headers("Content-Type: application/json")
+//    Call<Result<Boolean>> modifyRoom(@Path("roomId") String roomId, @Body Room room);
+//
+//    @DELETE("rooms/{roomId}")
+//    Call<Result<Boolean>> deleteRoom(@Path("roomId") String roomId);
 
     @GET("rooms/{roomId}")
     Call<Result<Room>> getRoom(@Path("roomId") String roomId);
 
     @GET("rooms")
     Call<Result<List<Room>>> getRooms();
+
+    @GET("devices")
+    Call<Result<List<Device>>> getDevices();
+
+    @GET("devices/{deviceId}")
+    Call<Result<Device>> getDevice(@Path("deviceId") String deviceId);
+
+    @GET("devices/devicetypes/{deviceTypeId}")
+    Call<Result<List<Device>>> getDevicesByType(@Path("deviceTypeId") String deviceTypeId);
 
 
 }
