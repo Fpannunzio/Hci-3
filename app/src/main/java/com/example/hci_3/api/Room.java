@@ -10,24 +10,34 @@ public class Room {
     @SerializedName("id")
     @Expose
     private String id;
+
     @SerializedName("name")
     @Expose
     private String name;
+
+    @SerializedName("home")
+    @Expose
+    private Home home;
+
     @SerializedName("meta")
     @Expose
-    private RoomMeta meta;
+    private Meta meta;
 
-    public Room() {
-    }
-
-    public Room(String name, RoomMeta meta) {
-        this.name = name;
-        this.meta = meta;
-    }
-
-    public Room(String id, String name, RoomMeta meta) {
+    public Room(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Room(String id, String name, Home home) {
+        this.id = id;
+        this.name = name;
+        this.home = home;
+    }
+
+    public Room(String id, String name, Home home, Meta meta) {
+        this.id = id;
+        this.name = name;
+        this.home = home;
         this.meta = meta;
     }
 
@@ -35,24 +45,20 @@ public class Room {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Home getHome() {
+        return home;
     }
 
-    public RoomMeta getMeta() {
+    public void setHome(Home home) {
+        this.home = home;
+    }
+
+    public Meta getMeta() {
         return meta;
-    }
-
-    public void setMeta(RoomMeta meta) {
-        this.meta = meta;
     }
 
     @NonNull
