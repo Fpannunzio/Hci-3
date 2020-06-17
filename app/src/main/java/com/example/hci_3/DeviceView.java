@@ -3,11 +3,18 @@ package com.example.hci_3;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.hci_3.api.Device;
 
-public class DeviceView extends LinearLayout { //ACView. Queda como DeviceView para pruebas
+public class DeviceView extends ConstraintLayout { //ACView. Queda como DeviceView para pruebas
+    private ImageView mDevImg;
+    private TextView mDevName;
+    private TextView mDevDescription;
+
     public DeviceView(Context context) {
         super(context);
         init(context);
@@ -33,7 +40,14 @@ public class DeviceView extends LinearLayout { //ACView. Queda como DeviceView p
     @Override // Equivalente a Mounted
     protected void onFinishInflate() {
         super.onFinishInflate();
-
+        //debieramos agregar los elementos on click de los botones de la app
+        /*mDevImg = (ImageView) this
+                .findViewById(R.id.ac_img);
+        mDevImg.setImageResource(R.);
+        mDevName = (TextView) this
+                .findViewById(R.id.device_name);
+        mDevDescription = (TextView) this
+                .findViewById(R.id.device_description);*/
     }
 
     public void setDevice(Device device) {
