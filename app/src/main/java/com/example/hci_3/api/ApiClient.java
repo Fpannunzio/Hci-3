@@ -4,8 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.hci_3.api.DeviceStates.DeviceState;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -98,6 +100,12 @@ public class ApiClient {
         return call;
     }
 
+    public <T extends DeviceState> Call<Result<JsonElement>> getDeviceState(String deviceId, Class<T> stateClass, SuccessHandler<T> responseHandler, ErrorHandler errorHandler){
+        Call<Result<JsonElement>> call = service.getDeviceState(deviceId);
+        call.enqueue(getDeviceStateCallback(stateClass, responseHandler, errorHandler));
+        return call;
+    }
+
     public Call<Result<Object>> executeActionInteger(String deviceId, String actionName, List<Integer> params, SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
         Call<Result<Object>> call = service.executeActionInteger(deviceId, actionName, params);
         call.enqueue(getExecuteActionCallback(responseHandler, errorHandler));
@@ -147,6 +155,30 @@ public class ApiClient {
 
             @Override
             public void onFailure(@NonNull Call<Result<Object>> call, @NonNull Throwable t) {
+                handleUnexpectedError(t);
+            }
+        };
+    }
+
+    private <T extends DeviceState> Callback<Result<JsonElement>> getDeviceStateCallback(Class<T> stateClass, SuccessHandler<T> responseHandler, ErrorHandler errorHandler){
+        return new Callback<Result<JsonElement>>(){
+
+            @Override
+            public void onResponse(@NonNull Call<Result<JsonElement>> call, @NonNull Response<Result<JsonElement>> response){
+
+                if (response.isSuccessful()) {
+                    JsonElement json = getResponseData(response);
+                    if(json == null)
+                        throw new RuntimeException("State data was not provided by API");
+
+                    T state = new Gson().fromJson(json.getAsJsonObject().toString(), stateClass);
+                    responseHandler.handle(state);
+                } else
+                    handleError(response, errorHandler);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Result<JsonElement>> call, @NonNull Throwable t) {
                 handleUnexpectedError(t);
             }
         };

@@ -1,5 +1,8 @@
 package com.example.hci_3.api;
 
+import com.example.hci_3.api.DeviceStates.DeviceState;
+import com.google.gson.JsonElement;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -43,6 +46,9 @@ public interface ApiService {
 
     @GET("devices/devicetypes/{deviceTypeId}")
     Call<Result<List<Device>>> getDevicesByType(@Path("deviceTypeId") String deviceTypeId);
+
+    @GET("devices/{deviceId}/state")
+    Call<Result<JsonElement>> getDeviceState(@Path("deviceId") String deviceId);
 
     // Logs
 
