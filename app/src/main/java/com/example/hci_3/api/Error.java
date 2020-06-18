@@ -10,6 +10,7 @@ public class Error {
     @SerializedName("code")
     @Expose
     private int code;
+
     @SerializedName("description")
     @Expose
     private List<String> description = null;

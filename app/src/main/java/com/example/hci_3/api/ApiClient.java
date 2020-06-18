@@ -1,5 +1,9 @@
 package com.example.hci_3.api;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,6 +15,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Converter;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -57,33 +62,116 @@ public class ApiClient {
         }
     }
 
-    public Call<Result<Room>> getRoom(String roomId, Callback<Result<Room>> callback) {
+    public Call<Result<Room>> getRoom(String roomId, SuccessHandler<Room> responseHandler, ErrorHandler errorHandler) {
         Call<Result<Room>> call = this.service.getRoom(roomId);
-        call.enqueue(callback);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
         return call;
     }
 
-    public Call<Result<List<Room>>> getRooms(Callback<Result<List<Room>>> callback) {
+    public Call<Result<List<Room>>> getRooms(SuccessHandler<List<Room>> responseHandler, ErrorHandler errorHandler) {
         Call<Result<List<Room>>> call = this.service.getRooms();
-        call.enqueue(callback);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
         return call;
     }
 
-    public Call<Result<List<Device>>> getDevices(Callback<Result<List<Device>>> callback){
+    public Call<Result<List<Device>>> getRoomDevices(String roomId, SuccessHandler<List<Device>> responseHandler, ErrorHandler errorHandler) {
+        Call<Result<List<Device>>> call = this.service.getRoomDevices(roomId);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Result<List<Device>>> getDevices(SuccessHandler<List<Device>> responseHandler, ErrorHandler errorHandler){
         Call<Result<List<Device>>> call = service.getDevices();
-        call.enqueue(callback);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
         return call;
     }
 
-    public Call<Result<Device>> getDevice(String deviceId, Callback<Result<Device>> callback){
+    public Call<Result<Device>> getDevice(String deviceId, SuccessHandler<Device> responseHandler, ErrorHandler errorHandler){
         Call<Result<Device>> call = service.getDevice(deviceId);
-        call.enqueue(callback);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
         return call;
     }
 
-    public Call<Result<List<Device>>> getDevicesByType(String deviceTypeId, Callback<Result<List<Device>>> callback){
+    public Call<Result<List<Device>>> getDevicesByType(String deviceTypeId, SuccessHandler<List<Device>> responseHandler, ErrorHandler errorHandler){
         Call<Result<List<Device>>> call = service.getDevicesByType(deviceTypeId);
-        call.enqueue(callback);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
         return call;
+    }
+
+    public Call<Result<Object>> executeActionInteger(String deviceId, String actionName, List<Integer> params, SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
+        Call<Result<Object>> call = service.executeActionInteger(deviceId, actionName, params);
+        call.enqueue(getExecuteActionCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Result<Object>> executeActionString(String deviceId, String actionName, List<String> params, SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
+        Call<Result<Object>> call = service.executeActionString(deviceId, actionName, params);
+        call.enqueue(getExecuteActionCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    private <T> Callback<Result<T>> getStandardCallback(SuccessHandler<T> responseHandler, ErrorHandler errorHandler){
+        return new Callback<Result<T>>(){
+
+            @Override
+            public void onResponse(@NonNull Call<Result<T>> call, @NonNull Response<Result<T>> response){
+
+                if (response.isSuccessful())
+                    responseHandler.handle(getResponseData(response));
+                else
+                    handleError(response, errorHandler);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Result<T>> call, @NonNull Throwable t) {
+                handleUnexpectedError(t);
+            }
+        };
+    }
+
+    private Callback<Result<Object>> getExecuteActionCallback(SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
+        return new Callback<Result<Object>>(){
+            @Override
+            public void onResponse(@NonNull Call<Result<Object>> call, @NonNull Response<Result<Object>> response) {
+
+                if (response.isSuccessful()) {
+                    Object result = getResponseData(response);
+
+                    if (result instanceof Boolean) {
+                        responseHandler.handle((Boolean) result);
+                    }else
+                        responseHandler.handle(result != null);
+                } else
+                    handleError(response, errorHandler);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Result<Object>> call, @NonNull Throwable t) {
+                handleUnexpectedError(t);
+            }
+        };
+    }
+
+    private <T> T getResponseData(@NonNull Response<Result<T>> response){
+        Result<T> result = response.body();
+        return (result != null)? result.getResult() : null;
+    }
+
+    private <T> void handleError(Response<T> response, ErrorHandler handler) {
+        Error error = getError(response.errorBody());
+        handler.handle(error.getDescription().get(0), error.getCode());
+    }
+
+    private void handleUnexpectedError(Throwable t) {
+        String LOG_TAG = "com.example.hci_3";
+        Log.e(LOG_TAG, t.toString());
+    }
+
+    public interface SuccessHandler<T> {
+        void handle(T responseData);
+    }
+
+    public interface ErrorHandler {
+        void handle(String message, int code);
     }
 }

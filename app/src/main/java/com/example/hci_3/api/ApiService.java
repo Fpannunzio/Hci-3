@@ -24,12 +24,17 @@ public interface ApiService {
 //    @DELETE("rooms/{roomId}")
 //    Call<Result<Boolean>> deleteRoom(@Path("roomId") String roomId);
 
+    // Room Api Calls
     @GET("rooms/{roomId}")
     Call<Result<Room>> getRoom(@Path("roomId") String roomId);
 
     @GET("rooms")
     Call<Result<List<Room>>> getRooms();
 
+    @GET("rooms/{roomId}/devices")
+    Call<Result<List<Device>>> getRoomDevices(@Path("roomId") String roomId);
+
+    // Device Api Calls
     @GET("devices")
     Call<Result<List<Device>>> getDevices();
 
@@ -38,6 +43,16 @@ public interface ApiService {
 
     @GET("devices/devicetypes/{deviceTypeId}")
     Call<Result<List<Device>>> getDevicesByType(@Path("deviceTypeId") String deviceTypeId);
+
+    // Logs
+
+    @PUT("devices/{deviceId}/{actionName}")
+    @Headers("Content-Type: application/json")
+    Call<Result<Object>> executeActionInteger(@Path("deviceId") String deviceId, @Path("actionName") String actionName, @Body List<Integer> params);
+
+    @PUT("devices/{deviceId}/{actionName}")
+    @Headers("Content-Type: application/json")
+    Call<Result<Object>> executeActionString(@Path("deviceId") String deviceId, @Path("actionName") String actionName, @Body List<String> params);
 
 
 }
