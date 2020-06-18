@@ -1,5 +1,6 @@
 package com.example.hci_3.api;
 
+import com.example.hci_3.api.DeviceStates.DeviceState;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,11 +16,11 @@ public class Device {
 
     @SerializedName("type")
     @Expose
-    private Type type;
+    private DeviceType deviceType;
 
     @SerializedName("state")
     @Expose
-    private State state;
+    private DeviceState state;
 
     @SerializedName("room")
     @Expose
@@ -29,19 +30,19 @@ public class Device {
     @Expose
     private Meta meta;
 
-    public Device(String id, String name, Type type, State state, Room room, Meta meta) {
+    public Device(String id, String name, DeviceType deviceType, DeviceState state, Room room, Meta meta) {
         this.id = id;
         this.name = name;
-        this.type = type;
+        this.deviceType = deviceType;
         this.state = state;
         this.room = room;
         this.meta = meta;
     }
 
-    public Device(String id, String name, Type type, State state, Meta meta) {
+    public Device(String id, String name, DeviceType deviceType, DeviceState state, Meta meta) {
         this.id = id;
         this.name = name;
-        this.type = type;
+        this.deviceType = deviceType;
         this.state = state;
         this.meta = meta;
     }
@@ -54,19 +55,19 @@ public class Device {
         return name;
     }
 
-    public Type getType() {
-        return type;
+    public DeviceType getDeviceType() {
+        return deviceType;
     }
 
     public String getTypeName() {
-        return type.getName();
+        return deviceType.getName();
     }
 
-    public State getState() {
+    public DeviceState getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(DeviceState state) {
         this.state = state;
     }
 

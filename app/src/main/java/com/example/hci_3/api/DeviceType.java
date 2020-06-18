@@ -3,7 +3,7 @@ package com.example.hci_3.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Type {
+public class DeviceType {
 
     @SerializedName("id")
     @Expose
@@ -17,7 +17,7 @@ public class Type {
     @Expose
     private Integer powerUsage;
 
-    public Type(String id, String name, Integer powerUsage) {
+    public DeviceType(String id, String name, Integer powerUsage) {
         this.id = id;
         this.name = name;
         this.powerUsage = powerUsage;

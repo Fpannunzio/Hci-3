@@ -1,9 +1,9 @@
-package com.example.hci_3.api;
+package com.example.hci_3.api.DeviceStates;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class State { // AC State. Completamente temporal
+public class ACState implements DeviceState {
 
     @SerializedName("status")
     @Expose
@@ -29,7 +29,7 @@ public class State { // AC State. Completamente temporal
     @Expose
     private String fanSpeed;
 
-    public State(String status, Integer temperature, String mode, String verticalSwing, String horizontalSwing, String fanSpeed) {
+    public ACState(String status, Integer temperature, String mode, String verticalSwing, String horizontalSwing, String fanSpeed) {
         this.status = status;
         this.temperature = temperature;
         this.mode = mode;
@@ -84,5 +84,17 @@ public class State { // AC State. Completamente temporal
 
     public void setFanSpeed(String fanSpeed) {
         this.fanSpeed = fanSpeed;
+    }
+
+    @Override
+    public String toString() {
+        return "ACState{" +
+                "status='" + status + '\'' +
+                ", temperature=" + temperature +
+                ", mode='" + mode + '\'' +
+                ", verticalSwing='" + verticalSwing + '\'' +
+                ", horizontalSwing='" + horizontalSwing + '\'' +
+                ", fanSpeed='" + fanSpeed + '\'' +
+                '}';
     }
 }

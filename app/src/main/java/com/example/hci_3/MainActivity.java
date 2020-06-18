@@ -28,10 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.v("hola", "holaaa");
 
         ApiClient.getInstance().getDevices(new Callback<Result<List<Device>>>(){
-
 
             @Override
             public void onResponse(@NonNull Call<Result<List<Device>>> call, @NonNull Response<Result<List<Device>>> response){

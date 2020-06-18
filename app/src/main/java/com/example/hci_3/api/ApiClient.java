@@ -1,5 +1,8 @@
 package com.example.hci_3.api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -20,9 +23,17 @@ public class ApiClient {
     private final String BaseURL = "http://10.0.2.2:8080/api/";
 
     private ApiClient() {
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+
+        // Adding custom deserializers
+        gsonBuilder.registerTypeAdapter(Device.class, new DeviceDeserializer());
+        Gson gson = gsonBuilder.create();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(BaseURL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         this.service = retrofit.create(ApiService.class);
     }
