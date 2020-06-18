@@ -22,21 +22,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        ApiClient.getInstance().getDevices((devices) -> {
-//
-//            DeviceAdapter adapter = new DeviceAdapter(devices);
-//            rv = findViewById(R.id.recyclerView);
-//            rv.setAdapter(adapter);
-//            rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-//
-//        }, this::handleError);
+        ApiClient.getInstance().getDevices((devices) -> {
 
-        List<String> params = new ArrayList<>();
-        params.add("fan");
-
-        ApiClient.getInstance().executeActionString("23f3af2899d5f13a", "setMode", params, (success) -> {
-
-            Log.v("execute", success.toString());
+            DeviceAdapter adapter = new DeviceAdapter(devices);
+            rv = findViewById(R.id.recyclerView);
+            rv.setAdapter(adapter);
+            rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         }, this::handleError);
     }
