@@ -13,7 +13,6 @@ import com.example.hci_3.api.DeviceTypeInfo;
 import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
-
     private List<Device> devices;
 
     public DeviceAdapter(List<Device> devices) {

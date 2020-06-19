@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Hci-3</string>
     <string name="error_message">Something went wrong: %1$s [%2$d]</string>
+    <string name="prendido">Prendido</string>
+    <string name="apagado">Apagado</string>
+    <string name="invalid_temp">Valor de temperatura invalido</string>
+    <string name="ac_temp"> %1$s°C </string>
+    <string name="ac_state">%1$s-%2$d°C</string>
 </resources>

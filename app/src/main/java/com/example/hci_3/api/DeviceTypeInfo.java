@@ -4,9 +4,10 @@ import android.content.Context;
 
 import com.example.hci_3.ACView;
 import com.example.hci_3.DeviceView;
+import com.example.hci_3.LampView;
 import com.example.hci_3.api.DeviceStates.*;
 
-public enum DeviceTypeInfo {
+public enum  DeviceTypeInfo {
 
     AC("li6cbv5sdlatti0j", "ac"){
         @Override
@@ -66,7 +67,7 @@ public enum DeviceTypeInfo {
 
     LAMP("go46xmbqeomjrsjr", "lamp") {
         @Override
-        public DeviceView getView(Context context) { return null; }
+        public DeviceView getView(Context context) { return new LampView(context); }
 
         @Override
         public Class<?> getStateClass() { return LampState.class; }

@@ -47,6 +47,7 @@
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/textLampView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -54,11 +55,12 @@
                         android:textSize="18sp" />
 
                     <TextView
+                        android:id="@+id/onStateLamp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="Prendido"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <ImageButton
@@ -95,6 +97,7 @@
                     android:layout_marginEnd="10dp">
 
                     <Switch
+                        android:id="@+id/lamp_switch"
                         android:layout_width="50dp"
                         android:layout_height="30dp"
                         android:shadowColor="#72E1C7" />
