@@ -9,23 +9,33 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.hci_3.api.ApiClient;
+import com.example.hci_3.api.Device;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rv;
+    DeviceAdapter adapter;
+    List<Device> devices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        devices = new ArrayList<>();
+        adapter = new DeviceAdapter(devices);
+        rv = findViewById(R.id.recyclerView);
+        rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        rv.setAdapter(adapter);
+
         ApiClient.getInstance().getDevices((devices) -> {
 
-            DeviceAdapter adapter = new DeviceAdapter(devices);
-            rv = findViewById(R.id.recyclerView);
-            rv.setAdapter(adapter);
-            rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            this.devices.addAll(devices);
+            adapter.notifyDataSetChanged();
 
         }, this::handleError);
     }
