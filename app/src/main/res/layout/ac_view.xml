@@ -24,17 +24,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp">
 
-
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:contentDescription="lamparita123"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@mipmap/ac_round" />
+
 
                 <TextView
                     android:id="@+id/textView8"
@@ -55,8 +54,7 @@
                     android:textSize="18sp"
                     app:layout_constraintBottom_toTopOf="@+id/onStateAc"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
                 <TextView
                     android:id="@+id/onStateAc"
@@ -81,12 +79,12 @@
                     android:contentDescription="Extend arrow"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"><!--android:visibility="gone"-->
+                android:layout_marginBottom="10dp"
+                ><!--android:visibility="gone"-->
 
                 <Switch
                     android:id="@+id/ac_switch"
@@ -167,16 +165,14 @@
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Calor"
-                            tools:layout_editor_absoluteX="87dp" />
+                            android:text="Calor" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/ventilation_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ventilacion"
-                            tools:layout_editor_absoluteX="174dp" />
+                            android:text="Ventilacion" />
 
                     </com.google.android.material.button.MaterialButtonToggleGroup>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -190,8 +186,8 @@
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:text="Desplazamiento de aspas"
+                        android:layout_marginTop="10dp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -201,9 +197,9 @@
                         android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
                         android:text="Vertical:"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="10dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -229,32 +225,28 @@
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="22"
-                            tools:layout_editor_absoluteX="87dp" />
+                            android:text="22" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/v_45_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="45"
-                            tools:layout_editor_absoluteX="146dp" />
+                            android:text="45" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/v_67_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="67"
-                            tools:layout_editor_absoluteX="205dp" />
+                            android:text="67" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/v_90_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="90"
-                            tools:layout_editor_absoluteX="264dp" />
+                            android:text="90" />
 
                     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -262,8 +254,8 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginStart="10dp"
                         android:text="Horizontal:"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/vertical_toggle_group" />
@@ -290,40 +282,35 @@
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="-90"
-                            tools:layout_editor_absoluteX="87dp" />
+                            android:text="-90" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/h_n45_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="-45"
-                            tools:layout_editor_absoluteX="146dp" />
+                            android:text="-45" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/h_0_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="0"
-                            tools:layout_editor_absoluteX="205dp" />
+                            android:text="0" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/h_45_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="45"
-                            tools:layout_editor_absoluteX="264dp" />
+                            android:text="45" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/h_90_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="90"
-                            tools:layout_editor_absoluteX="323dp" />
+                            android:text="90" />
 
                     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -360,32 +347,28 @@
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="25"
-                            tools:layout_editor_absoluteX="87dp" />
+                            android:text="25" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/fs_50_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="50"
-                            tools:layout_editor_absoluteX="146dp" />
+                            android:text="50" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/fs_75_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="75"
-                            tools:layout_editor_absoluteX="205dp" />
+                            android:text="75" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/fs_100_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:text="100"
-                            tools:layout_editor_absoluteX="264dp" />
+                            android:text="100" />
 
                     </com.google.android.material.button.MaterialButtonToggleGroup>
 
