@@ -263,10 +263,12 @@ public class ApiClient {
         Log.e(LOG_TAG, t.toString());
     }
 
+    @FunctionalInterface
     public interface SuccessHandler<T> {
         void handle(T responseData);
     }
 
+    @FunctionalInterface
     public interface ErrorHandler {
         void handle(String message, int code);
     }
