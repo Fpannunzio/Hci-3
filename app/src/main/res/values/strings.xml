@@ -16,6 +16,11 @@
         <item>Economico</item>
         <item>Convencional</item>
     </string-array>
+    <string-array name="vacuum_location">
+        <item>ROOM1</item>
+        <item>ROOM2</item>
+        <item>ROOM3</item>
+    </string-array>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
     <string name="invalid_temp">Valor de temperatura invalido</string>

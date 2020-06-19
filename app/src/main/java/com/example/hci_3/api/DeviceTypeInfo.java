@@ -6,6 +6,7 @@ import com.example.hci_3.ACView;
 import com.example.hci_3.DeviceView;
 import com.example.hci_3.DoorView;
 import com.example.hci_3.OvenView;
+import com.example.hci_3.VacuumView;
 import com.example.hci_3.api.DeviceStates.*;
 
 public enum  DeviceTypeInfo {
@@ -44,7 +45,7 @@ public enum  DeviceTypeInfo {
 
     VACUUM("ofglvd9gqx8yfl3l", "vacuum") {
         @Override
-        public DeviceView getView(Context context) { return null; }
+        public DeviceView getView(Context context) { return new VacuumView(context); }
 
         @Override
         public Class<?> getStateClass() { return VacuumState.class; }

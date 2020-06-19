@@ -81,11 +81,11 @@
                         android:id="@+id/expandBtn"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginTop="12dp"
                         android:background="@drawable/ripple_effect"
-                        android:tint="@color/colorPrimary"
                         android:contentDescription="Extend arrow"
                         android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                        android:tint="@color/colorPrimary"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
