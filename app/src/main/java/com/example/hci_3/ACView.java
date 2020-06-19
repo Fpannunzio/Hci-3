@@ -4,11 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.hci_3.api.ApiClient;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ACView extends DeviceView {
-    private TextView mDevName, mState, mTemperature;
+    private TextView mDevName, mState, mTemperature, mLocation;
     private MaterialButtonToggleGroup mTempGroup, mVertGroup, mHorGroup, mFanSpeedGroup;
     private Switch mSwitch;
     private ImageButton mMinus, mPlus;
@@ -45,6 +44,7 @@ public class ACView extends DeviceView {
         // Aca guardo los elementos de mi view
         mDevName = findViewById(R.id.ac_name);
         mTemperature = findViewById(R.id.ac_temp);
+        mLocation = findViewById(R.id.ac_location);
         mSwitch = findViewById(R.id.ac_switch);
         mState = findViewById(R.id.onStateAc);
         mTempGroup = findViewById(R.id.temp_group);
@@ -60,21 +60,24 @@ public class ACView extends DeviceView {
         super.setDevice(device);
 
         // Aca se cargan los parametros del device
+        mLocation.setText(getResources().getString(R.string.disp_location, getParsedName(device.getRoom().getName()), device.getRoom().getHome().getName()));
+
         mDevName.setText(getParsedName(device.getName()));
 
-        mState.setText(getResources().getString(R.string.ac_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
-        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(((ACState) device.getState()).getTemperature())));
+        mState.setText(getResources().getString(R.string.temp_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
+        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(((ACState) device.getState()).getTemperature())));
         mMinus.setOnClickListener(v -> {
             int temp = ((ACState) device.getState()).getTemperature() - 1;
             if(temp >= 18)
                 ApiClient.getInstance().executeAction(device.getId(), "setTemperature", new ArrayList<>(Collections.singletonList(temp)), (success) -> {
                     if (success) {
                         ((ACState) device.getState()).setTemperature(temp);
-                        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(temp)));
-                        mState.setText(getResources().getString(R.string.ac_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
+                        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(temp)));
+                        mState.setText(getResources().getString(R.string.temp_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
                     }
             }, this::handleError);
-            //else
+            else
+                Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_LONG).show();
                 //enviar mensaje de error. Por ejemplo un Toast! (tobi)
         });
         mPlus.setOnClickListener(v -> {
@@ -83,28 +86,29 @@ public class ACView extends DeviceView {
                 ApiClient.getInstance().executeAction(device.getId(), "setTemperature", new ArrayList<>(Collections.singletonList(temp)), (success) -> {
                     if (success) {
                         ((ACState) device.getState()).setTemperature(temp);
-                        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(temp)));
-                        mState.setText(getResources().getString(R.string.ac_state,
+                        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(temp)));
+                        mState.setText(getResources().getString(R.string.temp_state,
                                 ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
                                 ((ACState) device.getState()).getTemperature()));
                     }
                 }, this::handleError);
-            //else
-            //enviar mensaje de error. Por ejemplo un Toast! (tobi)
+            else
+                Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_LONG).show();
+                //enviar mensaje de error. Por ejemplo un Toast! (tobi)
         });
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked)
                 ApiClient.getInstance().executeAction(device.getId(), "turnOn", new ArrayList<>(), (success) -> {
                     if (success)
                         ((ACState) device.getState()).setStatus("on");
-                    mState.setText(getResources().getString(R.string.ac_state, getResources().getString(R.string.prendido),
+                    mState.setText(getResources().getString(R.string.temp_state, getResources().getString(R.string.prendido),
                             ((ACState) device.getState()).getTemperature()));
                 }, this::handleError);
             else
                 ApiClient.getInstance().executeAction(device.getId(), "turnOff", new ArrayList<>(), (success) -> {
                     if (success)
                         ((ACState) device.getState()).setStatus("off");
-                    mState.setText(getResources().getString(R.string.ac_state, getResources().getString(R.string.apagado),
+                    mState.setText(getResources().getString(R.string.temp_state, getResources().getString(R.string.apagado),
                             ((ACState) device.getState()).getTemperature()));
                 }, this::handleError);
         });

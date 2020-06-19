@@ -36,7 +36,7 @@
 
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/ac_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -54,7 +54,7 @@
                     android:textSize="18sp"
                     app:layout_constraintBottom_toTopOf="@+id/onStateAc"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                    app:layout_constraintTop_toBottomOf="@+id/ac_location" />
 
                 <TextView
                     android:id="@+id/onStateAc"
@@ -183,7 +183,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/oven_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Desplazamiento de aspas"
@@ -201,7 +201,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginStart="10dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                        app:layout_constraintTop_toBottomOf="@+id/oven_state" />
 
                     <com.google.android.material.button.MaterialButtonToggleGroup
                         android:id="@+id/vertical_toggle_group"
