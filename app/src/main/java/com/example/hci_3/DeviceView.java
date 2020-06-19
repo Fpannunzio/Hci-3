@@ -2,6 +2,7 @@ package com.example.hci_3;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,7 +31,10 @@ public abstract class DeviceView extends ConstraintLayout {
         init(context);
     }
 
-    protected abstract void init(Context context);
+    protected void init(Context context){
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        setLayoutParams(layoutParams);
+    }
 
     public void setDevice(Device device) {
         this.device = device;

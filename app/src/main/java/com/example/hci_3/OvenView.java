@@ -10,13 +10,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.hci_3.DeviceView;
-import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 
 public class OvenView extends DeviceView {
@@ -25,7 +22,6 @@ public class OvenView extends DeviceView {
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
 
-    private TextView fuenteCalor, modoGrill, modoConveccion;
     private Spinner fuenteSpinner, grillSpinner, conveccionSpinner;
 
     private ArrayAdapter<CharSequence> fuenteAdapter, grillAdapter, conveccionAdapter;
@@ -44,19 +40,17 @@ public class OvenView extends DeviceView {
 
     @Override
     protected void init(Context context) {
+        super.init(context);
         LayoutInflater.from(context).inflate(R.layout.oven_view, this, true);
 
         cardView = findViewById(R.id.cardView);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
 
-        fuenteCalor = findViewById(R.id.fuenteCalor);
         fuenteSpinner = findViewById(R.id.fuenteSpinner);
 
-        modoGrill = findViewById(R.id.modoGrill);
         grillSpinner = findViewById(R.id.grillSpinner);
 
-        modoConveccion = findViewById(R.id.modoConveccion);
         conveccionSpinner = findViewById(R.id.conveccionSpinner);
 
         fuenteAdapter = ArrayAdapter.createFromResource(context, R.array.fuente_calor, android.R.layout.simple_spinner_item);

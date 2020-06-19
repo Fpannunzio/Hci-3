@@ -36,6 +36,7 @@ public class DoorView extends DeviceView {
 
     @Override
     protected void init(Context context) {
+        super.init(context);
         LayoutInflater.from(context).inflate(R.layout.door_view, this, true);
 
         cardView = findViewById(R.id.cardView);
