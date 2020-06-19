@@ -54,11 +54,6 @@ public interface ApiService {
 
     @PUT("devices/{deviceId}/{actionName}")
     @Headers("Content-Type: application/json")
-    Call<Result<Object>> executeActionInteger(@Path("deviceId") String deviceId, @Path("actionName") String actionName, @Body List<Integer> params);
-
-    @PUT("devices/{deviceId}/{actionName}")
-    @Headers("Content-Type: application/json")
-    Call<Result<Object>> executeActionString(@Path("deviceId") String deviceId, @Path("actionName") String actionName, @Body List<String> params);
-
+    Call<Result<Object>> executeAction(@Path("deviceId") String deviceId, @Path("actionName") String actionName, @Body List<Object> params);
 
 }

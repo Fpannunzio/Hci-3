@@ -106,14 +106,8 @@ public class ApiClient {
         return call;
     }
 
-    public Call<Result<Object>> executeActionInteger(String deviceId, String actionName, List<Integer> params, SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
-        Call<Result<Object>> call = service.executeActionInteger(deviceId, actionName, params);
-        call.enqueue(getExecuteActionCallback(responseHandler, errorHandler));
-        return call;
-    }
-
-    public Call<Result<Object>> executeActionString(String deviceId, String actionName, List<String> params, SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
-        Call<Result<Object>> call = service.executeActionString(deviceId, actionName, params);
+    public Call<Result<Object>> executeAction(String deviceId, String actionName, List<Object> params, SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
+        Call<Result<Object>> call = service.executeAction(deviceId, actionName, params);
         call.enqueue(getExecuteActionCallback(responseHandler, errorHandler));
         return call;
     }
