@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.hci_3.ACView;
 import com.example.hci_3.DeviceView;
+import com.example.hci_3.DoorView;
 import com.example.hci_3.OvenView;
 import com.example.hci_3.api.DeviceStates.*;
 
@@ -51,7 +52,7 @@ public enum  DeviceTypeInfo {
 
     DOOR("lsf78ly0eqrjbz91", "door") {
         @Override
-        public DeviceView getView(Context context) { return null; }
+        public DeviceView getView(Context context) { return new DoorView(context); }
 
         @Override
         public Class<?> getStateClass() { return DoorState.class; }

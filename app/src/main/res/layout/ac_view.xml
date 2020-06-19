@@ -91,7 +91,7 @@
                     android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
-                    android:shadowColor="#72E1C7"
+                    android:shadowColor="@color/colorPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
