@@ -50,10 +50,11 @@
                     android:id="@+id/door_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#3C3F58"
                     android:layout_marginStart="10dp"
+                    android:text="a"
+                    android:textColor="#3C3F58"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView2"
+                    app:layout_constraintBottom_toTopOf="@+id/onStateDoor"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -61,8 +62,8 @@
                     android:id="@+id/onStateDoor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Prendido - 180°C"
                     android:layout_marginStart="10dp"
+                    android:text="Prendido - 180°C"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView" />
@@ -71,9 +72,9 @@
                     android:id="@+id/expandBtn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginTop="12dp"
                     android:background="@drawable/ripple_effect"
                     android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
