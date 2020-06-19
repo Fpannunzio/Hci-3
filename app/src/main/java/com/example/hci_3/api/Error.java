@@ -13,12 +13,12 @@ public class Error {
 
     @SerializedName("description")
     @Expose
-    private List<String> description = null;
+    private Object description;
 
     public Error() {
     }
 
-    public Error(int code, List<String> description) {
+    public Error(int code, Object description) {
         this.code = code;
         this.description = description;
     }
@@ -31,11 +31,15 @@ public class Error {
         this.code = code;
     }
 
-    public List<String> getDescription() {
-        return description;
+    @SuppressWarnings("unchecked") // description is either a String or List<String>. Defined by Api.
+    public String getDescription() {
+        if(description instanceof List<?>)
+            return ((List<String>) description).get(0);
+        else
+            return (String) description;
     }
 
-    public void setDescription(List<String> description) {
+    public void setDescription(Object description) {
         this.description = description;
     }
 

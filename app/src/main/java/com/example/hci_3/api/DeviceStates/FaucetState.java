@@ -1,5 +1,7 @@
 package com.example.hci_3.api.DeviceStates;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -64,6 +66,7 @@ public class FaucetState implements DeviceState {
         this.dispensedQuantity = dispensedQuantity;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "FaucetState{" +

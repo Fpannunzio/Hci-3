@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.text.DateFormat;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -36,7 +37,9 @@ public class ApiClient {
 
         // Adding custom deserializers
         gsonBuilder.registerTypeAdapter(Device.class, new DeviceDeserializer());
-        Gson gson = gsonBuilder.create();
+        Gson gson = gsonBuilder
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                .create();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BaseURL)
@@ -106,9 +109,57 @@ public class ApiClient {
         return call;
     }
 
+    public Call<Result<List<LogEntry>>> getLogs(String limit, String offset, SuccessHandler<List<LogEntry>> responseHandler, ErrorHandler errorHandler){
+        Call<Result<List<LogEntry>>> call = service.getLogs(limit, offset);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Result<List<LogEntry>>> getDeviceLogs(String deviceId, String limit, String offset, SuccessHandler<List<LogEntry>> responseHandler, ErrorHandler errorHandler){
+        Call<Result<List<LogEntry>>> call = service.getDeviceLogs(deviceId, limit, offset);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
+        return call;
+    }
+
     public Call<Result<Object>> executeAction(String deviceId, String actionName, List<Object> params, SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
         Call<Result<Object>> call = service.executeAction(deviceId, actionName, params);
         call.enqueue(getExecuteActionCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Result<Home>> getHome(String homeId, SuccessHandler<Home> responseHandler, ErrorHandler errorHandler) {
+        Call<Result<Home>> call = this.service.getHome(homeId);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Result<List<Home>>> getHomes(SuccessHandler<List<Home>> responseHandler, ErrorHandler errorHandler) {
+        Call<Result<List<Home>>> call = this.service.getHomes();
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Result<List<Room>>> getHomeRooms(String homeId, SuccessHandler<List<Room>> responseHandler, ErrorHandler errorHandler) {
+        Call<Result<List<Room>>> call = this.service.getHomeRooms(homeId);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Result<Routine>> getRoutine(String routineId, SuccessHandler<Routine> responseHandler, ErrorHandler errorHandler) {
+        Call<Result<Routine>> call = this.service.getRoutine(routineId);
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Result<List<Routine>>> getRoutines(SuccessHandler<List<Routine>> responseHandler, ErrorHandler errorHandler) {
+        Call<Result<List<Routine>>> call = this.service.getRoutines();
+        call.enqueue(getStandardCallback(responseHandler, errorHandler));
+        return call;
+    }
+
+    public Call<Void> executeRoutine(String routineId, Runnable responseHandler, ErrorHandler errorHandler) {
+        Call<Void> call = this.service.executeRoutine(routineId);
+        call.enqueue(getVoidCallback(responseHandler, errorHandler));
         return call;
     }
 
@@ -178,6 +229,25 @@ public class ApiClient {
         };
     }
 
+    private Callback<Void> getVoidCallback(Runnable responseHandler, ErrorHandler errorHandler){
+        return new Callback<Void>(){
+
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response){
+
+                if (response.isSuccessful())
+                    responseHandler.run();
+                else
+                    handleError(response, errorHandler);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                handleUnexpectedError(t);
+            }
+        };
+    }
+
     private <T> T getResponseData(@NonNull Response<Result<T>> response){
         Result<T> result = response.body();
         return (result != null)? result.getResult() : null;
@@ -185,7 +255,7 @@ public class ApiClient {
 
     private <T> void handleError(Response<T> response, ErrorHandler handler) {
         Error error = getError(response.errorBody());
-        handler.handle(error.getDescription().get(0), error.getCode());
+        handler.handle(error.getDescription(), error.getCode());
     }
 
     private void handleUnexpectedError(Throwable t) {

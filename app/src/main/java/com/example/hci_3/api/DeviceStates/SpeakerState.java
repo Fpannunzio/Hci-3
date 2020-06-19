@@ -1,5 +1,7 @@
 package com.example.hci_3.api.DeviceStates;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -66,6 +68,7 @@ public class SpeakerState implements DeviceState {
         this.song = song;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "SpeakerState{" +
@@ -145,6 +148,7 @@ public class SpeakerState implements DeviceState {
             this.progress = progress;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "Song{" +

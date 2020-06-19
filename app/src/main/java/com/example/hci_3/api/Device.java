@@ -1,5 +1,7 @@
 package com.example.hci_3.api;
 
+import androidx.annotation.NonNull;
+
 import com.example.hci_3.api.DeviceStates.DeviceState;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -79,15 +81,28 @@ public class Device {
         this.room = room;
     }
 
-    public void fav() {
-        meta.fav = true;
-    }
+//    public void fav() {
+//        meta.fav = true;
+//    }
 
-    public void unfav() {
-        meta.fav = false;
-    }
+//    public void unfav() {
+//        meta.fav = false;
+//    }
 
     public Boolean isFav() {
         return meta.fav;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Device{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", deviceType=" + deviceType +
+                ", state=" + state +
+                ", room=" + room +
+                ", meta=" + meta +
+                '}';
     }
 }

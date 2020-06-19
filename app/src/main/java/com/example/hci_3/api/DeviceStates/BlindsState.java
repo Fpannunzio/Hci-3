@@ -1,5 +1,7 @@
 package com.example.hci_3.api.DeviceStates;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -47,6 +49,7 @@ public class BlindsState implements DeviceState {
         this.currentLevel = currentLevel;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "BlindsState{" +

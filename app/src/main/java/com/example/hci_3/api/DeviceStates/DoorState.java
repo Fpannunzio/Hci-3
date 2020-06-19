@@ -1,5 +1,7 @@
 package com.example.hci_3.api.DeviceStates;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -34,6 +36,7 @@ public class DoorState implements DeviceState {
         this.lock = lock;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "DoorState{" +

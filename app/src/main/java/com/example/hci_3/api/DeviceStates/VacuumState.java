@@ -1,5 +1,7 @@
 package com.example.hci_3.api.DeviceStates;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -60,6 +62,7 @@ public class VacuumState implements DeviceState {
         this.location = location;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "VacuumState{" +
@@ -101,6 +104,7 @@ public class VacuumState implements DeviceState {
             this.name = name;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "Location{" +

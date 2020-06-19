@@ -1,5 +1,7 @@
 package com.example.hci_3.api.DeviceStates;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -86,6 +88,7 @@ public class ACState implements DeviceState {
         this.fanSpeed = fanSpeed;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ACState{" +

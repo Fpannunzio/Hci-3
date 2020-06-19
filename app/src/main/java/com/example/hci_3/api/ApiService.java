@@ -16,18 +16,8 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-//    @POST("rooms")
-//    @Headers("Content-Type: application/json")
-//    Call<Result<Room>> addRoom(@Body Room room);
-//
-//    @PUT("rooms/{roomId}")
-//    @Headers("Content-Type: application/json")
-//    Call<Result<Boolean>> modifyRoom(@Path("roomId") String roomId, @Body Room room);
-//
-//    @DELETE("rooms/{roomId}")
-//    Call<Result<Boolean>> deleteRoom(@Path("roomId") String roomId);
-
     // Room Api Calls
+
     @GET("rooms/{roomId}")
     Call<Result<Room>> getRoom(@Path("roomId") String roomId);
 
@@ -38,6 +28,7 @@ public interface ApiService {
     Call<Result<List<Device>>> getRoomDevices(@Path("roomId") String roomId);
 
     // Device Api Calls
+
     @GET("devices")
     Call<Result<List<Device>>> getDevices();
 
@@ -50,10 +41,39 @@ public interface ApiService {
     @GET("devices/{deviceId}/state")
     Call<Result<JsonElement>> getDeviceState(@Path("deviceId") String deviceId);
 
-    // Logs
+    @GET("devices/logs/limit/{limit}/offset/{offset}")
+    Call<Result<List<LogEntry>>> getLogs(@Path("limit") String limit, @Path("offset") String offset);
+
+    @GET("devices/{deviceId}/logs/limit/{limit}/offset/{offset}")
+    Call<Result<List<LogEntry>>> getDeviceLogs(@Path("deviceId") String deviceId, @Path("limit") String limit, @Path("offset") String offset);
 
     @PUT("devices/{deviceId}/{actionName}")
     @Headers("Content-Type: application/json")
     Call<Result<Object>> executeAction(@Path("deviceId") String deviceId, @Path("actionName") String actionName, @Body List<Object> params);
+
+    // DeviceType Api Calls
+
+    // Home Api Calls
+
+    @GET("homes/{homeId}")
+    Call<Result<Home>> getHome(@Path("homeId") String homeId);
+
+    @GET("homes")
+    Call<Result<List<Home>>> getHomes();
+
+    @GET("homes/{homeId}/rooms")
+    Call<Result<List<Room>>> getHomeRooms(@Path("homeId") String homeId);
+
+    // Routines Api Calls
+
+    @GET("routines/{routineId}")
+    Call<Result<Routine>> getRoutine(@Path("routineId") String routineId);
+
+    @GET("routines")
+    Call<Result<List<Routine>>> getRoutines();
+
+    @PUT("routines/{routineId}/execute")
+    @Headers("Content-Type: application/json")
+    Call<Void> executeRoutine(@Path("routineId") String routineId);
 
 }

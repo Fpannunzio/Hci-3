@@ -64,19 +64,11 @@ public class Room {
     @NonNull
     @Override
     public String toString() {
-        if (this.getId() != null)
-        {
-            if (this.getMeta() != null)
-                return String.format("%s - %s - %s", this.getId(), this.getName(), this.getMeta());
-            else
-                return String.format("%s - %s", this.getId(), this.getName());
-        }
-        else
-        {
-            if (this.getMeta() != null)
-                return String.format("%s - %s", this.getName(), this.getMeta());
-            else
-                return this.getName();
-        }
+        return "Room{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", home=" + home +
+                ", meta=" + meta +
+                '}';
     }
 }
