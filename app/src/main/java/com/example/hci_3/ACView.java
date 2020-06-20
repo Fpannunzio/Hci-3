@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import androidx.lifecycle.LiveData;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.ACState;
@@ -74,28 +74,19 @@ public class ACView extends DeviceView {
         @SuppressWarnings("ConstantConditions")
         ACState state = (ACState) device.getValue().getState();
 
-        // Aca se cargan los parametros del device
-        mLocation.setText(getResources().getString(R.string.disp_location, getParsedName(device.getRoom().getName()), device.getRoom().getHome().getName()));
+        // Aca se cargan la funcionalidad de los elementos UI
 
-        mDevName.setText(getParsedName(device.getName()));
-
-        mState.setText(getResources().getString(R.string.temp_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
-        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(((ACState) device.getState()).getTemperature())));
-        mState.setText(getResources().getString(R.string.temp_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
-        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(((ACState) device.getState()).getTemperature())));
-        extendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (expandableLayout.getVisibility() == View.GONE){
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    expandableLayout.setVisibility(View.VISIBLE);
-                    // Falta rotar la flecha
-                } else {
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    expandableLayout.setVisibility(View.GONE);
-                }
+        extendBtn.setOnClickListener(v -> {
+            if (expandableLayout.getVisibility() == View.GONE){
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                expandableLayout.setVisibility(View.VISIBLE);
+                // Falta rotar la flecha
+            } else {
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                expandableLayout.setVisibility(View.GONE);
             }
         });
+
         mMinus.setOnClickListener(v -> {
             int temp = state.getTemperature() - 1;
 
@@ -204,18 +195,22 @@ public class ACView extends DeviceView {
 
     @Override
     public void onDeviceRefresh(Device device) {
-        Log.v("deviceStateChange", "AC");
         ACState state = (ACState) device.getState();
 
         mDevName.setText(getParsedName(device.getName()));
 
-        mState.setText(getResources().getString(R.string.ac_state,
+        mState.setText(getResources().getString(R.string.temp_state,
                 state.getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
                 state.getTemperature()));
 
-        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(state.getTemperature())));
+        mTemperature.setText(getResources().getString(R.string.temp,
+                String.valueOf(state.getTemperature())));
 
-        // Estaria bueno que se coloreen los buttonGroup segun el estado.
+        mLocation.setText(getResources().getString(R.string.disp_location,
+                getParsedName(device.getRoom().getName()),
+                device.getRoom().getHome().getName()));
+
+        // Estaria bueno que se coloreen los buttonGroup segun el estado!
     }
 
     private void turnOn(){

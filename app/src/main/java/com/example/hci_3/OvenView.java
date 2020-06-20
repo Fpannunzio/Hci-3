@@ -18,7 +18,6 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 
-import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.OvenState;
 
@@ -81,11 +80,10 @@ public class OvenView extends DeviceView {
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
-        mDevName.setText(getParsedName(device.getName()));
 
-        mLocation.setText(getResources().getString(R.string.disp_location, getParsedName(device.getRoom().getName()), device.getRoom().getHome().getName()));
-        mState.setText(getResources().getString(R.string.temp_state, ((OvenState) device.getState()).getStatus().equals("on") ? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado), ((OvenState) device.getState()).getTemperature()));
-        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(((OvenState) device.getState()).getTemperature())));
+        @SuppressWarnings("ConstantConditions")
+        OvenState state = (OvenState) device.getValue().getState();
+
         mFont.setAdapter(fuenteAdapter);
         mGrill.setAdapter(grillAdapter);
         mConvection.setAdapter(conveccionAdapter);
@@ -98,7 +96,7 @@ public class OvenView extends DeviceView {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
-                setFont(fuenteArray[arg2]);
+                setHeat(fuenteArray[arg2]);
             }
 
             @Override
@@ -140,31 +138,20 @@ public class OvenView extends DeviceView {
                 expandableLayout.setVisibility(View.GONE);
             }
         });
+
         mMinus.setOnClickListener(v -> {
-            int temp = ((OvenState) device.getState()).getTemperature() - 5;
+            int temp = state.getTemperature() - 5;
+
             if (temp >= 90)
-                ApiClient.getInstance().executeAction(device.getId(), "setTemperature", new ArrayList<>(Collections.singletonList(temp)), (success) -> {
-                    if (success) {
-                        ((OvenState) device.getState()).setTemperature(temp);
-                        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(temp)));
-                        mState.setText(getResources().getString(R.string.temp_state, ((OvenState) device.getState()).getStatus().equals("on") ? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado), ((OvenState) device.getState()).getTemperature()));
-                    }
-                }, this::handleError);
+                setTemperature(temp);
             else
                 Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_LONG).show();
         });
+
         mPlus.setOnClickListener(v -> {
-            int temp = ((OvenState) device.getState()).getTemperature() + 5;
+            int temp = state.getTemperature() + 5;
             if (temp <= 230)
-                ApiClient.getInstance().executeAction(device.getId(), "setTemperature", new ArrayList<>(Collections.singletonList(temp)), (success) -> {
-                    if (success) {
-                        ((OvenState) device.getState()).setTemperature(temp);
-                        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(temp)));
-                        mState.setText(getResources().getString(R.string.temp_state,
-                                ((OvenState) device.getState()).getStatus().equals("on") ? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
-                                ((OvenState) device.getState()).getTemperature()));
-                    }
-                }, this::handleError);
+                setTemperature(temp);
             else
                 Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_LONG).show();
 
@@ -172,93 +159,94 @@ public class OvenView extends DeviceView {
 
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked)
-                ApiClient.getInstance().executeAction(device.getId(), "turnOn", new ArrayList<>(), (success) -> {
-                    if (success)
-                        ((OvenState) device.getState()).setStatus("on");
-                    mState.setText(getResources().getString(R.string.temp_state, getResources().getString(R.string.prendido),
-                            ((OvenState) device.getState()).getTemperature()));
-                }, this::handleError);
+                turnOn();
             else
-                ApiClient.getInstance().executeAction(device.getId(), "turnOff", new ArrayList<>(), (success) -> {
-                    if (success)
-                        ((OvenState) device.getState()).setStatus("off");
-                    mState.setText(getResources().getString(R.string.temp_state, getResources().getString(R.string.apagado),
-                            ((OvenState) device.getState()).getTemperature()));
-                }, this::handleError);
+                turnOff();
         });
-    }
-
-    private void setFont(String value) {
-        switch (value) {
-            case "Convencional": {
-                ApiClient.getInstance().executeAction(device.getId(), "setHeat", new ArrayList<>(Collections.singletonList("conventional")),
-                        (success) -> ((OvenState) device.getState()).setHeat("conventional"),
-                        this::handleError);
-                break;
-            }
-            case "Abajo": {
-                ApiClient.getInstance().executeAction(device.getId(), "setHeat", new ArrayList<>(Collections.singletonList("bottom")),
-                        (success) -> ((OvenState) device.getState()).setHeat("bottom"),
-                        this::handleError);
-                break;
-            }
-            case "Arriba": {
-                ApiClient.getInstance().executeAction(device.getId(), "setHeat", new ArrayList<>(Collections.singletonList("top")),
-                        (success) -> ((OvenState) device.getState()).setHeat("top"),
-                        this::handleError);
-                break;
-            }
-        }
-    }
-
-    private void setGrill(String value) {
-        switch (value) {
-            case "Apagado": {
-                ApiClient.getInstance().executeAction(device.getId(), "setGrill", new ArrayList<>(Collections.singletonList("off")),
-                        (success) -> ((OvenState) device.getState()).setGrill("off"),
-                        this::handleError);
-                break;
-            }
-            case "Economico": {
-                ApiClient.getInstance().executeAction(device.getId(), "setGrill", new ArrayList<>(Collections.singletonList("eco")),
-                        (success) -> ((OvenState) device.getState()).setGrill("eco"),
-                        this::handleError);
-                break;
-            }
-            case "Completo": {
-                ApiClient.getInstance().executeAction(device.getId(), "setGrill", new ArrayList<>(Collections.singletonList("large")),
-                        (success) -> ((OvenState) device.getState()).setGrill("large"),
-                        this::handleError);
-                break;
-            }
-        }
-    }
-
-    private void setConvection(String value) {
-        switch (value) {
-            case "Convencional": {
-                ApiClient.getInstance().executeAction(device.getId(), "setConvection", new ArrayList<>(Collections.singletonList("normal")),
-                        (success) -> ((OvenState) device.getState()).setConvection("normal"),
-                        this::handleError);
-                break;
-            }
-            case "Apagado": {
-                ApiClient.getInstance().executeAction(device.getId(), "setConvection", new ArrayList<>(Collections.singletonList("off")),
-                        (success) -> ((OvenState) device.getState()).setConvection("off"),
-                        this::handleError);
-                break;
-            }
-            case "Economico": {
-                ApiClient.getInstance().executeAction(device.getId(), "setConvection", new ArrayList<>(Collections.singletonList("eco")),
-                        (success) -> ((OvenState) device.getState()).setConvection("eco"),
-                        this::handleError);
-                break;
-            }
-        }
     }
 
     @Override
     public void onDeviceRefresh(Device device) {
-        Log.v("deviceStateChange", "OVEN");
+        OvenState state = (OvenState) device.getState();
+
+        mDevName.setText(getParsedName(device.getName()));
+
+        mLocation.setText(getResources().getString(R.string.disp_location,
+                getParsedName(device.getRoom().getName()),
+                device.getRoom().getHome().getName()));
+
+        mState.setText(getResources().getString(R.string.temp_state,
+                state.getStatus().equals("on") ? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
+                ((OvenState) device.getState()).getTemperature()));
+
+        mTemperature.setText(getResources().getString(R.string.temp,
+                String.valueOf(state.getTemperature())));
+
+        // Hay que poner que se activen los botones con el estado
     }
+
+    private void turnOn(){
+        executeAction("turnOn", this::handleError);
+    }
+
+    private void turnOff(){
+        executeAction("turnOff", this::handleError);
+    }
+
+    private void setTemperature(int temp){
+        executeAction("setTemperature", new ArrayList<>(Collections.singletonList(temp)), this::handleError);
+    }
+
+    private void setHeat(String heatMode) {
+        switch (heatMode) {
+            case "Convencional": {
+                executeAction("setHeat", new ArrayList<>(Collections.singletonList("conventional")), this::handleError);
+                break;
+            }
+            case "Abajo": {
+                executeAction("setHeat", new ArrayList<>(Collections.singletonList("bottom")), this::handleError);
+                break;
+            }
+            case "Arriba": {
+                executeAction("setHeat", new ArrayList<>(Collections.singletonList("top")), this::handleError);
+                break;
+            }
+        }
+    }
+
+    private void setGrill(String grillMode) {
+        switch (grillMode) {
+            case "Apagado": {
+                executeAction("setGrill", new ArrayList<>(Collections.singletonList("off")), this::handleError);
+                break;
+            }
+            case "Economico": {
+                executeAction("setGrill", new ArrayList<>(Collections.singletonList("eco")), this::handleError);
+                break;
+            }
+            case "Completo": {
+                executeAction("setGrill", new ArrayList<>(Collections.singletonList("large")), this::handleError);
+                break;
+            }
+        }
+    }
+
+    private void setConvection(String convectionMode) {
+        switch (convectionMode) {
+            case "Convencional": {
+                executeAction("setConvection", new ArrayList<>(Collections.singletonList("normal")), this::handleError);
+                break;
+            }
+            case "Apagado": {
+                executeAction("setConvection", new ArrayList<>(Collections.singletonList("off")), this::handleError);
+                break;
+            }
+            case "Economico": {
+                executeAction("setConvection", new ArrayList<>(Collections.singletonList("eco")), this::handleError);
+                break;
+            }
+        }
+    }
+
+
 }
