@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LiveData;
+
 import com.example.hci_3.api.Device;
 import com.skydoves.colorpickerview.ColorPickerView;
 import com.skydoves.colorpickerview.listeners.ColorListener;
@@ -48,7 +50,12 @@ public class LampView extends DeviceView {
     }
 
     @Override
-    public void setDevice(Device device) {
+    public void onDeviceRefresh(Device device) {
+
+    }
+
+    @Override
+    public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
 //        mDevName.setText(getParsedName(device.getName()));
