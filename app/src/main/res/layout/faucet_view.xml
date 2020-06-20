@@ -45,7 +45,7 @@
 
 
                     <TextView
-                        android:id="@+id/ac_location"
+                        android:id="@+id/faucet_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -60,11 +60,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:textSize="22sp"
                         android:textColor="@color/colorText"
+                        android:textSize="22sp"
                         app:layout_constraintBottom_toTopOf="@+id/onStateFaucet"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
-                        app:layout_constraintTop_toBottomOf="@+id/ac_location" />
+                        app:layout_constraintTop_toBottomOf="@+id/faucet_location" />
 
                     <TextView
                         android:id="@+id/onStateFaucet"
@@ -113,12 +113,12 @@
                             android:layout_height="wrap_content"
                             android:spinnerMode="dropdown"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/open"
+                            app:layout_constraintEnd_toStartOf="@+id/faucet_open"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/open"
+                            android:id="@+id/faucet_open"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
@@ -126,11 +126,11 @@
                             android:text="Abrir"
                             android:textColor="@color/colorText"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/dispense"
+                            app:layout_constraintEnd_toStartOf="@+id/faucet_dispense"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/dispense"
+                            android:id="@+id/faucet_dispense"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
@@ -158,29 +158,29 @@
                             android:layout_marginBottom="20dp"
                             android:src="@drawable/ic_droplet"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/seekBar"
+                            app:layout_constraintEnd_toStartOf="@+id/faucet_seekBar"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <SeekBar
-                            android:id="@+id/seekBar"
+                            android:id="@+id/faucet_seekBar"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                            app:layout_constraintEnd_toStartOf="@+id/amount"
+                            app:layout_constraintEnd_toStartOf="@+id/faucet_amount"
                             app:layout_constraintStart_toEndOf="@+id/imageView5"
                             app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
                         <TextView
-                            android:id="@+id/amount"
+                            android:id="@+id/faucet_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="80 ml"
                             android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/seekBar"
+                            app:layout_constraintBottom_toBottomOf="@+id/faucet_seekBar"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/seekBar"
-                            app:layout_constraintTop_toTopOf="@+id/seekBar" />
+                            app:layout_constraintStart_toEndOf="@+id/faucet_seekBar"
+                            app:layout_constraintTop_toTopOf="@+id/faucet_seekBar" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
