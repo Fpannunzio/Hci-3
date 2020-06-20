@@ -1,6 +1,7 @@
 package com.example.hci_3;
 
 
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -19,11 +20,24 @@ public class DeviceRepository {
     private ApiClient apiClient;
     private MutableLiveData<List<MutableLiveData<Device>>> devices;
     private Map<String, MutableLiveData<Device>> idToDeviceMap;
+    private Handler handler;
 
     private DeviceRepository(){
         apiClient = ApiClient.getInstance();
         devices = new MutableLiveData<>();
         idToDeviceMap = new HashMap<>();
+
+        // Para mi tiene que ser un alarmManager
+        handler = new Handler();
+        int delay = 1000;
+
+        handler.postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                handler.postDelayed(this, delay);
+                getDevices();
+            }
+        }, delay);
     }
 
     public static synchronized DeviceRepository getInstance() {
@@ -61,7 +75,7 @@ public class DeviceRepository {
         executeAction(deviceId, actionName, params, bool -> {}, errorHandler);
     }
 
-    public void getDevices(){
+    private void getDevices(){
         apiClient.getDevices(
                 this::updateDeviceList,
                 (m, c) -> Log.w("uncriticalError", "Failed to get devices: " + m + " Code: " + c)
@@ -69,9 +83,11 @@ public class DeviceRepository {
     }
 
     private void updateDeviceList(List<Device> devs){
+        devs.forEach(d -> Log.v("checkDevices", d.toString()));
         Map<String, MutableLiveData<Device>> auxMap = new HashMap<>();
 
         List<MutableLiveData<Device>> ans = devs.stream().map(dev -> {
+            Log.v("DevicesAdded", dev.toString());
             MutableLiveData<Device> liveData = null;
 
             if(idToDeviceMap.containsKey(dev.getId()))

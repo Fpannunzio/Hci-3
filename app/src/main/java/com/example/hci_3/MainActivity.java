@@ -23,7 +23,5 @@ public class MainActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
 
         model.getDevices().observe(this, adapter::setDevices);
-
-        DeviceRepository.getInstance().getDevices();
     }
 }
