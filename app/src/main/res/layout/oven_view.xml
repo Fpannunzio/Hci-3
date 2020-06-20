@@ -4,35 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardCornerRadius="8dp"
-        style="@style/CardView.Light">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            style="@style/CardView.Light">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/oven_round"
-                    android:contentDescription="oven icon" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="16dp"
+                        android:contentDescription="oven icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@mipmap/oven_round" />
 
 
                 <TextView
@@ -44,6 +50,15 @@
                     android:textSize="12sp"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Casa | Living"
+                        android:layout_marginStart="10dp"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/oven_name"
@@ -55,6 +70,16 @@
                     app:layout_constraintBottom_toTopOf="@+id/oven_state"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/oven_location" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Horno"
+                        android:layout_marginStart="10dp"
+                        android:textSize="22sp"
+                        android:textColor="@color/colorText"
+                        app:layout_constraintBottom_toTopOf="@+id/textView2"
+                        app:layout_constraintStart_toEndOf="@+id/imageView"
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <TextView
                     android:id="@+id/oven_state"
@@ -65,24 +90,34 @@
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView" />
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Prendido - 180°C"
+                        android:layout_marginStart="10dp"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView" />
 
-                <ImageButton
-                    android:id="@+id/expandBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ripple_effect"
-                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageButton
+                        android:id="@+id/expandBtn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/ripple_effect"
+                        android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                        android:tint="@color/colorPrimary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/expandableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                ><!--android:visibility="gone"-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/expandableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    ><!--android:visibility="gone"-->
 
                 <Switch
                     android:id="@+id/oven_switch"
@@ -92,6 +127,14 @@
                     android:shadowColor="#72E1C7"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="10dp"
+                        android:shadowColor="#72E1C7"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/oven_minus"
@@ -104,6 +147,17 @@
                     android:src="@drawable/ic_minus"
                     app:layout_constraintStart_toEndOf="@+id/oven_switch"
                     app:layout_constraintTop_toTopOf="parent" />
+                    <ImageButton
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="60dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_minus"
+                        android:background="@drawable/ripple_effect"
+                        app:layout_constraintStart_toEndOf="@+id/switch1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:contentDescription="Minus"/>
 
                 <TextView
                     android:id="@+id/oven_temp"
@@ -114,6 +168,16 @@
                     android:text="180°C"
                     app:layout_constraintStart_toEndOf="@+id/oven_minus"
                     app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="4dp"
+                        android:text="180°C"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toEndOf="@+id/imageView2"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/oven_plus"
@@ -126,9 +190,31 @@
                     android:src="@drawable/ic_plus"
                     app:layout_constraintStart_toEndOf="@+id/oven_temp"
                     app:layout_constraintTop_toTopOf="parent" />
+                    <ImageButton
+                        android:id="@+id/imageButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/ripple_effect"
+                        android:contentDescription="Plus"
+                        android:src="@drawable/ic_plus"
+                        app:layout_constraintStart_toEndOf="@+id/temperature"
+                        app:layout_constraintTop_toTopOf="parent" />
 
+                    <TextView
+                        android:id="@+id/fuenteCalor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fuente Calor:"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="30dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/switch1" />
                 <TextView
-                    android:id="@+id/fuenteCalor"
+                    android:id="@+id/oven_fuente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fuente Calor:"
@@ -147,17 +233,26 @@
                     android:spinnerMode="dropdown"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/oven_switch" />
+                    <Spinner
+                        android:id="@+id/fuenteSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:spinnerMode="dropdown"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/fuenteCalor" />
 
-                <TextView
-                    android:id="@+id/modoGrill"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Modo Grill:"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fuenteCalor"/>
+                    <TextView
+                        android:id="@+id/modoGrill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Modo Grill:"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fuenteCalor"/>
 
                 <Spinner
                     android:id="@+id/oven_grill"
@@ -167,17 +262,25 @@
                     android:layout_marginEnd="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/oven_fuente" />
+                    <Spinner
+                        android:id="@+id/grillSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/modoGrill" />
 
-                <TextView
-                    android:id="@+id/modoConveccion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Modo Conveccion:"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="50dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/modoGrill" />
+                    <TextView
+                        android:id="@+id/modoConveccion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Modo Conveccion:"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="30dp"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/modoGrill" />
 
                 <Spinner
                     android:id="@+id/oven_conveccion"
@@ -187,10 +290,19 @@
                     android:layout_marginEnd="50dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/oven_grill" />
+                    <Spinner
+                        android:id="@+id/conveccionSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/modoConveccion" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 </merge>

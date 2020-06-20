@@ -1,6 +1,8 @@
 package com.example.hci_3;
 
 import android.content.Context;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.util.AttributeSet;
 
 import android.view.LayoutInflater;
@@ -9,6 +11,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
@@ -25,6 +30,10 @@ public class ACView extends DeviceView {
     private Switch mSwitch;
     private ImageButton mMinus, mPlus;
 
+    private CardView cardView;
+    private ConstraintLayout expandableLayout;
+    private ImageButton extendBtn;
+
     public ACView(Context context) {
         super(context);
     }
@@ -39,6 +48,7 @@ public class ACView extends DeviceView {
 
     @Override
     protected void init(Context context) {
+        super.init(context);
         LayoutInflater.from(context).inflate(R.layout.ac_view, this, true);
 
         // Aca guardo los elementos de mi view
@@ -53,6 +63,9 @@ public class ACView extends DeviceView {
         mFanSpeedGroup = findViewById(R.id.fan_speed_toggle_group);
         mMinus = findViewById(R.id.ac_minus);
         mPlus = findViewById(R.id.ac_plus);
+        cardView = findViewById(R.id.cardView);
+        expandableLayout = findViewById(R.id.expandableLayout);
+        extendBtn = findViewById(R.id.expandBtn);
     }
 
     @Override
@@ -66,6 +79,21 @@ public class ACView extends DeviceView {
 
         mState.setText(getResources().getString(R.string.temp_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
         mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(((ACState) device.getState()).getTemperature())));
+        mState.setText(getResources().getString(R.string.ac_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
+        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(((ACState) device.getState()).getTemperature())));
+        extendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (expandableLayout.getVisibility() == View.GONE){
+                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                    expandableLayout.setVisibility(View.VISIBLE);
+                    // Falta rotar la flecha
+                } else {
+                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                    expandableLayout.setVisibility(View.GONE);
+                }
+            }
+        });
         mMinus.setOnClickListener(v -> {
             int temp = ((ACState) device.getState()).getTemperature() - 1;
             if(temp >= 18)

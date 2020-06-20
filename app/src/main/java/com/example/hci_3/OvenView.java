@@ -52,6 +52,7 @@ public class OvenView extends DeviceView {
 
     @Override
     protected void init(Context context) {
+        super.init(context);
         LayoutInflater.from(context).inflate(R.layout.oven_view, this, true);
 
         mLocation = findViewById(R.id.oven_location);

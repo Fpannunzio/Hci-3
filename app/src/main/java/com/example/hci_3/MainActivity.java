@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
         rv = findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         rv.setAdapter(adapter);
+        rv.addItemDecoration(new SpacesItemDecoration(30));
+
+
+
 
         ApiClient.getInstance().getDevices((devices) -> {
 

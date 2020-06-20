@@ -6,51 +6,53 @@ import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.hci_3.api.Device;
 
-public class DoorView extends DeviceView {
+public class FaucetView extends DeviceView {
 
     private CardView cardView;
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
-    private TextView mDevName;
 
+    private Spinner unitSpinner;
+    private ArrayAdapter<CharSequence> unitAdapter;
 
-    public DoorView(Context context) {
+    public FaucetView(Context context) {
         super(context);
     }
 
-    public DoorView(Context context, AttributeSet attrs) {
+    public FaucetView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public DoorView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FaucetView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @Override
     protected void init(Context context) {
         super.init(context);
-        LayoutInflater.from(context).inflate(R.layout.door_view, this, true);
+        LayoutInflater.from(context).inflate(R.layout.faucet_view, this, true);
 
         cardView = findViewById(R.id.cardView);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
-        mDevName = findViewById(R.id.door_name);
 
+        unitSpinner = findViewById(R.id.unitSpinner);
+        unitAdapter = ArrayAdapter.createFromResource(context, R.array.faucet_units, android.R.layout.simple_spinner_item);
     }
 
     @Override
     public void setDevice(Device device) {
         super.setDevice(device);
-
-        mDevName.setText(getParsedName(device.getName()));
+        unitSpinner.setAdapter(unitAdapter);
 
         extendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
