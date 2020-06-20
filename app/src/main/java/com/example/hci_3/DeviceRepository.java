@@ -29,7 +29,7 @@ public class DeviceRepository {
 
         // Para mi tiene que ser un alarmManager
         handler = new Handler();
-        int delay = 1000;
+        int delay = 60000;
 
         handler.postDelayed(new Runnable(){
             @Override
@@ -75,7 +75,7 @@ public class DeviceRepository {
         executeAction(deviceId, actionName, params, bool -> {}, errorHandler);
     }
 
-    private void getDevices(){
+    public void getDevices(){
         apiClient.getDevices(
                 this::updateDeviceList,
                 (m, c) -> Log.w("uncriticalError", "Failed to get devices: " + m + " Code: " + c)

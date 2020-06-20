@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -92,8 +93,8 @@ public class ACView extends DeviceView {
 
             if(temp >= 18)
                 setTemperature(temp);
-            //else
-                //enviar mensaje de error. Por ejemplo un Toast! (tobi)
+            else
+                Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_LONG).show();
         });
 
         mPlus.setOnClickListener(v -> {
@@ -101,8 +102,8 @@ public class ACView extends DeviceView {
 
             if(temp <= 38)
                 setTemperature(temp);
-            //else
-                //enviar mensaje de error. Por ejemplo un Toast! (tobi)
+            else
+                Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_LONG).show();
         });
 
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {

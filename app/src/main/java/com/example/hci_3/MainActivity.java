@@ -22,10 +22,8 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         rv.setAdapter(adapter);
         rv.addItemDecoration(new SpacesItemDecoration(30));
-
-
-
-
         model.getDevices().observe(this, adapter::setDevices);
+
+        DeviceRepository.getInstance().getDevices();
     }
 }

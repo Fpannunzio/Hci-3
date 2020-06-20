@@ -58,7 +58,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.917"
-                app:layout_constraintStart_toEndOf="@+id/oven_location"
+                app:layout_constraintStart_toEndOf="@+id/door_location"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/play_round" />
         </androidx.constraintlayout.widget.ConstraintLayout>
