@@ -7,6 +7,7 @@ import com.example.hci_3.BlindsView;
 import com.example.hci_3.DeviceView;
 import com.example.hci_3.DoorView;
 import com.example.hci_3.FaucetView;
+import com.example.hci_3.LampView;
 import com.example.hci_3.OvenView;
 import com.example.hci_3.VacuumView;
 import com.example.hci_3.api.DeviceStates.*;
@@ -71,7 +72,7 @@ public enum  DeviceTypeInfo {
 
     LAMP("go46xmbqeomjrsjr", "lamp") {
         @Override
-        public DeviceView getView(Context context) { return null; }
+        public DeviceView getView(Context context) { return new LampView(context); }
 
         @Override
         public Class<?> getStateClass() { return LampState.class; }
