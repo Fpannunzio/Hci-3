@@ -1,47 +1,66 @@
 package com.example.hci_3;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import android.widget.Toast;
 
-import com.example.hci_3.api.ApiClient;
-import com.example.hci_3.api.Device;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    RecyclerView rv;
-    DeviceAdapter adapter;
-    List<Device> devices;
+    //private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        setSupportActionBar(toolbar);
+       //mAppBarConfiguration = new AppBarConfiguration().Builder(R.id.favoritos, R.id.hogares, R.id.rutinas).build();
 
-        devices = new ArrayList<>();
-        adapter = new DeviceAdapter(devices);
-        rv = findViewById(R.id.recyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        rv.setAdapter(adapter);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        ApiClient.getInstance().getDevices((devices) -> {
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // perform query here
 
-            this.devices.addAll(devices);
-            adapter.notifyDataSetChanged();
+                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
+                // see https://code.google.com/p/android/issues/detail?id=24599
+                searchView.clearFocus();
 
-        }, this::handleError);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        return true;
     }
 
-    private void handleError(String message, int code){
-        String text = getResources().getString(R.string.error_message, message, code);
-        Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
-    }
+
 }

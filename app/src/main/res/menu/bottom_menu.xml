@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/favoritos"
+        android:title="Favoritos" android:icon="@drawable/ic_favoritos"/>
+    <item android:id="@+id/hogares"
+        android:title="Hogares" android:icon="@drawable/ic_home" />
+    <item android:id="@+id/rutinas"
+        android:title="Rutinas" android:icon="@drawable/ic_rutinas"/>
+
+</menu>
