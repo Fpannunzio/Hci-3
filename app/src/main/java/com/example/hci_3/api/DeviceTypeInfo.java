@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.hci_3.ACView;
 import com.example.hci_3.DeviceView;
 import com.example.hci_3.DoorView;
+import com.example.hci_3.FaucetView;
 import com.example.hci_3.OvenView;
 import com.example.hci_3.VacuumView;
 import com.example.hci_3.api.DeviceStates.*;
@@ -29,7 +30,7 @@ public enum  DeviceTypeInfo {
 
     FAUCET("dbrlsh7o5sn8ur4i", "faucet") {
         @Override
-        public DeviceView getView(Context context) { return null; }
+        public DeviceView getView(Context context) { return new FaucetView(context); }
 
         @Override
         public Class<?> getStateClass() { return FaucetState.class; }

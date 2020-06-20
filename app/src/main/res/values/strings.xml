@@ -21,6 +21,12 @@
         <item>ROOM2</item>
         <item>ROOM3</item>
     </string-array>
+    <string-array name="faucet_units">
+        <item>ml</item>
+        <item>cl</item>
+        <item>dl</item>
+        <item>l</item>
+    </string-array>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
     <string name="invalid_temp">Valor de temperatura invalido</string>
