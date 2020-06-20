@@ -107,7 +107,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/close"
+                            android:id="@+id/blinds_close"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorPrimary"
@@ -116,10 +116,10 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/open"/>
+                            app:layout_constraintEnd_toStartOf="@+id/blinds_open"/>
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/open"
+                            android:id="@+id/blinds_open"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorPrimary"
@@ -127,7 +127,7 @@
                             android:textColor="@color/colorText"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/close"
+                            app:layout_constraintStart_toEndOf="@+id/blinds_close"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -151,26 +151,26 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <SeekBar
-                            android:id="@+id/volumeBar"
+                            android:id="@+id/blinds_seekbar"
                             android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/level"
+                            app:layout_constraintEnd_toStartOf="@+id/blinds_level"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
                         <TextView
-                            android:id="@+id/level"
+                            android:id="@+id/blinds_level"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="80 (%)"
                             android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/volumeBar"
+                            app:layout_constraintBottom_toBottomOf="@+id/blinds_seekbar"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/volumeBar"
-                            app:layout_constraintTop_toTopOf="@+id/volumeBar" />
+                            app:layout_constraintStart_toEndOf="@+id/blinds_seekbar"
+                            app:layout_constraintTop_toTopOf="@+id/blinds_seekbar" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

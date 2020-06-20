@@ -69,8 +69,6 @@ public class FaucetView extends DeviceView {
         mAmount = findViewById(R.id.faucet_amount);
         mSeekBar = findViewById(R.id.faucet_seekBar);
 
-
-
         cardView = findViewById(R.id.cardView);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);

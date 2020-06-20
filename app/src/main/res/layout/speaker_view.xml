@@ -166,12 +166,12 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_baseline_volume_up_24"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/volumeBar"
+                            app:layout_constraintEnd_toStartOf="@+id/blinds_seekbar"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <SeekBar
-                            android:id="@+id/volumeBar"
+                            android:id="@+id/blinds_seekbar"
                             android:layout_width="300dp"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
