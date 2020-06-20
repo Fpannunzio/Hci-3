@@ -63,8 +63,6 @@ public class ACView extends DeviceView {
         ACState state = (ACState) device.getValue().getState();
 
         // Aca se cargan los parametros del device
-        mDevName.setText(getParsedName(device.getValue().getName()));
-
         mMinus.setOnClickListener(v -> {
             int temp = state.getTemperature() - 1;
 
@@ -175,6 +173,8 @@ public class ACView extends DeviceView {
     public void onDeviceRefresh(Device device) {
         Log.v("deviceStateChange", "AC");
         ACState state = (ACState) device.getState();
+
+        mDevName.setText(getParsedName(device.getName()));
 
         mState.setText(getResources().getString(R.string.ac_state,
                 state.getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),

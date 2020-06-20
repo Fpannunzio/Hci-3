@@ -40,7 +40,7 @@ public abstract class DeviceView extends ConstraintLayout {
 
     public void setDevice(LiveData<Device> device) {
         this.device = device;
-        device.observe(getLifecycleOwner(), this::onDeviceRefresh);
+        this.device.observe(getLifecycleOwner(), this::onDeviceRefresh);
     }
 
     public abstract void onDeviceRefresh(Device device);
