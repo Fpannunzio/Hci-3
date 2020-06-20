@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.api.Device;
 
@@ -47,23 +48,24 @@ public class DoorView extends DeviceView {
     }
 
     @Override
-    public void setDevice(Device device) {
+    public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
-        mDevName.setText(getParsedName(device.getName()));
-
-        extendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (expandableLayout.getVisibility() == View.GONE){
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    expandableLayout.setVisibility(View.VISIBLE);
-                    // Falta rotar la flecha
-                } else {
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    expandableLayout.setVisibility(View.GONE);
-                }
+        extendBtn.setOnClickListener(v -> {
+            if (expandableLayout.getVisibility() == View.GONE){
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                expandableLayout.setVisibility(View.VISIBLE);
+                // Falta rotar la flecha
+            } else {
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                expandableLayout.setVisibility(View.GONE);
             }
         });
     }
+
+    @Override
+    public void onDeviceRefresh(Device device) {
+        mDevName.setText(getParsedName(device.getName()));
+    }
+
 }

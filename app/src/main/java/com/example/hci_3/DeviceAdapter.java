@@ -5,18 +5,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceTypeInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
-    private List<Device> devices;
+    private List<MutableLiveData<Device>> devices;
 
-    public DeviceAdapter(List<Device> devices) {
-        this.devices = devices;
+    public DeviceAdapter() {
+        devices = new ArrayList<>();
     }
 
     @NonNull
@@ -32,14 +34,15 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
 
     @Override
     public void onBindViewHolder(DeviceViewHolder holder, int position) {
-        Device device = devices.get(position);
-        holder.setDevice(device);
+        MutableLiveData<Device> ldDevice = devices.get(position);
+        holder.setDevice(ldDevice);
     }
 
     @Override
     public int getItemViewType(int position) {
 
-        DeviceTypeInfo e = DeviceTypeInfo.getFromName(devices.get(position).getTypeName());
+        @SuppressWarnings("ConstantConditions")
+        DeviceTypeInfo e = DeviceTypeInfo.getFromName(devices.get(position).getValue().getTypeName());
         if(e == null)
             throw new RuntimeException("Invalid or unsupported DeviceType");
 
@@ -56,14 +59,20 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
         return DeviceTypeInfo.values()[viewType].getView(context);
     }
 
+    public void setDevices(List<MutableLiveData<Device>> devices){
+        this.devices.clear();
+        this.devices.addAll(devices);
+        notifyDataSetChanged();
+    }
+
     public static class DeviceViewHolder extends RecyclerView.ViewHolder {
 
         public DeviceViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
-        public void setDevice(Device device) {
-            ((DeviceView) itemView).setDevice(device);
+        public void setDevice(MutableLiveData<Device> ldDevice) {
+            ((DeviceView) itemView).setDevice(ldDevice);
         }
     }
 }

@@ -1,22 +1,21 @@
 package com.example.hci_3;
 
 import android.content.Context;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.util.AttributeSet;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.hci_3.api.ApiClient;
+import androidx.lifecycle.LiveData;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
+
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.ACState;
 import com.google.android.material.button.MaterialButtonToggleGroup;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ACView extends DeviceView {
-    private TextView mDevName, mState, mTemperature;
+    private TextView mDevName, mState, mTemperature, mLocation;
     private MaterialButtonToggleGroup mTempGroup, mVertGroup, mHorGroup, mFanSpeedGroup;
     private Switch mSwitch;
     private ImageButton mMinus, mPlus;
@@ -52,9 +51,9 @@ public class ACView extends DeviceView {
         super.init(context);
         LayoutInflater.from(context).inflate(R.layout.ac_view, this, true);
 
-        // Aca guardo los elementos de mi view
         mDevName = findViewById(R.id.ac_name);
         mTemperature = findViewById(R.id.ac_temp);
+        mLocation = findViewById(R.id.ac_location);
         mSwitch = findViewById(R.id.ac_switch);
         mState = findViewById(R.id.onStateAc);
         mTempGroup = findViewById(R.id.temp_group);
@@ -69,70 +68,48 @@ public class ACView extends DeviceView {
     }
 
     @Override
-    public void setDevice(Device device) {
+    public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
-        // Aca se cargan los parametros del device
-        mDevName.setText(getParsedName(device.getName()));
+        @SuppressWarnings("ConstantConditions")
+        ACState state = (ACState) device.getValue().getState();
 
-        mState.setText(getResources().getString(R.string.ac_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
-        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(((ACState) device.getState()).getTemperature())));
-        extendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (expandableLayout.getVisibility() == View.GONE){
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    expandableLayout.setVisibility(View.VISIBLE);
-                    // Falta rotar la flecha
-                } else {
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    expandableLayout.setVisibility(View.GONE);
-                }
+        // Aca se cargan la funcionalidad de los elementos UI
+
+        extendBtn.setOnClickListener(v -> {
+            if (expandableLayout.getVisibility() == View.GONE){
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                expandableLayout.setVisibility(View.VISIBLE);
+                // Falta rotar la flecha
+            } else {
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                expandableLayout.setVisibility(View.GONE);
             }
         });
+
         mMinus.setOnClickListener(v -> {
-            int temp = ((ACState) device.getState()).getTemperature() - 1;
+            int temp = state.getTemperature() - 1;
+
             if(temp >= 18)
-                ApiClient.getInstance().executeAction(device.getId(), "setTemperature", new ArrayList<>(Collections.singletonList(temp)), (success) -> {
-                    if (success) {
-                        ((ACState) device.getState()).setTemperature(temp);
-                        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(temp)));
-                        mState.setText(getResources().getString(R.string.ac_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
-                    }
-            }, this::handleError);
+                setTemperature(temp);
             //else
                 //enviar mensaje de error. Por ejemplo un Toast! (tobi)
         });
+
         mPlus.setOnClickListener(v -> {
-            int temp = ((ACState) device.getState()).getTemperature() + 1;
+            int temp = state.getTemperature() + 1;
+
             if(temp <= 38)
-                ApiClient.getInstance().executeAction(device.getId(), "setTemperature", new ArrayList<>(Collections.singletonList(temp)), (success) -> {
-                    if (success) {
-                        ((ACState) device.getState()).setTemperature(temp);
-                        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(temp)));
-                        mState.setText(getResources().getString(R.string.ac_state,
-                                ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
-                                ((ACState) device.getState()).getTemperature()));
-                    }
-                }, this::handleError);
+                setTemperature(temp);
             //else
-            //enviar mensaje de error. Por ejemplo un Toast! (tobi)
+                //enviar mensaje de error. Por ejemplo un Toast! (tobi)
         });
+
         mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked)
-                ApiClient.getInstance().executeAction(device.getId(), "turnOn", new ArrayList<>(), (success) -> {
-                    if (success)
-                        ((ACState) device.getState()).setStatus("on");
-                    mState.setText(getResources().getString(R.string.ac_state, getResources().getString(R.string.prendido),
-                            ((ACState) device.getState()).getTemperature()));
-                }, this::handleError);
+                turnOn();
             else
-                ApiClient.getInstance().executeAction(device.getId(), "turnOff", new ArrayList<>(), (success) -> {
-                    if (success)
-                        ((ACState) device.getState()).setStatus("off");
-                    mState.setText(getResources().getString(R.string.ac_state, getResources().getString(R.string.apagado),
-                            ((ACState) device.getState()).getTemperature()));
-                }, this::handleError);
+                turnOff();
         });
 
         mTempGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
@@ -215,28 +192,53 @@ public class ACView extends DeviceView {
             }
         });
     }
+
+    @Override
+    public void onDeviceRefresh(Device device) {
+        ACState state = (ACState) device.getState();
+
+        mDevName.setText(getParsedName(device.getName()));
+
+        mState.setText(getResources().getString(R.string.temp_state,
+                state.getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
+                state.getTemperature()));
+
+        mTemperature.setText(getResources().getString(R.string.temp,
+                String.valueOf(state.getTemperature())));
+
+        mLocation.setText(getResources().getString(R.string.disp_location,
+                getParsedName(device.getRoom().getName()),
+                device.getRoom().getHome().getName()));
+
+        // Estaria bueno que se coloreen los buttonGroup segun el estado!
+    }
+
+    private void turnOn(){
+        executeAction("turnOn", this::handleError);
+    }
+
+    private void turnOff(){
+        executeAction("turnOff", this::handleError);
+    }
+
+    private void setTemperature(int temp){
+        executeAction("setTemperature", new ArrayList<>(Collections.singletonList(temp)), this::handleError);
+    }
+
     private void setMode(String value){
-        ApiClient.getInstance().executeAction(device.getId(), "setMode", new ArrayList<>(Collections.singletonList(value)),
-                (success) -> ((ACState) device.getState()).setMode(value),
-                this::handleError);
+        executeAction("setMode", new ArrayList<>(Collections.singletonList(value)), this::handleError);
     }
 
     private void setVerticalSwing(String value){
-        ApiClient.getInstance().executeAction(device.getId(), "setVerticalSwing", new ArrayList<>(Collections.singletonList(value)),
-                (success) -> ((ACState) device.getState()).setVerticalSwing(value),
-                this::handleError);
+        executeAction("setVerticalSwing", new ArrayList<>(Collections.singletonList(value)), this::handleError);
     }
 
     private void setHorizontalSwing(String value){
-        ApiClient.getInstance().executeAction(device.getId(), "setHorizontalSwing", new ArrayList<>(Collections.singletonList(value)),
-                (success) -> ((ACState) device.getState()).setHorizontalSwing(value),
-                this::handleError);
+        executeAction("setHorizontalSwing", new ArrayList<>(Collections.singletonList(value)), this::handleError);
     }
 
     private void setFanSpeed(String value){
-        ApiClient.getInstance().executeAction(device.getId(), "setFanSpeed", new ArrayList<>(Collections.singletonList(value)),
-                (success) -> ((ACState) device.getState()).setFanSpeed(value),
-                this::handleError);
+        executeAction("setFanSpeed", new ArrayList<>(Collections.singletonList(value)), this::handleError);
     }
 }
 
