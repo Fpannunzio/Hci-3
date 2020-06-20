@@ -6,6 +6,7 @@ import android.transition.TransitionManager;
 import android.util.AttributeSet;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -79,8 +80,8 @@ public class ACView extends DeviceView {
 
         mState.setText(getResources().getString(R.string.temp_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
         mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(((ACState) device.getState()).getTemperature())));
-        mState.setText(getResources().getString(R.string.ac_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
-        mTemperature.setText(getResources().getString(R.string.ac_temp, String.valueOf(((ACState) device.getState()).getTemperature())));
+        mState.setText(getResources().getString(R.string.temp_state, ((ACState) device.getState()).getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado) , ((ACState) device.getState()).getTemperature()));
+        mTemperature.setText(getResources().getString(R.string.temp, String.valueOf(((ACState) device.getState()).getTemperature())));
         extendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -45,7 +45,7 @@
 
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/ac_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -64,7 +64,7 @@
                         android:textColor="@color/colorText"
                         app:layout_constraintBottom_toTopOf="@+id/onStateFaucet"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
-                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                        app:layout_constraintTop_toBottomOf="@+id/ac_location" />
 
                     <TextView
                         android:id="@+id/onStateFaucet"
