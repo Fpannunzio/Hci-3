@@ -39,7 +39,8 @@ public class Homes extends Fragment {
         View view = inflater.inflate(R.layout.fragment_homes, container, false);
         textView = view.findViewById(R.id.text_home);
         if(this.isAdded()){
-            textView.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.homes_to_room));
+            textView.setOnClickListener(v ->
+                    Navigation.findNavController(view).navigate(HomesDirections.homesToRoom().setNumber(22)));
         }
 
         return view;

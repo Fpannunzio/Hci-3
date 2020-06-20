@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.TextView;
  */
 public class Room extends Fragment {
     private TextView textView;
+
     public Room() {
         // Required empty public constructor
     }
@@ -42,6 +44,9 @@ public class Room extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_room, container, false);
         textView = view.findViewById(R.id.text_room);
+        assert getArguments() != null;
+        int amount = RoomArgs.fromBundle(getArguments()).getNumber();
+        textView.setText(String.valueOf(amount));
         if(this.isAdded()){
             textView.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.room_to_homes));
         }

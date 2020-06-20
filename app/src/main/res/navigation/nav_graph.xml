@@ -24,6 +24,10 @@
             android:id="@+id/homes_to_room"
             app:destination="@id/room"
             app:enterAnim="@android:anim/fade_in" />
+        <argument
+            android:name="number2"
+            app:argType="integer"
+            android:defaultValue="21" />
     </fragment>
     <fragment
         android:id="@+id/room"
@@ -34,5 +38,9 @@
             android:id="@+id/room_to_homes"
             app:destination="@id/hogares"
             app:enterAnim="@android:anim/fade_in" />
+        <argument
+            android:name="number"
+            app:argType="integer"
+            android:defaultValue="2" />
     </fragment>
 </navigation>
