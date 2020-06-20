@@ -16,9 +16,21 @@
         <item>Economico</item>
         <item>Convencional</item>
     </string-array>
+    <string-array name="vacuum_location">
+        <item>ROOM1</item>
+        <item>ROOM2</item>
+        <item>ROOM3</item>
+    </string-array>
+    <string-array name="faucet_units">
+        <item>ml</item>
+        <item>cl</item>
+        <item>dl</item>
+        <item>l</item>
+    </string-array>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
     <string name="invalid_temp">Valor de temperatura invalido</string>
-    <string name="ac_temp"> %1$s°C </string>
-    <string name="ac_state">%1$s-%2$d°C</string>
+    <string name="temp"> %1$s°C </string>
+    <string name="temp_state">%1$s-%2$d°C</string>
+    <string name="disp_location">%1$s | %2$s</string>
 </resources>
