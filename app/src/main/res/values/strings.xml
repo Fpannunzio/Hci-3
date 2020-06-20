@@ -27,6 +27,12 @@
         <item>dl</item>
         <item>l</item>
     </string-array>
+    <string-array name="genres">
+        <item>pop</item>
+        <item>country</item>
+        <item>rock</item>
+        <item>kpop</item>
+    </string-array>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
     <string name="invalid_temp">Valor de temperatura invalido</string>

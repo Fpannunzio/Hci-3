@@ -9,6 +9,7 @@ import com.example.hci_3.DoorView;
 import com.example.hci_3.FaucetView;
 import com.example.hci_3.LampView;
 import com.example.hci_3.OvenView;
+import com.example.hci_3.SpeakerView;
 import com.example.hci_3.VacuumView;
 import com.example.hci_3.api.DeviceStates.*;
 
@@ -64,7 +65,7 @@ public enum  DeviceTypeInfo {
 
     SPEAKER("c89b94e8581855bc", "speaker") {
         @Override
-        public DeviceView getView(Context context) { return null; }
+        public DeviceView getView(Context context) { return new SpeakerView(context); }
 
         @Override
         public Class<?> getStateClass() { return SpeakerState.class; }

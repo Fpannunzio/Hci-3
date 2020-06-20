@@ -45,7 +45,7 @@
 
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/speaker_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -56,18 +56,18 @@
 
 
                     <TextView
-                        android:id="@+id/faucet_name"
+                        android:id="@+id/speaker_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:textSize="22sp"
                         android:textColor="@color/colorText"
-                        app:layout_constraintBottom_toTopOf="@+id/onStateFaucet"
+                        app:layout_constraintBottom_toTopOf="@+id/speaker_state"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
-                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                        app:layout_constraintTop_toBottomOf="@+id/speaker_location" />
 
                     <TextView
-                        android:id="@+id/onStateFaucet"
+                        android:id="@+id/speaker_state"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -106,7 +106,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                         <Switch
-                            android:id="@+id/switch1"
+                            android:id="@+id/speaker_switch"
                             android:layout_width="50dp"
                             android:layout_height="30dp"
                             android:layout_marginStart="10dp"
@@ -116,31 +116,31 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
-                            android:id="@+id/minus"
+                            android:id="@+id/speaker_minus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ripple_effect"
                             android:contentDescription="Minus"
                             android:src="@drawable/ic_minus"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/pause"
-                            app:layout_constraintStart_toEndOf="@+id/switch1"
+                            app:layout_constraintEnd_toStartOf="@+id/speaker_pause"
+                            app:layout_constraintStart_toEndOf="@+id/speaker_switch"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
-                            android:id="@+id/pause"
+                            android:id="@+id/speaker_pause"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ripple_effect"
                             android:contentDescription="Plus"
                             android:src="@drawable/ic_play"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/plus"
-                            app:layout_constraintStart_toEndOf="@+id/minus"
+                            app:layout_constraintEnd_toStartOf="@+id/speaker_plus"
+                            app:layout_constraintStart_toEndOf="@+id/speaker_minus"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
-                            android:id="@+id/plus"
+                            android:id="@+id/speaker_plus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ripple_effect"
@@ -148,7 +148,7 @@
                             android:src="@drawable/ic_plus"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/pause"
+                            app:layout_constraintStart_toEndOf="@+id/speaker_pause"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,7 +164,7 @@
                             android:id="@+id/imageView5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_droplet"
+                            android:src="@drawable/ic_baseline_volume_up_24"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/volumeBar"
                             app:layout_constraintStart_toStartOf="parent"
