@@ -29,13 +29,13 @@ public class DeviceRepository {
 
         // Para mi tiene que ser un alarmManager
         handler = new Handler();
-        int delay = 1000;
+        int delay = 60000;
 
         handler.postDelayed(new Runnable(){
             @Override
             public void run(){
                 handler.postDelayed(this, delay);
-                getDevices();
+                updateDevices();
             }
         }, delay);
     }
@@ -47,7 +47,7 @@ public class DeviceRepository {
         return instance;
     }
 
-    public MutableLiveData<List<MutableLiveData<Device>>> getLiveData(){
+    public MutableLiveData<List<MutableLiveData<Device>>> getDevices(){
         return devices;
     }
 
@@ -75,7 +75,7 @@ public class DeviceRepository {
         executeAction(deviceId, actionName, params, bool -> {}, errorHandler);
     }
 
-    private void getDevices(){
+    private void updateDevices(){
         apiClient.getDevices(
                 this::updateDeviceList,
                 (m, c) -> Log.w("uncriticalError", "Failed to get devices: " + m + " Code: " + c)
@@ -83,11 +83,9 @@ public class DeviceRepository {
     }
 
     private void updateDeviceList(List<Device> devs){
-        devs.forEach(d -> Log.v("checkDevices", d.toString()));
         Map<String, MutableLiveData<Device>> auxMap = new HashMap<>();
 
         List<MutableLiveData<Device>> ans = devs.stream().map(dev -> {
-            Log.v("DevicesAdded", dev.toString());
             MutableLiveData<Device> liveData = null;
 
             if(idToDeviceMap.containsKey(dev.getId()))

@@ -15,16 +15,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FavoriteDeviceViewModel model = new ViewModelProvider(this).get(FavoriteDeviceViewModel.class);
+        FavoriteViewModel model = new ViewModelProvider(this).get(FavoriteViewModel.class);
 
         DeviceAdapter adapter = new DeviceAdapter();
         RecyclerView rv = findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         rv.setAdapter(adapter);
         rv.addItemDecoration(new SpacesItemDecoration(30));
-
-
-
 
         model.getDevices().observe(this, adapter::setDevices);
     }
