@@ -3,6 +3,7 @@ package com.example.hci_3.api;
 import android.content.Context;
 
 import com.example.hci_3.ACView;
+import com.example.hci_3.BlindsView;
 import com.example.hci_3.DeviceView;
 import com.example.hci_3.DoorView;
 import com.example.hci_3.FaucetView;
@@ -22,7 +23,7 @@ public enum  DeviceTypeInfo {
 
     BLINDS("eu0v2xgprrhhg41g", "blinds") {
         @Override
-        public DeviceView getView(Context context) { return null; }
+        public DeviceView getView(Context context) { return new BlindsView(context); }
 
         @Override
         public Class<?> getStateClass() { return BlindsState.class; }
