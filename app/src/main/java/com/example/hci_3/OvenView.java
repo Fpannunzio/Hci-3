@@ -1,10 +1,10 @@
 package com.example.hci_3;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,9 +14,8 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LiveData;
 
-import com.example.hci_3.DeviceView;
-import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 
 public class OvenView extends DeviceView {
@@ -51,6 +50,7 @@ public class OvenView extends DeviceView {
 
     @Override
     protected void init(Context context) {
+        super.init(context);
         LayoutInflater.from(context).inflate(R.layout.oven_view, this, true);
 
         cardView = findViewById(R.id.cardView);
@@ -72,24 +72,26 @@ public class OvenView extends DeviceView {
     }
 
     @Override
-    public void setDevice(Device device) {
+    public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
         fuenteSpinner.setAdapter(fuenteAdapter);
         grillSpinner.setAdapter(grillAdapter);
         conveccionSpinner.setAdapter(conveccionAdapter);
 
-        extendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (expandableLayout.getVisibility() == View.GONE){
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    expandableLayout.setVisibility(View.VISIBLE);
-                    // Falta rotar la flecha
-                } else {
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    expandableLayout.setVisibility(View.GONE);
-                }
+        extendBtn.setOnClickListener(v -> {
+            if (expandableLayout.getVisibility() == View.GONE){
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                expandableLayout.setVisibility(View.VISIBLE);
+                // Falta rotar la flecha
+            } else {
+                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                expandableLayout.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onDeviceRefresh(Device device) {
+        Log.v("deviceStateChange", "OVEN");
     }
 }

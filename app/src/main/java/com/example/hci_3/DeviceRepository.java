@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
-import com.example.hci_3.api.DeviceTypeInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,17 +39,32 @@ public class DeviceRepository {
 
     public void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.SuccessHandler<Boolean> responseHandler, ApiClient.ErrorHandler errorHandler){
         apiClient.executeAction(deviceId, actionName, params, success -> {
-            Device device = idToDeviceMap.get(deviceId).getValue();
-            apiClient.getDeviceState(deviceId, device.getState().getClass(), )
 
-            responseHandler.handle(success);
+            if(success) {
+                MutableLiveData<Device> ldDevice = idToDeviceMap.get(deviceId);
+                assert ldDevice != null;
+                Device device = ldDevice.getValue();
+                assert device != null;
+                apiClient.getDeviceState(deviceId, device.getState().getClass(), state -> {
+                    device.setState(state);
+                    ldDevice.postValue(device);
+                    responseHandler.handle(true);
+                }, (m, c) -> Log.w("uncriticalError", "Failed to get device state: " + m + " Code: " + c));
+
+            } else
+                responseHandler.handle(false);
+
         }, errorHandler);
     }
 
-    private void getDevices(){
+    public void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.ErrorHandler errorHandler){
+        executeAction(deviceId, actionName, params, bool -> {}, errorHandler);
+    }
+
+    public void getDevices(){
         apiClient.getDevices(
                 this::updateDeviceList,
-                (m, c) -> Log.w("warningcito", "Failed to get devices: " + m + " Code: " + c)
+                (m, c) -> Log.w("uncriticalError", "Failed to get devices: " + m + " Code: " + c)
         );
     }
 
@@ -76,4 +90,8 @@ public class DeviceRepository {
 
         devices.postValue(ans);
     }
+
+//    public enum DeviceDataState {
+//        UNCHANGED, UPDATED, REMOVED, ADDED
+//    }
 }
