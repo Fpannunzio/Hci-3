@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
@@ -11,21 +11,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hci_3.adapters.DeviceAdapter;
+import com.example.hci_3.R;
+import com.example.hci_3.SpacesItemDecoration;
+import com.example.hci_3.repositories.DeviceRepository;
+import com.example.hci_3.view_models.FavoriteDeviceViewModel;
+
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Favoritos#newInstance} factory method to
+ * Use the {@link FavoritesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Favoritos extends Fragment {
+public class FavoritesFragment extends Fragment {
 
     RecyclerView rv;
-    public Favoritos() {
+    public FavoritesFragment() {
         // Required empty public constructor
     }
 
-    public static Favoritos newInstance(String param1, String param2) {
-        Favoritos fragment = new Favoritos();
+    public static FavoritesFragment newInstance(String param1, String param2) {
+        FavoritesFragment fragment = new FavoritesFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

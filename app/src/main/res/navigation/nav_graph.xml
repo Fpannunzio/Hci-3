@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/favoritos"
-        android:name="com.example.hci_3.Favoritos"
+        android:name="com.example.hci_3.fragments.FavoritesFragment"
         android:label="fragment_favoritos"
         tools:layout="@layout/fragment_favoritos" />
     <fragment
         android:id="@+id/rutinas"
-        android:name="com.example.hci_3.rutinas"
+        android:name="com.example.hci_3.fragments.RoutinesFragment"
         android:label="fragment_rutinas"
         tools:layout="@layout/fragment_rutinas" />
     <fragment
         android:id="@+id/hogares"
-        android:name="com.example.hci_3.Homes"
+        android:name="com.example.hci_3.fragments.HomesFragment"
         android:label="fragment_homes"
         tools:layout="@layout/fragment_homes" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/room"
-        android:name="com.example.hci_3.Room"
+        android:name="com.example.hci_3.fragments.RoomDetailsFragment"
         android:label="fragment_room"
         tools:layout="@layout/fragment_room" >
         <action

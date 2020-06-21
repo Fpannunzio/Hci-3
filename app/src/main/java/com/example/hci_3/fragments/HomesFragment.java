@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
@@ -10,17 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.hci_3.R;
+
 import static androidx.navigation.Navigation.findNavController;
 
-public class Homes extends Fragment {
+public class HomesFragment extends Fragment {
 
     private TextView textView;
-    public Homes() {
+    public HomesFragment() {
         // Required empty public constructor
     }
 
-    public static Homes newInstance(String param1, String param2) {
-        Homes fragment = new Homes();
+    public static HomesFragment newInstance(String param1, String param2) {
+        HomesFragment fragment = new HomesFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);

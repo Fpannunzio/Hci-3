@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
@@ -11,21 +11,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hci_3.adapters.DeviceAdapter;
+import com.example.hci_3.R;
+import com.example.hci_3.SpacesItemDecoration;
+import com.example.hci_3.repositories.DeviceRepository;
+import com.example.hci_3.view_models.FavoriteDeviceViewModel;
 
 
-
-public class rutinas extends Fragment {
+public class RoutinesFragment extends Fragment {
 
     RecyclerView rv;
 
 
-    public rutinas() {
+    public RoutinesFragment() {
         // Required empty public constructor
     }
 
 
-    public static rutinas newInstance(String param1, String param2) {
-        rutinas fragment = new rutinas();
+    public static RoutinesFragment newInstance(String param1, String param2) {
+        RoutinesFragment fragment = new RoutinesFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

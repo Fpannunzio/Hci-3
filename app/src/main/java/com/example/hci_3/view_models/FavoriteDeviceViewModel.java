@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.view_models;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;

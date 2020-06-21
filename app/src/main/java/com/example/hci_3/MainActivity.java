@@ -6,11 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,8 +14,6 @@ import android.view.MenuItem;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.HashSet;
 
 
 public class MainActivity extends AppCompatActivity {

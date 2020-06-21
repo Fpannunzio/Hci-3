@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hci_3.device_views.DeviceView;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceTypeInfo;
 

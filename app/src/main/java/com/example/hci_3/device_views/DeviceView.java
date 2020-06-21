@@ -1,15 +1,16 @@
-package com.example.hci_3;
+package com.example.hci_3.device_views;
 
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 
+import com.example.hci_3.view_models.DeviceViewModel;
+import com.example.hci_3.R;
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
 
