@@ -126,4 +126,6 @@
     <string name="faucet">Imagen de regador</string>
     <string name="dispensar">Dispensar</string>
     <string name="cantidad">Cantidad</string>
+    <string name="seleccione_hogar">Seleccione Hogar:</string>
+    <string name="habitacion">Habitacion:</string>
 </resources>
