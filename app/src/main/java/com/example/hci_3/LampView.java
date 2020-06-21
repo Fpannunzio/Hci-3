@@ -13,8 +13,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.api.Device;
+/*
 import com.skydoves.colorpickerview.ColorPickerView;
 import com.skydoves.colorpickerview.listeners.ColorListener;
+*/
 
 public class LampView extends DeviceView {
 
@@ -22,7 +24,7 @@ public class LampView extends DeviceView {
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
     private TextView mDevName;
-    private ColorPickerView colorPickerView;
+   // private ColorPickerView colorPickerView;
     private View currentColor;
 
     public LampView(Context context) {
@@ -46,7 +48,7 @@ public class LampView extends DeviceView {
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
         mDevName = findViewById(R.id.door_name);
-        colorPickerView = findViewById(R.id.colorPickerView);
+       // colorPickerView = findViewById(R.id.colorPickerView);
     }
 
     @Override
@@ -60,13 +62,13 @@ public class LampView extends DeviceView {
 
 //        mDevName.setText(getParsedName(device.getName()));
 
-        colorPickerView.setColorListener(new ColorListener() {
+       /* colorPickerView.setColorListener(new ColorListener() {
             @Override
             public void onColorSelected(int color, boolean fromUser) {
                 currentColor = findViewById(R.id.currentColor);
                 currentColor.setBackgroundColor(color);
             }
-        });
+        });*/
 
         extendBtn.setOnClickListener(new View.OnClickListener() {
             @Override

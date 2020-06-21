@@ -47,21 +47,10 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // perform query here
-        FavoriteDeviceViewModel model = new ViewModelProvider(this).get(FavoriteDeviceViewModel.class);
-
-        DeviceAdapter adapter = new DeviceAdapter();
-        RecyclerView rv = findViewById(R.id.recyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        rv.setAdapter(adapter);
-        rv.addItemDecoration(new SpacesItemDecoration(30));
-        model.getDevices().observe(this, adapter::setDevices);
-
-        DeviceRepository.getInstance().getDevices();
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
                 searchView.clearFocus();
-
+                // perform query here
                 return true;
             }
 
