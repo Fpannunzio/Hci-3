@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.device_views;
 
 import android.content.Context;
 import android.transition.AutoTransition;
@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 
+import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 /*
 import com.skydoves.colorpickerview.ColorPickerView;

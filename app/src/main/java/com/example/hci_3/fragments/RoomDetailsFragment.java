@@ -1,31 +1,31 @@
-package com.example.hci_3;
+package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.hci_3.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Room#newInstance} factory method to
+ * Use the {@link RoomDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Room extends Fragment {
+public class RoomDetailsFragment extends Fragment {
     private TextView textView;
 
-    public Room() {
+    public RoomDetailsFragment() {
         // Required empty public constructor
     }
 
-    public static Room newInstance(String param1, String param2) {
-        Room fragment = new Room();
+    public static RoomDetailsFragment newInstance(String param1, String param2) {
+        RoomDetailsFragment fragment = new RoomDetailsFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
