@@ -1,23 +1,29 @@
 package com.example.hci_3;
 
 import android.content.Context;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.util.AttributeSet;
-
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LiveData;
 
-import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
-
-import java.util.ArrayList;
+import com.skydoves.colorpickerview.ColorPickerView;
+import com.skydoves.colorpickerview.listeners.ColorListener;
 
 public class LampView extends DeviceView {
-    private TextView mDevName, mState;
 
-    private Switch mSwitch;
+    private CardView cardView;
+    private ConstraintLayout expandableLayout;
+    private ImageButton extendBtn;
+    private TextView mDevName;
+    private ColorPickerView colorPickerView;
+    private View currentColor;
 
     public LampView(Context context) {
         super(context);
@@ -33,35 +39,47 @@ public class LampView extends DeviceView {
 
     @Override
     protected void init(Context context) {
+        super.init(context);
         LayoutInflater.from(context).inflate(R.layout.lamp_view, this, true);
 
-        // Aca guardo los elementos de mi view
-        mDevName = findViewById(R.id.textLampView);
-        mState = findViewById(R.id.onStateLamp);
-        mSwitch = findViewById(R.id.lamp_switch);
+        cardView = findViewById(R.id.cardView);
+        expandableLayout = findViewById(R.id.expandableLayout);
+        extendBtn = findViewById(R.id.expandBtn);
+        mDevName = findViewById(R.id.door_name);
+        colorPickerView = findViewById(R.id.colorPickerView);
     }
 
     @Override
-    public void setDevice(Device device) {
-        super.setDevice(device);
+    public void onDeviceRefresh(Device device) {
 
-        // Aca se cargan los parametros del device
-        mDevName.setText(this.device.getName());
-        /*mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mSwitch.isChecked())
-                    ApiClient.getInstance().executeActionString(device.getId(), "turnOn", new ArrayList<>(), (success) -> {
-                        if (success)
-                            mState.setText(getResources().getString(R.string.prendido));
-                    }, (m, c) -> handleError(m, c));
-                else
-                    ApiClient.getInstance().executeActionString(device.getId(), "turnOff", new ArrayList<>(), (success) -> {
-                        if (success)
-                            mState.setText(getResources().getString(R.string.apagado));
-                    }, (m, c) -> handleError(m, c));
-            }
-        });*/
     }
 
+    @Override
+    public void setDevice(LiveData<Device> device) {
+        super.setDevice(device);
+
+//        mDevName.setText(getParsedName(device.getName()));
+
+        colorPickerView.setColorListener(new ColorListener() {
+            @Override
+            public void onColorSelected(int color, boolean fromUser) {
+                currentColor = findViewById(R.id.currentColor);
+                currentColor.setBackgroundColor(color);
+            }
+        });
+
+        extendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (expandableLayout.getVisibility() == View.GONE){
+                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                    expandableLayout.setVisibility(View.VISIBLE);
+                    // Falta rotar la flecha
+                } else {
+                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                    expandableLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
 }
