@@ -41,7 +41,7 @@
 
 
                     <TextView
-                        android:id="@+id/oven_location"
+                        android:id="@+id/door_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Casa | Living"
@@ -59,7 +59,7 @@
                         android:textSize="22sp"
                         app:layout_constraintBottom_toTopOf="@+id/onStateDoor"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
-                        app:layout_constraintTop_toBottomOf="@+id/oven_location" />
+                        app:layout_constraintTop_toBottomOf="@+id/door_location" />
 
                     <TextView
                         android:id="@+id/onStateDoor"
@@ -91,7 +91,7 @@
                     ><!--android:visibility="gone"-->
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/materialButton2"
+                        android:id="@+id/door_open"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="80dp"
@@ -104,15 +104,15 @@
                         app:layout_constraintVertical_bias="0.0" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/materialButton"
+                        android:id="@+id/door_block"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#71A69A"
                         android:text="Bloquear"
-                        android:backgroundTint="#72E1C7"
                         android:textColor="#3C3F58"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/materialButton2"
+                        app:layout_constraintStart_toEndOf="@+id/door_open"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

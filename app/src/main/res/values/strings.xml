@@ -27,10 +27,53 @@
         <item>dl</item>
         <item>l</item>
     </string-array>
+    <string-array name="genres">
+        <item>pop</item>
+        <item>country</item>
+        <item>rock</item>
+        <item>classical</item>
+        <item>dance</item>
+        <item>latina</item>
+    </string-array>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
-    <string name="invalid_temp">Valor de temperatura invalido</string>
+    <string name="activa">Activa</string>
+    <string name="cargandose">Cargando</string>
+    <string name="apagada">Apagada</string>
+    <string name="pausado">Pausado</string>
+    <string name="parado">Apagado</string>
+    <string name="abierto">Abierto</string>
+    <string name="cerrado">Cerrado</string>
+    <string name="abierta">Abierta</string>
+    <string name="cerrada">Cerrada</string>
+    <string name="abrir">Abrir</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="abriendose">Abriendose</string>
+    <string name="cerrandose">Cerrandose</string>
+    <string name="desbloqueada">Desbloqueada</string>
+    <string name="bloqueada">Bloqueada</string>
+    <string name="desbloquer">Desbloquear</string>
+    <string name="bloquear">Bloquear</string>
+    <string name="reproduciendo">Reproduciendo</string>
+
+
+
     <string name="temp"> %1$s°C </string>
+    <string name="state">%1$s</string>
+    <string name="door_state">%1$s - %2$s</string>
     <string name="temp_state">%1$s-%2$d°C</string>
+    <string name="speaker_state">%1$s: %2$s</string>
+    <string name="blinds_state">%1$s-%2$d</string>
+    <string name="batery_state">Bateria:%1$d</string>
     <string name="disp_location">%1$s | %2$s</string>
+    <string name="faucet_amount">%1$d %2$s</string>
+    <string name="blinds_level">%1$d</string>
+
+    <string name="invalid_temp">Valor de temperatura invalido</string>
+    <string name="stopped_error">El parlante esta apagado, para reproducir musica debes prenderlo</string>
+    <string name="block_error">No se puede bloquear la puerta si esta abierta</string>
+    <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
+    <string name="blinds_open_error">La persiana ya esta abierta</string>
+    <string name="blinds_close_error">La persiana ya esta cerrada</string>
+    <string name="dispense_error">El dispositivo ya esta dispensando</string>
 </resources>
