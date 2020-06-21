@@ -1,5 +1,7 @@
 package com.example.hci_3.api;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -81,5 +83,17 @@ public class LogEntry {
             return (Boolean)result;
         else
             return result != null;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "LogEntry{" +
+                "timestamp=" + timestamp +
+//                ", deviceId='" + deviceId + '\'' +
+                ", action='" + action + '\'' +
+//                ", params=" + params +
+//                ", result=" + result +
+                '}';
     }
 }

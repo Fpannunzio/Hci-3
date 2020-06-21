@@ -126,4 +126,6 @@
     <string name="faucet">Imagen de regador</string>
     <string name="dispensar">Dispensar</string>
     <string name="cantidad">Cantidad</string>
+    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>
+    <string name="notifications">notifications_key</string>
 </resources>
