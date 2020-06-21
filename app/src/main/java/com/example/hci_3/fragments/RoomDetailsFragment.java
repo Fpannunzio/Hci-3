@@ -45,7 +45,7 @@ public class RoomDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_room, container, false);
         textView = view.findViewById(R.id.text_room);
         assert getArguments() != null;
-        int amount = RoomArgs.fromBundle(getArguments()).getNumber();
+        int amount = RoomDetailsFragmentArgs.fromBundle(getArguments()).getNumber();
         textView.setText(String.valueOf(amount));
         if(this.isAdded()){
             textView.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.room_to_homes));

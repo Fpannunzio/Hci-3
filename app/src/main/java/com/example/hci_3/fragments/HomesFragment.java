@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.example.hci_3.R;
 
-import static androidx.navigation.Navigation.findNavController;
 
 public class HomesFragment extends Fragment {
 
@@ -42,7 +41,7 @@ public class HomesFragment extends Fragment {
         textView = view.findViewById(R.id.text_home);
         if(this.isAdded()){
             textView.setOnClickListener(v ->
-                    Navigation.findNavController(view).navigate(HomesDirections.homesToRoom().setNumber(22)));
+                    Navigation.findNavController(view).navigate(HomesFragmentDirections.homesToRoom().setNumber(22)));
         }
 
         return view;
