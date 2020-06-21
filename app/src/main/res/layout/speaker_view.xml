@@ -116,12 +116,12 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
-                            android:id="@+id/speaker_minus"
+                            android:id="@+id/speaker_previous"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ripple_effect"
                             android:contentDescription="Minus"
-                            android:src="@drawable/ic_minus"
+                            android:src="@drawable/ic_previous"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/speaker_pause"
                             app:layout_constraintStart_toEndOf="@+id/speaker_switch"
@@ -135,17 +135,17 @@
                             android:contentDescription="Plus"
                             android:src="@drawable/ic_play"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/speaker_plus"
-                            app:layout_constraintStart_toEndOf="@+id/speaker_minus"
+                            app:layout_constraintEnd_toStartOf="@+id/speaker_next"
+                            app:layout_constraintStart_toEndOf="@+id/speaker_previous"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
-                            android:id="@+id/speaker_plus"
+                            android:id="@+id/speaker_next"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ripple_effect"
                             android:contentDescription="Plus"
-                            android:src="@drawable/ic_plus"
+                            android:src="@drawable/ic_next"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/speaker_pause"
@@ -171,7 +171,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <SeekBar
-                            android:id="@+id/blinds_seekbar"
+                            android:id="@+id/speaker_seekbar"
                             android:layout_width="300dp"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -202,7 +202,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <Spinner
-                            android:id="@+id/genreSpinner"
+                            android:id="@+id/speaker_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="50dp"
