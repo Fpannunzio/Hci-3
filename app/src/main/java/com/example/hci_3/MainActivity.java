@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
        //mAppBarConfiguration = new AppBarConfiguration().Builder(R.id.favoritos, R.id.hogares, R.id.rutinas).build();
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
-        setAlarm();
     }
 
     @Override
