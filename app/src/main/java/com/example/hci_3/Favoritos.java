@@ -10,13 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.hci_3.api.ApiClient;
-import com.example.hci_3.api.Device;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,9 +20,6 @@ import java.util.List;
 public class Favoritos extends Fragment {
 
     RecyclerView rv;
-    DeviceAdapter adapter;
-    List<Device> devices;
-
     public Favoritos() {
         // Required empty public constructor
     }
@@ -56,11 +47,6 @@ public class Favoritos extends Fragment {
 
         DeviceAdapter adapter = new DeviceAdapter();
 
-
-
-
-
-
         rv = view.findViewById(R.id.recyclerView);
         if(this.isAdded()){
             rv.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -70,28 +56,14 @@ public class Favoritos extends Fragment {
         rv.setAdapter(adapter);
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
-        model.getDevices().observe(getActivity(), adapter::setDevices);
+        if(getActivity() != null){
+            model.getDevices().observe(getActivity(), adapter::setDevices);
+        }
+        else
+            throw new RuntimeException("fragment is null");
 
         DeviceRepository.getInstance().getDevices();
 
-        /*ApiClient.getInstance().getDevices((devices) -> {
-
-            this.devices.addAll(devices);
-            adapter.notifyDataSetChanged();
-
-        }, this::handleError);*/
-
         return view;
-    }
-
-    private void handleError(String message, int code){
-        String text = getResources().getString(R.string.error_message, message, code);
-
-        if(this.isAdded()){
-            Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
-        }
-        else
-            throw new RuntimeException("fragment in toast is null");
-
     }
 }

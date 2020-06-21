@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,12 +22,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.api.Device;
-import com.example.hci_3.api.DeviceStates.ACState;
-import com.example.hci_3.api.DeviceStates.DoorState;
 import com.example.hci_3.api.DeviceStates.FaucetState;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Objects;
 
 public class FaucetView extends DeviceView {
 
@@ -83,7 +81,7 @@ public class FaucetView extends DeviceView {
         super.setDevice(device);
 
         mAmount.setText(getResources().getString(R.string.faucet_amount, quantity, unit));
-        FaucetState state = (FaucetState) device.getValue().getState();
+        FaucetState state = (FaucetState) Objects.requireNonNull(device.getValue()).getState();
         mUnitSpinner.setAdapter(unitAdapter);
 
         extendBtn.setOnClickListener(v -> {
@@ -188,7 +186,7 @@ public class FaucetView extends DeviceView {
     }
 
     private void dispense(){
-        ArrayList aux= new ArrayList<Object>();
+        ArrayList<Object> aux= new ArrayList<>();
         aux.add(quantity);
         aux.add(unit);
         executeAction("dispense",aux,this::handleError);

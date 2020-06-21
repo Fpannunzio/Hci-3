@@ -60,7 +60,7 @@ public class DoorView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
-        DoorState state = (DoorState) device.getValue().getState();
+
 
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){

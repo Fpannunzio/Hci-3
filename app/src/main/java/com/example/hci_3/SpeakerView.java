@@ -13,7 +13,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,6 +23,7 @@ import com.example.hci_3.api.DeviceStates.SpeakerState;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 
 public class SpeakerView extends DeviceView {
     private TextView mDevName, mState, mLocation;
@@ -75,8 +75,6 @@ public class SpeakerView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
-        SpeakerState state = (SpeakerState) device.getValue().getState();
-
         mGenre.setAdapter(genreAdapter);
         final String[] generos = getResources().getStringArray(R.array.genres);
 
@@ -114,13 +112,9 @@ public class SpeakerView extends DeviceView {
             }
         });
 
-        mNext.setOnClickListener(v -> {
-           nextSong();
-        });
+        mNext.setOnClickListener(v -> nextSong());
 
-        mPrevious.setOnClickListener(v -> {
-            previousSong();
-        });
+        mPrevious.setOnClickListener(v -> previousSong());
 
 
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

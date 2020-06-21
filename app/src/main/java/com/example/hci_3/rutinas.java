@@ -10,19 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.hci_3.api.ApiClient;
-import com.example.hci_3.api.Device;
 
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class rutinas extends Fragment {
 
     RecyclerView rv;
-    List<Device> devices;
+
 
     public rutinas() {
         // Required empty public constructor
@@ -44,16 +39,11 @@ public class rutinas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_favoritos, container, false);
+        View view = inflater.inflate(R.layout.fragment_rutinas, container, false);
 
         FavoriteDeviceViewModel model = new ViewModelProvider(this).get(FavoriteDeviceViewModel.class);
 
         DeviceAdapter adapter = new DeviceAdapter();
-
-
-
-
-
 
         rv = view.findViewById(R.id.recyclerView);
         if(this.isAdded()){
@@ -64,27 +54,15 @@ public class rutinas extends Fragment {
         rv.setAdapter(adapter);
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
-        model.getDevices().observe(getActivity(), adapter::setDevices);
+        if(getActivity() != null){
+            model.getDevices().observe(getActivity(), adapter::setDevices);
+        }
+        else
+            throw new RuntimeException("fragment is null");
 
         DeviceRepository.getInstance().getDevices();
 
-        /*ApiClient.getInstance().getDevices((devices) -> {
-
-            this.devices.addAll(devices);
-            adapter.notifyDataSetChanged();
-
-        }, this::handleError);*/
-
         return view;
     }
-    private void handleError(String message, int code){
-        String text = getResources().getString(R.string.error_message, message, code);
 
-        if(this.isAdded()){
-            Toast.makeText(getContext(), text, Toast.LENGTH_LONG).show();
-        }
-        else
-            throw new RuntimeException("fragment in toast is null");
-
-    }
 }
