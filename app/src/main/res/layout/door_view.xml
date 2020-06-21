@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -37,14 +36,13 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@mipmap/door_round"
-                        android:contentDescription="door icon" />
+                        android:contentDescription="@string/door" />
 
 
                     <TextView
                         android:id="@+id/door_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Casa | Living"
                         android:layout_marginStart="10dp"
                         android:textSize="18sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -66,7 +64,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Prendido - 180°C"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView" />
@@ -80,7 +77,8 @@
                         android:tint="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:contentDescription="@string/extend_arrow" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="80dp"
-                        android:text="Abrir"
+                        android:text="@string/abrir"
                         android:backgroundTint="#72E1C7"
                         android:textColor="#3C3F58"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -108,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#71A69A"
-                        android:text="Bloquear"
+                        android:text="@string/bloquear"
                         android:textColor="#3C3F58"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

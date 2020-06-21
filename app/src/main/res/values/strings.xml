@@ -122,4 +122,8 @@
     <string name="fuenteDeCalor">Fuente de calor:</string>
     <string name="modoGrill">Modo Grill</string>
     <string name="modoConveccion">Modo de conveccion</string>
+    <string name="door">Imagen de puerta</string>
+    <string name="faucet">Imagen de regador</string>
+    <string name="dispensar">Dispensar</string>
+    <string name="cantidad">Cantidad</string>
 </resources>

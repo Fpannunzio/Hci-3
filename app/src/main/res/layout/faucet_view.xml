@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -41,7 +40,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/faucet_round" />
+                        app:srcCompat="@mipmap/faucet_round"
+                        android:contentDescription="@string/faucet" />
 
 
                     <TextView
@@ -49,7 +49,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Casa | Living"
                         android:textSize="18sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +71,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text="Prendido - 23°C"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView" />
@@ -82,7 +80,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/ripple_effect"
-                        android:contentDescription="Extend arrow"
+                        android:contentDescription="@string/extend_arrow"
                         android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
                         android:tint="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -123,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
                             android:backgroundTint="@color/colorPrimary"
-                            android:text="Abrir"
+                            android:text="@string/abrir"
                             android:textColor="@color/colorText"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/faucet_dispense"
@@ -135,7 +133,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
                             android:backgroundTint="@color/colorPrimary"
-                            android:text="Dispensar"
+                            android:text="@string/dispensar"
                             android:textColor="@color/colorText"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +158,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/faucet_seekBar"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:contentDescription="@string/cantidad" />
 
                         <SeekBar
                             android:id="@+id/faucet_seekBar"
@@ -175,7 +174,6 @@
                             android:id="@+id/faucet_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="80 ml"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="@+id/faucet_seekBar"
                             app:layout_constraintEnd_toEndOf="parent"
