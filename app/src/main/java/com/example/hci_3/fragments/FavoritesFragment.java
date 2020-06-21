@@ -26,6 +26,7 @@ import com.example.hci_3.view_models.FavoriteViewModel;
 public class FavoritesFragment extends Fragment {
 
     RecyclerView rv;
+
     public FavoritesFragment() {
         // Required empty public constructor
     }
@@ -44,8 +45,8 @@ public class FavoritesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favoritos, container, false);
 
@@ -54,17 +55,21 @@ public class FavoritesFragment extends Fragment {
         DeviceAdapter adapter = new DeviceAdapter();
 
         rv = view.findViewById(R.id.recyclerView);
-        if(this.isAdded()){
+
+        if(this.isAdded())
             rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        }
+
         else
             throw new RuntimeException("fragment is null");
+
+
         rv.setAdapter(adapter);
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
-        if(getActivity() != null){
+
+        if(getActivity() != null)
             model.getDevices().observe(getActivity(), adapter::setDevices);
-        }
+
         else
             throw new RuntimeException("fragment is null");
 

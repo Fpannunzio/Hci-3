@@ -11,6 +11,6 @@ import java.util.Date;
 public class NotificationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("pruebaBroadcast", "Prueba Alarm at: " + DateFormat.getDateTimeInstance().format(new Date()));
+        Log.d("pruebaBroadcast", "Notification Broadcast: Prueba Alarm at: " + DateFormat.getDateTimeInstance().format(new Date()));
     }
 }

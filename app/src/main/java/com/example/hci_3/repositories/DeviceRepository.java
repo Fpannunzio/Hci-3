@@ -2,6 +2,7 @@ package com.example.hci_3.repositories;
 
 
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -20,7 +21,7 @@ public class DeviceRepository {
     private ApiClient apiClient;
     private MutableLiveData<List<MutableLiveData<Device>>> devices;
     private Map<String, MutableLiveData<Device>> idToDeviceMap;
-    private Handler handler;
+    //private Handler handler;
 
     private DeviceRepository(){
         apiClient = ApiClient.getInstance();
@@ -28,16 +29,16 @@ public class DeviceRepository {
         idToDeviceMap = new HashMap<>();
 
         // Para mi tiene que ser un alarmManager
-        handler = new Handler();
-        int delay = 60000;
-
-        handler.postDelayed(new Runnable(){
-            @Override
-            public void run(){
-                handler.postDelayed(this, delay);
-                updateDevices();
-            }
-        }, delay);
+//        handler = new Handler();
+//        int delay = 60000;
+//
+//        handler.postDelayed(new Runnable(){
+//            @Override
+//            public void run(){
+//                handler.postDelayed(this, delay);
+//                updateDevices();
+//            }
+//        }, delay);
     }
 
     public static synchronized DeviceRepository getInstance() {
@@ -75,7 +76,8 @@ public class DeviceRepository {
         executeAction(deviceId, actionName, params, bool -> {}, errorHandler);
     }
 
-    private void updateDevices(){
+    public void updateDevices(){
+        Log.v("pruebaBroadcast", "initUpdate");
         apiClient.getDevices(
                 this::updateDeviceList,
                 (m, c) -> Log.w("uncriticalError", "Failed to get devices: " + m + " Code: " + c)
@@ -83,6 +85,7 @@ public class DeviceRepository {
     }
 
     private void updateDeviceList(List<Device> devs){
+        Log.v("pruebaBroadcast", "initDeviceUpdate");
         Map<String, MutableLiveData<Device>> auxMap = new HashMap<>();
 
         List<MutableLiveData<Device>> ans = devs.stream().map(dev -> {
@@ -103,6 +106,11 @@ public class DeviceRepository {
         idToDeviceMap = auxMap;
 
         devices.postValue(ans);
+
+        Log.v("pruebaBroadcast", "updatedDevices!");
+
+        if(Looper.myLooper() == Looper.getMainLooper())
+            Log.v("pruebaBroadcast", "Main thread!!!");
     }
 
 //    public enum DeviceDataState {
