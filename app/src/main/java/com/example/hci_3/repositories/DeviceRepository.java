@@ -79,7 +79,7 @@ public class DeviceRepository {
     public void updateDevices(){
         Log.v("pruebaBroadcast", "initUpdate");
         apiClient.getDevices(
-                this::updateDeviceList,
+                devices -> new Thread(() -> updateDeviceList(devices)).start(),
                 (m, c) -> Log.w("uncriticalError", "Failed to get devices: " + m + " Code: " + c)
         );
     }
