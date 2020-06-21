@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -41,7 +40,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/lamp_round" />
+                        app:srcCompat="@mipmap/lamp_round"
+                        android:contentDescription="current color"/>
 
 
                     <TextView
@@ -49,7 +49,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Casa | Living"
                         android:textSize="18sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -64,7 +63,7 @@
                         android:textColor="@color/colorText"
                         app:layout_constraintBottom_toTopOf="@+id/onStateLamp"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
-                        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                        app:layout_constraintTop_toBottomOf="@+id/lamp_location" />
 
                     <TextView
                         android:id="@+id/onStateLamp"
@@ -72,7 +71,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text="On - "
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView" />
@@ -95,7 +93,8 @@
                         android:layout_height="20dp"
                         app:layout_constraintBottom_toBottomOf="@+id/onStateLamp"
                         app:layout_constraintStart_toEndOf="@+id/onStateLamp"
-                        app:layout_constraintTop_toTopOf="@+id/onStateLamp" />
+                        app:layout_constraintTop_toTopOf="@+id/onStateLamp"
+                        android:layout_marginStart="8dp"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -134,7 +133,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/brightness"
                             app:layout_constraintStart_toEndOf="@+id/lamp_switch"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:contentDescription="brightness"/>
 
                         <SeekBar
                             android:id="@+id/brightness"
