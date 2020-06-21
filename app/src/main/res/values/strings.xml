@@ -31,35 +31,100 @@
         <item>pop</item>
         <item>country</item>
         <item>rock</item>
-        <item>kpop</item>
+        <item>classical</item>
+        <item>dance</item>
+        <item>latina</item>
     </string-array>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
+    <string name="activa">Activa</string>
+    <string name="cargandose">Cargando</string>
+    <string name="apagada">Apagada</string>
+    <string name="pausado">Pausado</string>
+    <string name="parado">Apagado</string>
     <string name="abierto">Abierto</string>
     <string name="cerrado">Cerrado</string>
     <string name="abierta">Abierta</string>
     <string name="cerrada">Cerrada</string>
     <string name="abrir">Abrir</string>
     <string name="cerrar">Cerrar</string>
+    <string name="abriendose">Abriendose</string>
+    <string name="cerrandose">Cerrandose</string>
     <string name="desbloqueada">Desbloqueada</string>
     <string name="bloqueada">Bloqueada</string>
     <string name="desbloquer">Desbloquear</string>
     <string name="bloquear">Bloquear</string>
-    <string name="block_error">No se puede bloquear la puerta si esta abierta</string>
-    <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
-    <string name="blinds_open_error">La persiana ya esta abierta</string>
-    <string name="blinds_close_error">La persiana ya esta cerrada</string>
-    <string name="invalid_temp">Valor de temperatura invalido</string>
+    <string name="reproduciendo">Reproduciendo</string>
+
+
+
     <string name="temp"> %1$s°C </string>
     <string name="state">%1$s</string>
     <string name="door_state">%1$s - %2$s</string>
     <string name="lamp_state">%1s -</string>
     <string name="temp_state">%1$s-%2$d°C</string>
+    <string name="speaker_state">%1$s: %2$s</string>
     <string name="blinds_state">%1$s-%2$d</string>
+    <string name="batery_state">Bateria:%1$d</string>
     <string name="disp_location">%1$s | %2$s</string>
     <string name="faucet_amount">%1$d %2$s</string>
-    <string name="dispense_error">El dispositivo ya esta dispensando</string>
     <string name="blinds_level">%1$d</string>
-    <string name="abriendose">Abriendose</string>
-    <string name="cerrandose">Cerrandose</string>
+
+    <string name="invalid_temp">Valor de temperatura invalido</string>
+    <string name="stopped_error">El parlante esta apagado, para reproducir musica debes prenderlo</string>
+    <string name="block_error">No se puede bloquear la puerta si esta abierta</string>
+    <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
+    <string name="blinds_open_error">La persiana ya esta abierta</string>
+    <string name="blinds_close_error">La persiana ya esta cerrada</string>
+    <string name="dispense_error">El dispositivo ya esta dispensando</string>
+    <string name="persiana">Persiana</string>
+    <string name="extend_arrow">Flecha para ampliar tarjeta</string>
+    <string name="bajar">Bajar</string>
+    <string name="subir">Subir</string>
+    <string name="seleccione_nivel">Seleccione nivel:</string>
+    <string name="vacuum">Imagen de aspiradora</string>
+    <string name="blinds">Imagen de Persiana</string>
+    <string name="prender">Prender</string>
+    <string name="cargar">Cargar</string>
+    <string name="apagar">Apagar</string>
+    <string name="aspirar">aspirar</string>
+    <string name="trapear">trapear</string>
+    <string name="ubicacion">Ubicacion:</string>
+    <string name="ac">Imagen de Aire Acondicionado</string>
+    <string name="minus_button">Boton menos</string>
+    <string name="plus_button">Boton mas</string>
+    <string name="frio">Frio</string>
+    <string name="calor">Calor</string>
+    <string name="ventilacion">Ventilacion</string>
+    <string name="modo">Modo</string>
+    <string name="desplazamiento_aspas">Desplazamiento de aspas</string>
+    <string name="vertical">Vertical:</string>
+    <string name="auto">auto</string>
+    <string name="veintidos">22</string>
+    <string name="cuarentaycinco">45</string>
+    <string name="sesentaysiete">67</string>
+    <string name="noventa">90</string>
+    <string name="horizontal">Horizontal:</string>
+    <string name="menosNoventa">-90</string>
+    <string name="menoscuarentaycinco">-45</string>
+    <string name="cero">0</string>
+    <string name="velocidad_ventilador">Velocidad del ventilador:</string>
+    <string name="veinticinco">25</string>
+    <string name="cincuenta">50</string>
+    <string name="setentaycinco">75</string>
+    <string name="cien">100</string>
+    <string name="speaker">Imagen de Speaker</string>
+    <string name="previous">Boton cancion anterior</string>
+    <string name="play">Boton de play y pausa</string>
+    <string name="next">Boton cancion siguiente</string>
+    <string name="genero" >Genero:</string>
+    <string name="volumen">Volumen</string>
+    <string name="oven">Imagen Horno</string>
+    <string name="fuenteDeCalor">Fuente de calor:</string>
+    <string name="modoGrill">Modo Grill</string>
+    <string name="modoConveccion">Modo de conveccion</string>
+    <string name="door">Imagen de puerta</string>
+    <string name="faucet">Imagen de regador</string>
+    <string name="dispensar">Dispensar</string>
+    <string name="cantidad">Cantidad</string>
 </resources>

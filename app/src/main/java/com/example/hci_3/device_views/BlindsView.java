@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.device_views;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -17,9 +17,9 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 
+import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.BlindsState;
-import com.example.hci_3.api.DeviceStates.DoorState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,7 +87,9 @@ public class BlindsView extends DeviceView {
 
 
         mState.setText(getResources().getString(R.string.blinds_state,
-                state.getStatus().equals("opened")? getResources().getString(R.string.abierta) :state.getStatus().equals("opening")? getResources().getString(R.string.abriendose): state.getStatus().equals("closing")? getResources().getString(R.string.cerrandose) : getResources().getString(R.string.cerrada), state.getCurrentLevel()) + "%");
+                state.getStatus().equals("opened")? getResources().getString(R.string.abierta) :state.getStatus().equals("opening")?
+                        getResources().getString(R.string.abriendose): state.getStatus().equals("closing")?
+                        getResources().getString(R.string.cerrandose) : getResources().getString(R.string.cerrada), state.getCurrentLevel()) + "%");
 
 
         mLocation.setText(getResources().getString(R.string.disp_location,

@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.device_views;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 
+import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.DoorState;
 
@@ -60,7 +61,7 @@ public class DoorView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
-        DoorState state = (DoorState) device.getValue().getState();
+
 
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){

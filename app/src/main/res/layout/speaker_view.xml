@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -41,7 +40,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/speaker_round" />
+                        app:srcCompat="@mipmap/speaker_round"
+                        android:contentDescription="@string/speaker" />
 
 
                     <TextView
@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Casa | Living"
+
                         android:textSize="18sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +72,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text="Abierta"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView" />
@@ -82,7 +81,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="@drawable/ripple_effect"
-                        android:contentDescription="Extend arrow"
+                        android:contentDescription="@string/extend_arrow"
                         android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
                         android:tint="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -116,12 +115,12 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
-                            android:id="@+id/speaker_minus"
+                            android:id="@+id/speaker_previous"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ripple_effect"
-                            android:contentDescription="Minus"
-                            android:src="@drawable/ic_minus"
+                            android:contentDescription="@string/previous"
+                            android:src="@drawable/ic_previous"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/speaker_pause"
                             app:layout_constraintStart_toEndOf="@+id/speaker_switch"
@@ -132,20 +131,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ripple_effect"
-                            android:contentDescription="Plus"
+                            android:contentDescription="@string/play"
                             android:src="@drawable/ic_play"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/speaker_plus"
-                            app:layout_constraintStart_toEndOf="@+id/speaker_minus"
+                            app:layout_constraintEnd_toStartOf="@+id/speaker_next"
+                            app:layout_constraintStart_toEndOf="@+id/speaker_previous"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
-                            android:id="@+id/speaker_plus"
+                            android:id="@+id/speaker_next"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ripple_effect"
-                            android:contentDescription="Plus"
-                            android:src="@drawable/ic_plus"
+                            android:contentDescription="@string/next"
+                            android:src="@drawable/ic_next"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/speaker_pause"
@@ -164,14 +163,16 @@
                             android:id="@+id/imageView5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
                             android:src="@drawable/ic_baseline_volume_up_24"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/blinds_seekbar"
+                            app:layout_constraintEnd_toStartOf="@+id/speaker_seekbar"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:contentDescription="@string/volumen" />
 
                         <SeekBar
-                            android:id="@+id/blinds_seekbar"
+                            android:id="@+id/speaker_seekbar"
                             android:layout_width="300dp"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -194,7 +195,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"
                             android:layout_marginBottom="20dp"
-                            android:text="Genero:"
+                            android:text="@string/genero"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -202,7 +203,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <Spinner
-                            android:id="@+id/genreSpinner"
+                            android:id="@+id/speaker_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="50dp"

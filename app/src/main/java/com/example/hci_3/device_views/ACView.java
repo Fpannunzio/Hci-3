@@ -1,4 +1,4 @@
-package com.example.hci_3;
+package com.example.hci_3.device_views;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -17,6 +17,7 @@ import androidx.lifecycle.LiveData;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
+import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.ACState;
 import com.google.android.material.button.MaterialButtonToggleGroup;

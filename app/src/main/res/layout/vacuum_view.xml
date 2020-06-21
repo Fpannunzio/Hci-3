@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -47,7 +46,8 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@mipmap/vacuum_round" />
+                            app:srcCompat="@mipmap/vacuum_round"
+                            android:contentDescription="@string/vacuum" />
 
 
                         <TextView
@@ -55,7 +55,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:text="Casa | Living"
+
                             android:textSize="18sp"
                             app:layout_constraintStart_toEndOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -68,7 +68,7 @@
                             android:layout_marginStart="16dp"
                             android:textColor="@color/colorText"
                             android:textSize="22sp"
-                            android:text="Aspirineta"
+
                             app:layout_constraintBottom_toTopOf="@+id/onStateVacuum"
                             app:layout_constraintStart_toEndOf="@+id/imageView"
                             app:layout_constraintTop_toBottomOf="@+id/vacuum_location" />
@@ -79,7 +79,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginBottom="8dp"
-                            android:text="Prendido - 23°C"
+
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView" />
@@ -89,7 +89,7 @@
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:background="@drawable/ripple_effect"
-                            android:contentDescription="Extend arrow"
+                            android:contentDescription="@string/extend_arrow"
                             android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
                             android:tint="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -108,7 +108,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"><!--android:visibility="gone"-->
 
                     <com.google.android.material.button.MaterialButtonToggleGroup
-                        android:id="@+id/onStateGroup"
+                        android:id="@+id/vacuum_onstate_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -121,30 +121,30 @@
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Prender" />
+                            android:text="@string/prender" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/charge_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cargar" />
+                            android:text="@string/cargar" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/off_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Apagar" />
+                            android:text="@string/apagar" />
                     </com.google.android.material.button.MaterialButtonToggleGroup>
 
                     <com.google.android.material.button.MaterialButtonToggleGroup
-                        android:id="@+id/modeGroup"
+                        android:id="@+id/vacuum_mode_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/onStateGroup"
+                        app:layout_constraintTop_toBottomOf="@+id/vacuum_onstate_group"
                         app:singleSelection="true">
 
                         <com.google.android.material.button.MaterialButton
@@ -152,27 +152,27 @@
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Aspirar" />
+                            android:text="@string/aspirar" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/trapear_button"
                             style="?attr/materialButtonOutlinedStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Trapear" />
+                            android:text="@string/trapear" />
 
                     </com.google.android.material.button.MaterialButtonToggleGroup>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@+id/modeGroup">
+                        app:layout_constraintTop_toBottomOf="@+id/vacuum_mode_group">
 
                         <TextView
                             android:id="@+id/location"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ubicación:"
+                            android:text="@string/ubicacion"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             android:layout_marginStart="30dp"
