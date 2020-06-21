@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,8 @@ public class HomesFragment extends Fragment {
         textView = view.findViewById(R.id.text_home);
         if(this.isAdded()){
             textView.setOnClickListener(v ->
-                    Navigation.findNavController(view).navigate(HomesDirections.homesToRoom().setNumber(22)));
+                    Log.v("", ""));
+                    //Navigation.findNavController(view).navigate(HomesDirections.homesToRoom().setNumber(22)));
         }
 
         return view;
