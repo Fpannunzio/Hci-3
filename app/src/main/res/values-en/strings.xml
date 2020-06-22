@@ -106,4 +106,5 @@
         <item>Dance</item>
         <item>Latina</item>
     </string-array>
+    <string name="rutina_exitosa">The routine was executed correctly</string>
 </resources>

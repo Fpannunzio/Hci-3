@@ -3,6 +3,7 @@ package com.example.hci_3.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,13 +15,21 @@ import android.view.ViewGroup;
 import com.example.hci_3.adapters.DeviceAdapter;
 import com.example.hci_3.R;
 import com.example.hci_3.SpacesItemDecoration;
+import com.example.hci_3.adapters.RoutineAdapter;
+import com.example.hci_3.api.Routine;
 import com.example.hci_3.repositories.DeviceRepository;
 import com.example.hci_3.view_models.FavoriteViewModel;
+import com.example.hci_3.view_models.RoutineViewModel;
+
+import java.util.List;
 
 
 public class RoutinesFragment extends Fragment {
 
     RecyclerView rv;
+    RoutineViewModel model;
+    LiveData<List<Routine>> routines;
+    RoutineAdapter adapter;
 
 
     public RoutinesFragment() {
@@ -37,7 +46,12 @@ public class RoutinesFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        model = new ViewModelProvider(this).get(RoutineViewModel.class);
+        model.startPolling();
+        routines = model.getRoutines();
+        routines.observe(this, this::refreshRoutines);
     }
 
     @Override
@@ -45,26 +59,19 @@ public class RoutinesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rutinas, container, false);
 
-        FavoriteViewModel model = new ViewModelProvider(this).get(FavoriteViewModel.class);
-
-        DeviceAdapter adapter = new DeviceAdapter();
+        adapter = new RoutineAdapter(model);
 
         rv = view.findViewById(R.id.recyclerView);
-        if(this.isAdded()){
-            rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        }
-        else
-            throw new RuntimeException("fragment is null");
+        rv.setLayoutManager(new LinearLayoutManager(requireContext()));
         rv.setAdapter(adapter);
-
         rv.addItemDecoration(new SpacesItemDecoration(30));
-        if(getActivity() != null){
-            model.getDevices().observe(getActivity(), adapter::setDevices);
-        }
-        else
-            throw new RuntimeException("fragment is null");
 
         return view;
+    }
+
+    private void refreshRoutines(List<Routine> routines) {
+
+        adapter.setRoutines(routines);
     }
 
 }

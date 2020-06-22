@@ -52,7 +52,7 @@ public class RoomDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_room, container, false);
         assert getArguments() != null;
         String roomId = RoomDetailsFragmentArgs.fromBundle(getArguments()).getRoomId();
-        RoomDetailsViewModel model = new RoomDetailsViewModel(roomId);
+        RoomDetailsViewModel model = new RoomDetailsViewModel();
 
         DeviceAdapter adapter = new DeviceAdapter();
 
