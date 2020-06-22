@@ -27,6 +27,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 //    private Context vContext;
 //    @Override
     public void onReceive(Context context, Intent intent) {
+        Log.v("pruebaBroadcast", "Notification Broadcast");
 //        vContext = context;
 //        sharedPref = context.getSharedPreferences(context.getString(R.string.sharedPreferences), Context.MODE_PRIVATE);
 //        String defaultValue = new Date(Long.MIN_VALUE).toString();
