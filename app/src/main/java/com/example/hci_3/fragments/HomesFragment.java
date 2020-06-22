@@ -99,8 +99,6 @@ public class HomesFragment extends Fragment {
 
         recyclerAdapter = new RoomAdapter();
 
-
-
         recyclerAdapter.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(recyclerAdapter.getRoomId())));
 
         rv = view.findViewById(R.id.room_recycler);
@@ -110,7 +108,6 @@ public class HomesFragment extends Fragment {
         rv.setAdapter(recyclerAdapter);
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
-
 
         return view;
     }

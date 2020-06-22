@@ -51,6 +51,10 @@ public class RoutineRepository {
         handler.removeCallbacksAndMessages(null);
     }
 
+    public void executeRoutine(String routineId, Runnable responseHandler, ApiClient.ErrorHandler errorHandler){
+        apiClient.executeRoutine(routineId, responseHandler, errorHandler);
+    }
+
     private void updateRoutines(){
         apiClient.getRoutines(
                 this::updateRoutineList,
