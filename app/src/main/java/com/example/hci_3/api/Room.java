@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Room {
 
     @SerializedName("id")
@@ -49,6 +52,11 @@ public class Room {
         return name;
     }
 
+    public String getParsedName(){
+        String[] aux = this.name.split("_");
+        return aux[aux.length - 1];
+    }
+
     public Home getHome() {
         return home;
     }
@@ -70,5 +78,21 @@ public class Room {
                 ", home=" + home +
                 ", meta=" + meta +
                 '}';
+    }
+
+    public Map<String, String> compareToNewerVersion(Room room) {
+        Map<String, String> ans = new HashMap<>();
+
+        if(! getParsedName().equals(room.getParsedName()))
+            ans.put("name", room.getParsedName());
+
+        for(Map.Entry<String,String> entry : getMeta().compareToNewerVersion(room.getMeta()).entrySet()) {
+            ans.put("meta." + entry.getKey(), entry.getValue());
+        }
+
+        for(Map.Entry<String,String> entry : getHome().compareToNewerVersion(room.getHome()).entrySet()) {
+            ans.put("home." + entry.getKey(), entry.getValue());
+        }
+        return ans;
     }
 }

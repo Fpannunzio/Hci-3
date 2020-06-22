@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BlindsState implements DeviceState {
 
     @SerializedName("status")
@@ -57,5 +60,27 @@ public class BlindsState implements DeviceState {
                 ", level=" + level +
                 ", currentLevel=" + currentLevel +
                 '}';
+    }
+
+    @Override
+    public Map<String, String> compareToNewerVersion(DeviceState state) {
+        Map<String, String> ans = new HashMap<>();
+
+        if(! (state instanceof BlindsState))
+            return ans; //TODO: null or empty map
+
+        BlindsState bState = (BlindsState) state;
+
+        if( ! getStatus().equals(bState.getStatus()))
+            ans.put("status",bState.getStatus());
+
+        if( ! getLevel().equals(bState.getLevel()))
+            ans.put("level",bState.getLevel().toString());
+
+        if( ! getCurrentLevel().equals(bState.getCurrentLevel()))
+            ans.put("currentLevel",bState.getCurrentLevel().toString());
+
+        return ans;
+
     }
 }

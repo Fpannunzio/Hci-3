@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DoorState implements DeviceState {
 
     @SerializedName("status")
@@ -43,5 +46,23 @@ public class DoorState implements DeviceState {
                 "status='" + status + '\'' +
                 ", lock='" + lock + '\'' +
                 '}';
+    }
+
+    @Override
+    public Map<String, String> compareToNewerVersion(DeviceState state) {
+        Map<String, String> ans = new HashMap<>();
+
+        if(! (state instanceof DoorState))
+            return ans; //TODO: null or empty map
+
+        DoorState dState = (DoorState) state;
+
+        if( ! getStatus().equals(dState.getStatus()))
+            ans.put("status",dState.getStatus());
+
+        if( ! getLock().equals(dState.getLock()))
+            ans.put("lock",dState.getLock());
+
+        return ans;
     }
 }
