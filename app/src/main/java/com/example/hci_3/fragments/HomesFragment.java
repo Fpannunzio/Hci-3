@@ -2,10 +2,11 @@ package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +22,10 @@ import com.example.hci_3.SpacesItemDecoration;
 import com.example.hci_3.adapters.RoomAdapter;
 import com.example.hci_3.api.Home;
 import com.example.hci_3.api.Room;
-import com.example.hci_3.view_models.FavoriteViewModel;
 import com.example.hci_3.view_models.HomesViewModel;
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -88,7 +88,7 @@ public class HomesFragment extends Fragment {
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
 
-                Home home = homes.getValue().get(arg2);
+                Home home = Objects.requireNonNull(homes.getValue()).get(arg2);
                 model.updateCurrentHome(home);
             }
 
@@ -99,9 +99,7 @@ public class HomesFragment extends Fragment {
 
         recyclerAdapter = new RoomAdapter();
 
-
-
-        recyclerAdapter.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(recyclerAdapter.getRoomId())));
+       // recyclerAdapter.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(recyclerAdapter.getRoomId(), recyclerAdapter.getRoomName())));
 
         rv = view.findViewById(R.id.room_recycler);
 
@@ -111,6 +109,10 @@ public class HomesFragment extends Fragment {
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        Objects.requireNonNull(actionBar).setTitle(R.string.hogares);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(false);
 
         return view;
     }

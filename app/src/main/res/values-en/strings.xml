@@ -71,6 +71,9 @@
     <string name="activa" translatable="false">Active</string>
     <string name="seleccione_hogar">"Choose home: "</string>
     <string name="habitacion">"Room: "</string>
+    <string name="favoritos">Favorites</string>
+    <string name="rutinas">Routines</string>
+    <string name="hogares">Homes</string>
 
     <string-array name="fuente_calor">
         <item>Conventional</item>

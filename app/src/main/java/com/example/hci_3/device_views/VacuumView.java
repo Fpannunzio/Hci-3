@@ -55,7 +55,7 @@ public class VacuumView extends DeviceView {
         mDevName = findViewById(R.id.vacuum_name);
         mLocation = findViewById(R.id.vacuum_location);
         mState = findViewById(R.id.onStateVacuum);
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
         mSpinner = findViewById(R.id.locationSpinner);

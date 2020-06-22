@@ -64,7 +64,7 @@ public class ACView extends DeviceView {
         mFanSpeedGroup = findViewById(R.id.fan_speed_toggle_group);
         mMinus = findViewById(R.id.ac_minus);
         mPlus = findViewById(R.id.ac_plus);
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
     }

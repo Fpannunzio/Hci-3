@@ -2,6 +2,8 @@ package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,8 +16,9 @@ import android.view.ViewGroup;
 import com.example.hci_3.adapters.DeviceAdapter;
 import com.example.hci_3.R;
 import com.example.hci_3.SpacesItemDecoration;
-import com.example.hci_3.repositories.DeviceRepository;
 import com.example.hci_3.view_models.FavoriteViewModel;
+
+import java.util.Objects;
 
 
 public class RoutinesFragment extends Fragment {
@@ -63,6 +66,11 @@ public class RoutinesFragment extends Fragment {
         }
         else
             throw new RuntimeException("fragment is null");
+
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        Objects.requireNonNull(actionBar).setTitle(R.string.rutinas);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(false);
 
         return view;
     }

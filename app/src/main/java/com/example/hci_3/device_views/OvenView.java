@@ -64,7 +64,7 @@ public class OvenView extends DeviceView {
         mMinus = findViewById(R.id.oven_minus);
         mPlus = findViewById(R.id.oven_plus);
 
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
 

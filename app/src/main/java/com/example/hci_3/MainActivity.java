@@ -25,24 +25,34 @@ import java.text.DateFormat;
 import java.util.Date;
 
 
+
 public class MainActivity extends AppCompatActivity {
     //private AppBarConfiguration mAppBarConfiguration;
+    private NavController navController;
+    private  Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar =  findViewById(R.id.toolbar);
+        toolbar =  findViewById(R.id.toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
         setSupportActionBar(toolbar);
+        //Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_back_arrow);
 
-
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp();
     }
 
     @Override
@@ -69,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+
 
     private void setAlarm(){
         final int INTERVAL = 60000;

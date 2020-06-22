@@ -65,7 +65,7 @@ public class SpeakerView extends DeviceView {
         mGenre = findViewById(R.id.speaker_spinner);
         mSeekBar = findViewById(R.id.speaker_seekbar);
 
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
 
