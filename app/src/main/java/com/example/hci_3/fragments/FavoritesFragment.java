@@ -54,6 +54,7 @@ public class FavoritesFragment extends Fragment {
         DeviceAdapter adapter = new DeviceAdapter();
 
         rv = view.findViewById(R.id.recyclerView);
+
         if(this.isAdded()){
             rv.setLayoutManager(new LinearLayoutManager(getContext()));
         }

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder>  {
-    private List<MutableLiveData<Room>> rooms;
+    private List<Room> rooms;
 
     public RoomAdapter() {
         rooms = new ArrayList<>();
@@ -32,8 +33,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
-        MutableLiveData<Room> ldRoom = rooms.get(position);
-        holder.setRoom(ldRoom);
+        Room room = rooms.get(position);
+        holder.setRoom(room);
     }
 
 
@@ -43,7 +44,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     }
 
 
-    public void setRooms(List<MutableLiveData<Room>> rooms){
+    public void setRooms(List<Room> rooms){
             this.rooms.clear();
             this.rooms.addAll(rooms);
             notifyDataSetChanged();
@@ -55,8 +56,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             super(itemView);
         }
 
-        public void setRoom(MutableLiveData<Room> ldRoom) {
-            ((RoomView) itemView).setRoom(ldRoom);
+        public void setRoom(Room room) {
+            ((RoomView) itemView).setRoom(room);
         }
     }
 }

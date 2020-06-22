@@ -34,6 +34,7 @@ public class HomesViewModel extends ViewModel {
         homes = homeRepository.getHomes();
         rooms = roomRepository.getRooms();
         deviceTypes = Transformations.map(deviceRepository.getDevices(), this::getHomesDeviceTypes);
+        isPollingHomes = false;
     }
 
     public void startUpdatingHomes(){
@@ -59,7 +60,7 @@ public class HomesViewModel extends ViewModel {
         return homes;
     }
 
-    public LiveData<List<Room>> getRooms(Home home){
+    public LiveData<List<Room>> getRooms(){
         return rooms;
     }
 
