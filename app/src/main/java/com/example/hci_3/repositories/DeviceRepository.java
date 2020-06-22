@@ -51,8 +51,8 @@ public class DeviceRepository {
         return devices;
     }
 
-    public void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.SuccessHandler<Boolean> responseHandler, ApiClient.ErrorHandler errorHandler){
-        apiClient.executeAction(deviceId, actionName, params, success -> {
+    public void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.ActionResponseHandler responseHandler, ApiClient.ErrorHandler errorHandler){
+        apiClient.executeAction(deviceId, actionName, params, (success, result) -> {
 
             if(success) {
                 MutableLiveData<Device> ldDevice = idToDeviceMap.get(deviceId);
@@ -62,17 +62,17 @@ public class DeviceRepository {
                 apiClient.getDeviceState(deviceId, device.getState().getClass(), state -> {
                     device.setState(state);
                     ldDevice.postValue(device);
-                    responseHandler.handle(true);
+                    responseHandler.handle(true, result);
                 }, (m, c) -> Log.w("uncriticalError", "Failed to get device state: " + m + " Code: " + c));
 
             } else
-                responseHandler.handle(false);
+                responseHandler.handle(false, result);
 
         }, errorHandler);
     }
 
     public void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.ErrorHandler errorHandler){
-        executeAction(deviceId, actionName, params, bool -> {}, errorHandler);
+        executeAction(deviceId, actionName, params, (bool, res) -> {}, errorHandler);
     }
 
     private void updateDevices(){

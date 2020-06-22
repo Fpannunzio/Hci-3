@@ -79,7 +79,7 @@ public class SpeakerState implements DeviceState {
                 '}';
     }
 
-    public static class Song{
+    public static class Song {
         @SerializedName("title")
         @Expose
         private String title;
