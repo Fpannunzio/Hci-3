@@ -56,12 +56,7 @@ public class FavoritesFragment extends Fragment {
 
         rv = view.findViewById(R.id.recyclerView);
 
-        if(this.isAdded())
-            rv.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        else
-            throw new RuntimeException("fragment is null");
-
+        rv.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         rv.setAdapter(adapter);
 

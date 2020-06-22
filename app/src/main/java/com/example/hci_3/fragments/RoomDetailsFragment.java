@@ -47,9 +47,8 @@ public class RoomDetailsFragment extends Fragment {
         assert getArguments() != null;
         int amount = RoomDetailsFragmentArgs.fromBundle(getArguments()).getNumber();
         textView.setText(String.valueOf(amount));
-        if(this.isAdded()){
-            textView.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.room_to_homes));
-        }
+        textView.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.room_to_homes));
+
 
         return view;
     }

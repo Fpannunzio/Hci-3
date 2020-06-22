@@ -51,12 +51,11 @@ public abstract class DeviceView extends ConstraintLayout {
 
     protected String getParsedName(String fullName){
         String[] aux = fullName.split("_");
-        // Aca se cargan los parametros del device
         return aux[aux.length - 1];
     }
 
     @SuppressWarnings("ConstantConditions")
-    public void executeAction(String actionName, List<Object> params, ApiClient.SuccessHandler<Boolean> responseHandler, ApiClient.ErrorHandler errorHandler){
+    public void executeAction(String actionName, List<Object> params, ApiClient.ActionResponseHandler responseHandler, ApiClient.ErrorHandler errorHandler){
         DeviceViewModel.executeAction(device.getValue().getId(), actionName, params, responseHandler, errorHandler);
     }
 

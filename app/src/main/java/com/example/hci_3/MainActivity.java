@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         setSupportActionBar(toolbar);
 
-       //mAppBarConfiguration = new AppBarConfiguration().Builder(R.id.favoritos, R.id.hogares, R.id.rutinas).build();
+
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 

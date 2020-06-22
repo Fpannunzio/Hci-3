@@ -13,15 +13,10 @@ import java.util.List;
 public abstract class DeviceViewModel extends ViewModel {
 
     protected static DeviceRepository deviceRepository = DeviceRepository.getInstance();
-    protected MutableLiveData<List<MutableLiveData<Device>>> devices;
 
-    public DeviceViewModel(){
-        assignDevicesTransformation();
-    }
+    protected abstract LiveData<List<MutableLiveData<Device>>> assignDevicesTransformation();
 
-    protected abstract void assignDevicesTransformation();
-
-    public static void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.SuccessHandler<Boolean> responseHandler, ApiClient.ErrorHandler errorHandler){
+    public static void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.ActionResponseHandler responseHandler, ApiClient.ErrorHandler errorHandler){
         deviceRepository.executeAction(deviceId, actionName, params, responseHandler, errorHandler);
     }
 
@@ -30,6 +25,6 @@ public abstract class DeviceViewModel extends ViewModel {
     }
 
     public LiveData<List<MutableLiveData<Device>>> getDevices(){
-        return devices;
+        return assignDevicesTransformation();
     }
 }

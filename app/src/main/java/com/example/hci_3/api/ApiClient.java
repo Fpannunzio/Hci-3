@@ -11,7 +11,6 @@ import com.google.gson.JsonElement;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.text.DateFormat;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -121,7 +120,7 @@ public class ApiClient {
         return call;
     }
 
-    public Call<Result<Object>> executeAction(String deviceId, String actionName, List<Object> params, SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
+    public Call<Result<Object>> executeAction(String deviceId, String actionName, List<Object> params, ActionResponseHandler responseHandler, ErrorHandler errorHandler){
         Call<Result<Object>> call = service.executeAction(deviceId, actionName, params);
         call.enqueue(getExecuteActionCallback(responseHandler, errorHandler));
         return call;
@@ -182,7 +181,7 @@ public class ApiClient {
         };
     }
 
-    private Callback<Result<Object>> getExecuteActionCallback(SuccessHandler<Boolean> responseHandler, ErrorHandler errorHandler){
+    private Callback<Result<Object>> getExecuteActionCallback(ActionResponseHandler responseHandler, ErrorHandler errorHandler){
         return new Callback<Result<Object>>(){
             @Override
             public void onResponse(@NonNull Call<Result<Object>> call, @NonNull Response<Result<Object>> response) {
@@ -191,9 +190,9 @@ public class ApiClient {
                     Object result = getResponseData(response);
 
                     if (result instanceof Boolean) {
-                        responseHandler.handle((Boolean) result);
+                        responseHandler.handle((Boolean) result, result);
                     }else
-                        responseHandler.handle(result != null);
+                        responseHandler.handle(result != null, result);
                 } else
                     handleError(response, errorHandler);
             }
@@ -271,5 +270,10 @@ public class ApiClient {
     @FunctionalInterface
     public interface ErrorHandler {
         void handle(String message, int code);
+    }
+
+    @FunctionalInterface
+    public interface ActionResponseHandler {
+        void handle(Boolean success, Object response);
     }
 }
