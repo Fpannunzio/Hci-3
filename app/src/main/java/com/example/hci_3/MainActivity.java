@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -22,6 +23,8 @@ import android.view.MenuItem;
 
 
 import com.example.hci_3.repositories.DeviceRepository;
+import com.example.hci_3.view_models.ActivityViewModel;
+import com.example.hci_3.view_models.FavoriteViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DateFormat;
@@ -34,16 +37,21 @@ public class MainActivity extends AppCompatActivity {
     public static final String ACTION_ALARM_HANDLE = "com.example.hci_3.ALARM_HANDLE";
 
     BroadcastReceiver dataSyncBroadcastReceiver;
+    ActivityViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        model = new ViewModelProvider(this).get(ActivityViewModel.class);
+
+        model.updateDevices();
+
         DeviceRepository.getInstance().updateDevices();
 
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar =  findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 

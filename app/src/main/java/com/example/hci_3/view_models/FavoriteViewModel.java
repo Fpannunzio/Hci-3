@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 public class FavoriteViewModel extends DeviceViewModel {
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     protected LiveData<List<MutableLiveData<Device>>> assignDevicesTransformation() {
         return Transformations.map(deviceRepository.getDevices(),
                 devs -> devs.stream()
+                        .filter(ldDev -> ldDev.getValue() != null)
                         .filter(ldDev -> ldDev.getValue().isFav())
                         .collect(Collectors.toList()));
     }

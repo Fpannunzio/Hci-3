@@ -1,5 +1,7 @@
 package com.example.hci_3.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,11 +65,7 @@ public class FavoritesFragment extends Fragment {
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
-        if(getActivity() != null)
-            model.getDevices().observe(getActivity(), adapter::setDevices);
-
-        else
-            throw new RuntimeException("fragment is null");
+        model.getDevices().observe(requireActivity(), adapter::setDevices);
 
         return view;
     }

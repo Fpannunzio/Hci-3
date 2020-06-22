@@ -1,14 +1,20 @@
 package com.example.hci_3.repositories;
 
 
+import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
+import com.example.hci_3.api.DeviceDeserializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +27,7 @@ public class DeviceRepository {
     private ApiClient apiClient;
     private MutableLiveData<List<MutableLiveData<Device>>> devices;
     private Map<String, MutableLiveData<Device>> idToDeviceMap;
+    private Application application;
     //private Handler handler;
 
     private DeviceRepository(){
@@ -46,6 +53,11 @@ public class DeviceRepository {
             instance = new DeviceRepository();
         }
         return instance;
+    }
+
+    public void setApplication(@NonNull Application application){
+        if(this.application == null)
+            this.application = application;
     }
 
     public MutableLiveData<List<MutableLiveData<Device>>> getDevices(){
@@ -86,6 +98,12 @@ public class DeviceRepository {
 
     private void updateDeviceList(List<Device> devs){
         Log.v("pruebaBroadcast", "initDeviceUpdate");
+        if(application == null)
+            throw new RuntimeException("Device Roepository Application was not set");
+
+        SharedPreferences.Editor preferencesEditor = application.getSharedPreferences("tobias", Application.MODE_PRIVATE).edit();
+        preferencesEditor.clear();
+        Gson gson = new Gson();
         Map<String, MutableLiveData<Device>> auxMap = new HashMap<>();
 
         List<MutableLiveData<Device>> ans = devs.stream().map(dev -> {
@@ -98,7 +116,10 @@ public class DeviceRepository {
                 liveData = new MutableLiveData<>();
 
             auxMap.put(dev.getId(), liveData);
+
             liveData.postValue(dev);
+
+            updatePreference(preferencesEditor, gson, dev);
 
             return liveData;
         }).collect(Collectors.toList());
@@ -107,10 +128,18 @@ public class DeviceRepository {
 
         devices.postValue(ans);
 
+        preferencesEditor.apply();
+
         Log.v("pruebaBroadcast", "updatedDevices!");
 
         if(Looper.myLooper() == Looper.getMainLooper())
             Log.v("pruebaBroadcast", "Main thread!!!");
+    }
+
+    private void updatePreference(SharedPreferences.Editor editor, Gson gson, Device device){
+        String json = gson.toJson(device);
+        editor.putString(device.getId(), json);
+        Log.v("hola", "hola");
     }
 
 //    public enum DeviceDataState {

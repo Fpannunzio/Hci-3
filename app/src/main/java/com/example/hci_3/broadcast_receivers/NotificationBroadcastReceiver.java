@@ -8,15 +8,21 @@ import android.util.Log;
 
 import com.example.hci_3.R;
 import com.example.hci_3.api.ApiClient;
+import com.example.hci_3.api.Device;
+import com.example.hci_3.api.DeviceDeserializer;
 import com.example.hci_3.api.LogEntry;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class NotificationBroadcastReceiver extends BroadcastReceiver {
+    private Gson gson;
 //    private static final String LOGS_REQUESTED = "5";
 //    private static final int MAX_LOG_COUNT = 100;
 //    private int logsProcessed = 0;
@@ -25,9 +31,21 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 //    private ApiClient api = ApiClient.getInstance();
 //    private SharedPreferences sharedPref;
 //    private Context vContext;
-//    @Override
+
+    public NotificationBroadcastReceiver() {
+        super();
+        gson = new GsonBuilder()
+                .registerTypeAdapter(Device.class, new DeviceDeserializer())
+                .create();
+    }
+
+    @Override
     public void onReceive(Context context, Intent intent) {
         Log.v("pruebaBroadcast", "Notification Broadcast");
+        SharedPreferences preferences = context.getSharedPreferences("tobias", Context.MODE_PRIVATE);
+        Map<String, Device> storedDevices = preferences.getAll().entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> gson.fromJson((String) e.getValue(), Device.class)));
+        Log.v("devices", storedDevices.toString());
 //        vContext = context;
 //        sharedPref = context.getSharedPreferences(context.getString(R.string.sharedPreferences), Context.MODE_PRIVATE);
 //        String defaultValue = new Date(Long.MIN_VALUE).toString();
