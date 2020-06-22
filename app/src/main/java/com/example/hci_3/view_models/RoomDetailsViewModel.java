@@ -13,7 +13,7 @@ public class RoomDetailsViewModel extends DeviceViewModel{
 
     String roomId;
 
-    public RoomDetailsViewModel(String roomId){
+    public void setRoom(String roomId){
         this.roomId = roomId;
     }
 
