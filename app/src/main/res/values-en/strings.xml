@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hci-3</string>
+    <string name="error_message">Something went wrong: %1$s [%2$d]</string>
+    <string name="prendido">On</string>
+    <string name="apagado">Off</string>
+    <string name="cargandose">Charging</string>
+    <string name="apagada">Off</string>
+    <string name="pausado">Paused</string>
+    <string name="parado">Off</string>
+    <string name="abierto">Open</string>
+    <string name="cerrado">Closed</string>
+    <string name="abierta">Open</string>
+    <string name="cerrada">Closed</string>
+    <string name="abrir">Open</string>
+    <string name="cerrar">Close</string>
+    <string name="abriendose">Opening</string>
+    <string name="cerrandose">Closing</string>
+    <string name="desbloqueada">Unlocked</string>
+    <string name="bloqueada">Locked</string>
+    <string name="desbloquer">Unlock</string>
+    <string name="bloquear">Lock</string>
+    <string name="reproduciendo">Reproducing</string>
+    <string name="batery_state">Battery: %1$d</string>
+    <string name="invalid_temp">Invalid temperature value</string>
+    <string name="stopped_error">The speaker is off, to play music you must turn it on</string>
+    <string name="block_error">" You can't lock the door if it's open"</string>
+    <string name="open_error">You can\'t open the door if it\'s locked</string>
+    <string name="blinds_open_error">The blind is already open</string>
+    <string name="blinds_close_error">The blind is already closed</string>
+    <string name="dispense_error">The device is already dispensing</string>
+    <string name="persiana">Blind</string>
+    <string name="extend_arrow">Arrow to extend card</string>
+    <string name="bajar">Lower</string>
+    <string name="subir">Roll up</string>
+    <string name="seleccione_nivel">Choose level:</string>
+    <string name="vacuum">Vacuum cleaner image</string>
+    <string name="blinds">Blind image</string>
+    <string name="prender">Turn on</string>
+    <string name="cargar">Charge</string>
+    <string name="apagar">Turn off</string>
+    <string name="aspirar">Vacuum</string>
+    <string name="trapear">Mop</string>
+    <string name="ubicacion">Location:</string>
+    <string name="ac">AC image</string>
+    <string name="minus_button">Minus button</string>
+    <string name="plus_button">Plus button</string>
+    <string name="frio">Cold</string>
+    <string name="calor">Heat</string>
+    <string name="ventilacion">ventilation</string>
+    <string name="modo">Mode</string>
+    <string name="desplazamiento_aspas">Blade displacement</string>
+    <string name="vertical">Vertical:</string>
+    <string name="auto">auto</string>
+    <string name="horizontal">Horizontal:</string>
+    <string name="velocidad_ventilador">Fan speed:</string>
+    <string name="speaker">Speaker image</string>
+    <string name="previous">Previous song button</string>
+    <string name="play">Play/pause button</string>
+    <string name="next">Next song button</string>
+    <string name="genero">Genre:</string>
+    <string name="volumen">Volume</string>
+    <string name="oven">Oven image</string>
+    <string name="fuenteDeCalor">Heat source</string>
+    <string name="modoGrill">Grill mode</string>
+    <string name="modoConveccion">Convection mode</string>
+    <string name="door">Door image</string>
+    <string name="faucet">Sprinkler image</string>
+    <string name="dispensar">Dispense</string>
+    <string name="cantidad">Ammount</string>
+    <string name="activa" translatable="false">Active</string>
+    <string name="seleccione_hogar">"Choose home: "</string>
+    <string name="habitacion">"Room: "</string>
+
+    <string-array name="fuente_calor">
+        <item>Conventional</item>
+        <item>Bottom</item>
+        <item>Top</item>
+    </string-array>
+    <string-array name="modo_grill">
+        <item>Off</item>
+        <item>Economic</item>
+        <item>Complete</item>
+    </string-array>
+    <string-array name="modo_conveccion">
+        <item>Off</item>
+        <item>Economic</item>
+        <item>Conventional</item>
+    </string-array>
+    <string-array name="vacuum_location">
+        <item>ROOM1</item>
+        <item>ROOM2</item>
+        <item>ROOM3</item>
+    </string-array>
+    <string-array name="faucet_units">
+        <item>ml</item>
+        <item>cl</item>
+        <item>dl</item>
+        <item>l</item>
+    </string-array>
+    <string-array name="genres">
+        <item>Pop</item>
+        <item>Country</item>
+        <item>Rock</item>
+        <item>Classical</item>
+        <item>Dance</item>
+        <item>Latina</item>
+    </string-array>
+</resources>
