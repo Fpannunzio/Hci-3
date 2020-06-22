@@ -24,7 +24,7 @@
     <string name="reproduciendo">Reproduciendo</string>
     <string name="batery_state">Bateria: %1$d</string>
     <string name="invalid_temp">Valor de temperatura invalido</string>
-    <string name="stopped_error">El parlante esta apagado, para reproducir musica debes prenderlo</string>
+    <string name="stopped_error">El parlante esta apagado, para reproducir música debes prenderlo</string>
     <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
     <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
     <string name="blinds_open_error">La persiana ya esta abierta</string>
@@ -42,7 +42,7 @@
     <string name="apagar">Apagar</string>
     <string name="aspirar">Aspirar</string>
     <string name="trapear">Trapear</string>
-    <string name="ubicacion">Ubicacion:</string>
+    <string name="ubicacion">Ubicación:</string>
     <string name="ac">Imagen de Aire Acondicionado</string>
     <string name="minus_button">Boton menos</string>
     <string name="plus_button">Boton mas</string>
@@ -56,9 +56,9 @@
     <string name="horizontal">Horizontal:</string>
     <string name="velocidad_ventilador">Velocidad del ventilador:</string>
     <string name="speaker">Imagen de parlante</string>
-    <string name="previous">Boton cancion anterior</string>
+    <string name="previous">Boton canción anterior</string>
     <string name="play">Boton de play y pausa</string>
-    <string name="next">Boton cancion siguiente</string>
+    <string name="next">Boton canción siguiente</string>
     <string name="genero">Genero:</string>
     <string name="volumen">Volumen</string>
     <string name="oven">Imagen Horno</string>
