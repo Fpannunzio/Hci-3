@@ -14,11 +14,19 @@
 
 <!--        <receiver android:name=".broadcast_receivers.NotificationBroadcastReceiver"  android:exported="true">-->
 <!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.ALARM"/>-->
+<!--                <action android:name="com.example.hci_3.ALARM_HANDLE"/>-->
 <!--            </intent-filter>-->
 <!--        </receiver>-->
 
-        <receiver android:name=".broadcast_receivers.NotificationBroadcastReceiver" />
+        <receiver android:name=".MainActivity$AlarmHandlerBroadcastReceiver" />
+
+        <receiver
+            android:name=".broadcast_receivers.NotificationBroadcastReceiver"
+            android:exported="false">
+            <intent-filter android:priority="1">
+                <action android:name="com.example.hci_3.ALARM_HANDLE" />
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".MainActivity">
             <intent-filter>

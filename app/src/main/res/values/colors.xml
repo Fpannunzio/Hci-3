@@ -6,4 +6,6 @@
     <color name="colorText">#3C3F58</color>
     <color name="colorPrimaryDark">#3B4063</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

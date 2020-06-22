@@ -1,5 +1,7 @@
 package com.example.hci_3.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -66,11 +68,8 @@ public class FavoritesFragment extends Fragment {
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
-        if(getActivity() != null)
-            model.getDevices().observe(getActivity(), adapter::setDevices);
+        model.getDevices().observe(requireActivity(), adapter::setDevices);
 
-        else
-            throw new RuntimeException("fragment is null");
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         Objects.requireNonNull(actionBar).setTitle(R.string.favoritos);
         actionBar.setDisplayHomeAsUpEnabled(false);
