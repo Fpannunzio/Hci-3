@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.navigation.ui.NavigationUI;
@@ -32,7 +33,10 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class RoomDetailsFragment extends Fragment {
+
     RecyclerView rv;
+    RoomDetailsViewModel model;
+    DeviceAdapter adapter;
 
 
     public RoomDetailsFragment() {
@@ -51,6 +55,15 @@ public class RoomDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        model = new ViewModelProvider(this).get(RoomDetailsViewModel.class);
+
+        String roomId = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getRoomId();
+
+        model.setRoom(roomId);
+
+        adapter = new DeviceAdapter();
+
+        model.getDevices().observe(requireActivity(), adapter::setDevices);
     }
 
     @Override
@@ -58,12 +71,6 @@ public class RoomDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_room, container, false);
-        assert getArguments() != null;
-        String roomId = RoomDetailsFragmentArgs.fromBundle(getArguments()).getRoomId();
-        String roomName = RoomDetailsFragmentArgs.fromBundle(getArguments()).getRoomName();
-        RoomDetailsViewModel model = new RoomDetailsViewModel(roomId);
-
-        DeviceAdapter adapter = new DeviceAdapter();
 
         rv = view.findViewById(R.id.room_recycler);
 
@@ -73,12 +80,16 @@ public class RoomDetailsFragment extends Fragment {
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
-        model.getDevices().observe(requireActivity(), adapter::setDevices);
-
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+
+        String roomName = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getRoomName();
+
         Objects.requireNonNull(actionBar).setTitle(roomName);
+
         actionBar.setDisplayHomeAsUpEnabled(true);
+
         actionBar.setHomeButtonEnabled(true);
+
         return view;
     }
 
@@ -86,7 +97,6 @@ public class RoomDetailsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
