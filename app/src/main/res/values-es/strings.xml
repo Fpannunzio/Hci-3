@@ -1,44 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hci-3</string>
     <string name="error_message">Algo salio mal: %1$s [%2$d]</string>
-    <string-array name="fuente_calor">
-        <item>Convencional</item>
-        <item>Abajo</item>
-        <item>Arriba</item>
-    </string-array>
-    <string-array name="modo_grill">
-        <item>Apagado</item>
-        <item>Economico</item>
-        <item>Completo</item>
-    </string-array>
-    <string-array name="modo_conveccion">
-        <item>Apagado</item>
-        <item>Economico</item>
-        <item>Convencional</item>
-    </string-array>
-    <string-array name="vacuum_location">
-        <item>ROOM1</item>
-        <item>ROOM2</item>
-        <item>ROOM3</item>
-    </string-array>
-    <string-array name="faucet_units">
-        <item>ml</item>
-        <item>cl</item>
-        <item>dl</item>
-        <item>l</item>
-    </string-array>
-    <string-array name="genres">
-        <item>pop</item>
-        <item>country</item>
-        <item>rock</item>
-        <item>classical</item>
-        <item>dance</item>
-        <item>latina</item>
-    </string-array>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
-    <string name="activa">Activa</string>
     <string name="cargandose">Activa</string>
+    <string name="activa" translatable="false">Activa</string>
     <string name="apagada">Apagada</string>
     <string name="pausado">Pausado</string>
     <string name="parado">Apagado</string>
@@ -55,21 +22,7 @@
     <string name="desbloquer">Desbloquear</string>
     <string name="bloquear">Bloquear</string>
     <string name="reproduciendo">Reproduciendo</string>
-
-
-
-    <string name="temp" translatable="false"> %1$s°C </string>
-    <string name="state" translatable="false">%1$s</string>
-    <string name="door_state" translatable="false">%1$s - %2$s</string>
-    <string name="lamp_state" translatable="false">%1s -</string>
-    <string name="temp_state" translatable="false">%1$s-%2$d°C</string>
-    <string name="speaker_state" translatable="false">%1$s: %2$s</string>
-    <string name="blinds_state" translatable="false">%1$s-%2$d</string>
     <string name="batery_state">Bateria: %1$d</string>
-    <string name="disp_location" translatable="false">%1$s | %2$s</string>
-    <string name="faucet_amount" translatable="false">%1$d %2$s</string>
-    <string name="blinds_level" translatable="false">%1$d</string>
-
     <string name="invalid_temp">Valor de temperatura invalido</string>
     <string name="stopped_error">El parlante esta apagado, para reproducir musica debes prenderlo</string>
     <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
@@ -100,24 +53,13 @@
     <string name="desplazamiento_aspas">Desplazamiento de aspas</string>
     <string name="vertical">Vertical:</string>
     <string name="auto">auto</string>
-    <string name="veintidos" translatable="false">22</string>
-    <string name="cuarentaycinco" translatable="false">45</string>
-    <string name="sesentaysiete" translatable="false">67</string>
-    <string name="noventa" translatable="false">90</string>
     <string name="horizontal">Horizontal:</string>
-    <string name="menosNoventa" translatable="false">-90</string>
-    <string name="menoscuarentaycinco" translatable="false">-45</string>
-    <string name="cero" translatable="false">0</string>
     <string name="velocidad_ventilador">Velocidad del ventilador:</string>
-    <string name="veinticinco" translatable="false">25</string>
-    <string name="cincuenta" translatable="false">50</string>
-    <string name="setentaycinco" translatable="false">75</string>
-    <string name="cien" translatable="false">100</string>
     <string name="speaker">Imagen de parlante</string>
     <string name="previous">Boton cancion anterior</string>
     <string name="play">Boton de play y pausa</string>
     <string name="next">Boton cancion siguiente</string>
-    <string name="genero" >Genero:</string>
+    <string name="genero">Genero:</string>
     <string name="volumen">Volumen</string>
     <string name="oven">Imagen Horno</string>
     <string name="fuenteDeCalor">Fuente de calor:</string>
@@ -129,4 +71,39 @@
     <string name="cantidad">Cantidad</string>
     <string name="seleccione_hogar">Seleccione Hogar:</string>
     <string name="habitacion">Habitacion:</string>
+
+    <string-array name="fuente_calor">
+        <item>Convencional</item>
+        <item>Abajo</item>
+        <item>Arriba</item>
+    </string-array>
+    <string-array name="modo_grill">
+        <item>Apagado</item>
+        <item>Economico</item>
+        <item>Completo</item>
+    </string-array>
+    <string-array name="modo_conveccion">
+        <item>Apagado</item>
+        <item>Economico</item>
+        <item>Convencional</item>
+    </string-array>
+    <string-array name="vacuum_location">
+        <item>ROOM1</item>
+        <item>ROOM2</item>
+        <item>ROOM3</item>
+    </string-array>
+    <string-array name="faucet_units">
+        <item>ml</item>
+        <item>cl</item>
+        <item>dl</item>
+        <item>l</item>
+    </string-array>
+    <string-array name="genres">
+        <item>Pop</item>
+        <item>Country</item>
+        <item>Rock</item>
+        <item>Clasica</item>
+        <item>Dance</item>
+        <item>Latina</item>
+    </string-array>
 </resources>

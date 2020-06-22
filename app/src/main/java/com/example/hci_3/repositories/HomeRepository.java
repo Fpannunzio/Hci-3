@@ -35,7 +35,8 @@ public class HomeRepository {
     }
 
     public void startPolling(){
-        // Para mi tiene que suscribirse al alarmManager
+        updateHomes();
+
         int delay = 60000;
 
         handler.postDelayed(new Runnable() {

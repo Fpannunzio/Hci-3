@@ -14,7 +14,7 @@ import com.example.hci_3.R;
 import com.example.hci_3.api.Room;
 
 public class RoomView  extends ConstraintLayout {
-    protected LiveData<Room> room;
+    protected Room room;
     protected Context context;
     private TextView mRoomName;
 
@@ -35,6 +35,7 @@ public class RoomView  extends ConstraintLayout {
 
     protected void init(Context context){
         this.context = context;
+
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
         LayoutInflater.from(context).inflate(R.layout.room_view, this, true);
@@ -42,25 +43,13 @@ public class RoomView  extends ConstraintLayout {
         mRoomName = findViewById(R.id.room_name);
     }
 
-    public void setRoom(LiveData<Room> room) {
+    public void setRoom(Room room) {
         this.room = room;
-        this.room.observe(getLifecycleOwner(), this::onRoomRefresh);
-    }
-
-
-    public void onRoomRefresh(Room room){
         mRoomName.setText(getParsedName(room.getName()));
     }
-    protected String getParsedName(String fullName){
+
+    private String getParsedName(String fullName){
         String[] aux = fullName.split("_");
-        // Aca se cargan los parametros del device
         return aux[aux.length - 1];
-    }
-    protected LifecycleOwner getLifecycleOwner() {
-        Context context = getContext();
-        while (!(context instanceof LifecycleOwner)) {
-            context = ((ContextWrapper) context).getBaseContext();
-        }
-        return (LifecycleOwner) context;
     }
 }
