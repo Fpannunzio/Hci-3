@@ -14,8 +14,10 @@ import com.example.hci_3.api.Room;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder>  {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder>  implements View.OnClickListener{
     private List<Room> rooms;
+    private View.OnClickListener listener;
+    private String roomId;
 
     public RoomAdapter() {
         rooms = new ArrayList<>();
@@ -26,12 +28,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.room_view, parent,false);
+        view.setOnClickListener(this);
         return new RoomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         Room room = rooms.get(position);
+        roomId = room.getId();
         holder.setRoom(room);
     }
 
@@ -45,15 +49,31 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             this.rooms.addAll(rooms);
             notifyDataSetChanged();
     }
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(listener != null)
+            listener.onClick(v);
+
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
 
     public static class RoomViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mRoomName;
 
+
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
             mRoomName = itemView.findViewById(R.id.room_name);
         }
+
 
         public void setRoom(Room room) {
             mRoomName.setText(getParsedName(room.getName()));

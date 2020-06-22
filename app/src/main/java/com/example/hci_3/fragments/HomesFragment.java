@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +40,7 @@ public class HomesFragment extends Fragment {
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     RoomAdapter recyclerAdapter;
+
 
     public HomesFragment() {
         // Required empty public constructor
@@ -97,6 +99,10 @@ public class HomesFragment extends Fragment {
 
         recyclerAdapter = new RoomAdapter();
 
+
+
+        recyclerAdapter.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(recyclerAdapter.getRoomId())));
+
         rv = view.findViewById(R.id.room_recycler);
 
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -105,9 +111,6 @@ public class HomesFragment extends Fragment {
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
-
-        /*textView.setOnClickListener(v ->
-                    Navigation.findNavController(view).navigate(HomesFragmentDirections.homesToRoom().setNumber(22)));*/
 
         return view;
     }
