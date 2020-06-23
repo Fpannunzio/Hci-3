@@ -47,8 +47,10 @@ public class RoutinesFragment extends Fragment {
 
         model = new ViewModelProvider(this).get(RoutineViewModel.class);
 
-        model.startPolling();
 
+        adapter = new RoutineAdapter(model);
+
+        model.startPolling();
         model.getRoutines().observe(this, this::refreshRoutines);
     }
 
@@ -56,8 +58,7 @@ public class RoutinesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_rutinas, container, false);
-
-        adapter = new RoutineAdapter(model);
+        setHasOptionsMenu(true);
 
         rv = view.findViewById(R.id.recyclerView);
 
