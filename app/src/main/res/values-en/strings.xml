@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hci-3</string>
     <string name="error_message">Something went wrong: %1$s [%2$d]</string>
     <string name="prendido">On</string>
     <string name="apagado">Off</string>
@@ -67,7 +66,7 @@
     <string name="door">Door image</string>
     <string name="faucet">Sprinkler image</string>
     <string name="dispensar">Dispense</string>
-    <string name="cantidad">Ammount</string>
+    <string name="cantidad">Amount</string>
     <string name="activa" translatable="false">Active</string>
     <string name="seleccione_hogar">"Choose home: "</string>
     <string name="habitacion">"Room: "</string>
@@ -106,4 +105,6 @@
         <item>Dance</item>
         <item>Latina</item>
     </string-array>
+    <string name="notifications_channel_name">General</string>
+    <string name="notifications_channel_description">General notifications for the app</string>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Hci-3</string>
     <string name="error_message">Algo salio mal: %1$s [%2$d]</string>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
@@ -106,4 +105,6 @@
         <item>Dance</item>
         <item>Latina</item>
     </string-array>
+    <string name="notifications_channel_name">Generales</string>
+    <string name="notifications_channel_description">Mensajes generales de la aplicacion</string>
 </resources>

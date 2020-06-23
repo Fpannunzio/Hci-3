@@ -61,9 +61,10 @@ public class Home {
         if(! getName().equals(home.getName()))
             ans.put("name", home.getName());
 
-        for(Map.Entry<String,String> entry : getMeta().compareToNewerVersion(home.getMeta()).entrySet()) {
-            ans.put("meta." + entry.getKey(), entry.getValue());
-        }
+        if(getMeta() != null)
+            for(Map.Entry<String,String> entry : getMeta().compareToNewerVersion(home.getMeta()).entrySet()) {
+                ans.put("meta." + entry.getKey(), entry.getValue());
+            }
 
         return ans;
     }

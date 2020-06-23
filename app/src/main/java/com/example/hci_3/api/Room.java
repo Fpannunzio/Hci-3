@@ -86,9 +86,10 @@ public class Room {
         if(! getParsedName().equals(room.getParsedName()))
             ans.put("name", room.getParsedName());
 
-        for(Map.Entry<String,String> entry : getMeta().compareToNewerVersion(room.getMeta()).entrySet()) {
-            ans.put("meta." + entry.getKey(), entry.getValue());
-        }
+        if(getMeta() != null)
+            for(Map.Entry<String,String> entry : getMeta().compareToNewerVersion(room.getMeta()).entrySet()) {
+                ans.put("meta." + entry.getKey(), entry.getValue());
+            }
 
         for(Map.Entry<String,String> entry : getHome().compareToNewerVersion(room.getHome()).entrySet()) {
             ans.put("home." + entry.getKey(), entry.getValue());

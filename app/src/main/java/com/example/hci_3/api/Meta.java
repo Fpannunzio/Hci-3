@@ -49,10 +49,10 @@ public class Meta {
     public Map<String, String> compareToNewerVersion(Meta meta){
         Map<String, String> ans = new HashMap<>();
 
-        if(! getFav().equals(meta.getFav()))
+        if(getFav() != null && ! getFav().equals(meta.getFav()))
             ans.put("fav", meta.getFav().toString());
 
-        if(! getDesc().equals(meta.getDesc()))
+        if(getDesc() != null && ! getDesc().equals(meta.getDesc()))
             ans.put("desc", meta.getDesc());
 
         return ans;
