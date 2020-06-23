@@ -67,18 +67,18 @@ public class LampState implements DeviceState {
         Map<String, String> ans = new HashMap<>();
 
         if(! (state instanceof LampState))
-            return ans; //TODO: null or empty map
+            return ans;
 
         LampState lState = (LampState) state;
 
-        if( ! getStatus().equals(lState.getStatus()))
-            ans.put("status",lState.getStatus());
+        if(!getStatus().equals(lState.getStatus()))
+            ans.put("status", lState.getStatus());
 
-        if( ! getColor().equals(lState.getColor()))
-            ans.put("color",lState.getColor());
+        if(!getColor().equals(lState.getColor()))
+            ans.put("color", lState.getColor());
 
-        if( ! getBrightness().equals(lState.getBrightness()))
-            ans.put("brightness",lState.getBrightness().toString());
+        if(!getBrightness().equals(lState.getBrightness()))
+            ans.put("brightness", lState.getBrightness().toString());
 
         return ans;
     }
