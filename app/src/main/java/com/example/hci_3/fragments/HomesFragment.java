@@ -142,7 +142,7 @@ public class HomesFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-
+        MenuItem settingsItem = menu.findItem(R.id.settings);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -155,6 +155,10 @@ public class HomesFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
+        });
+        settingsItem.setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(HomesFragmentDirections.actionHogaresToSettingsFragment());
+            return false;
         });
     }
 
@@ -171,8 +175,6 @@ public class HomesFragment extends Fragment {
         super.onPause();
         model.stopUpdatingHomes();
     }
-
-
     private void refreshHomes(List<Home> homes){
         adapter.clear();
         adapter.addAll(homes.stream().map(Home::getName).collect(Collectors.toList()));
