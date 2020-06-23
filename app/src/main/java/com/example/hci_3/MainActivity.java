@@ -94,11 +94,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used

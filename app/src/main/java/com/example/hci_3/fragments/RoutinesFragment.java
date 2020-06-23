@@ -32,14 +32,11 @@ public class RoutinesFragment extends Fragment {
 
     RecyclerView rv;
     RoutineViewModel model;
-    LiveData<List<Routine>> routines;
     RoutineAdapter adapter;
-
 
     public RoutinesFragment() {
         // Required empty public constructor
     }
-
 
     public static RoutinesFragment newInstance(String param1, String param2) {
         RoutinesFragment fragment = new RoutinesFragment();
@@ -50,36 +47,42 @@ public class RoutinesFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
         model = new ViewModelProvider(this).get(RoutineViewModel.class);
+
         model.startPolling();
-        routines = model.getRoutines();
-        routines.observe(this, this::refreshRoutines);
+
+        model.getRoutines().observe(this, this::refreshRoutines);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_rutinas, container, false);
 
         adapter = new RoutineAdapter(model);
 
         rv = view.findViewById(R.id.recyclerView);
+
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
+
         rv.setAdapter(adapter);
+
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+
         Objects.requireNonNull(actionBar).setTitle(R.string.rutinas);
+
         actionBar.setDisplayHomeAsUpEnabled(false);
+
         actionBar.setHomeButtonEnabled(false);
 
         return view;
     }
 
     private void refreshRoutines(List<Routine> routines) {
-
         adapter.setRoutines(routines);
     }
 

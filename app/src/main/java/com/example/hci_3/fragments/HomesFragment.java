@@ -73,8 +73,7 @@ public class HomesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_homes, container, false);
 
@@ -111,8 +110,11 @@ public class HomesFragment extends Fragment {
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+
         Objects.requireNonNull(actionBar).setTitle(R.string.hogares);
+
         actionBar.setDisplayHomeAsUpEnabled(false);
+
         actionBar.setHomeButtonEnabled(false);
 
         return view;
