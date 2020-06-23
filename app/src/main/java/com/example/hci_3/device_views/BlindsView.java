@@ -51,7 +51,7 @@ public class BlindsView extends DeviceView {
         super.init(context);
         LayoutInflater.from(context).inflate(R.layout.blinds_layout, this, true);
 
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
         mDevName = findViewById(R.id.blinds_name);

@@ -71,6 +71,9 @@
     <string name="cantidad">Cantidad</string>
     <string name="seleccione_hogar">Seleccione Hogar:</string>
     <string name="habitacion">Habitacion:</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="rutinas">Rutinas</string>
+    <string name="hogares">Hogares</string>
 
     <string-array name="fuente_calor">
         <item>Convencional</item>

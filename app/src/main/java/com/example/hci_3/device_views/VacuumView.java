@@ -131,12 +131,12 @@ public class VacuumView extends DeviceView {
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
 
-        if (state.getMode().equals("vacuum")){
-            
-        }
 
         //hay que setear el string array programaticamente antes de hacer esto
 //        mSpinner.setSelection(locationAdapter.getPosition(state.getLocation().getName()));
+
+        // Aca updetear el select de los rooms con model.getRooms(device, devices -> {}, this::handleError)
+        // y posicionar el spinner en el lugar correcto
     }
 
     private void setLocation(String roomid){ executeAction("setLocation",new ArrayList<>(Collections.singletonList(roomid)), this::handleError);}

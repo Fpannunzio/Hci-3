@@ -6,18 +6,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hci_3.R;
 import com.example.hci_3.api.Room;
+import com.example.hci_3.fragments.HomesFragmentDirections;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder>  implements View.OnClickListener{
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     private List<Room> rooms;
-    private View.OnClickListener listener;
-    private String roomId;
+
+
 
     public RoomAdapter() {
         rooms = new ArrayList<>();
@@ -28,14 +31,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.room_view, parent,false);
-        view.setOnClickListener(this);
         return new RoomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         Room room = rooms.get(position);
-        roomId = room.getId();
         holder.setRoom(room);
     }
 
@@ -49,39 +50,45 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             this.rooms.addAll(rooms);
             notifyDataSetChanged();
     }
-    public void setOnClickListener(View.OnClickListener listener){
-        this.listener = listener;
-    }
 
-    @Override
-    public void onClick(View v) {
-        if(listener != null)
-            listener.onClick(v);
 
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public static class RoomViewHolder extends RecyclerView.ViewHolder {
+    public static class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mRoomName;
+        private String roomId, roomName;
 
 
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
             mRoomName = itemView.findViewById(R.id.room_name);
+            CardView cardView = itemView.findViewById(R.id.room_card);
+
+            cardView.setOnClickListener(this);
         }
 
 
+
         public void setRoom(Room room) {
-            mRoomName.setText(getParsedName(room.getName()));
+            roomId = room.getId();
+            roomName = getParsedName(room.getName());
+            mRoomName.setText(roomName);
         }
 
         private String getParsedName(String fullName){
             String[] aux = fullName.split("_");
             return aux[aux.length - 1];
+        }
+        public String getRoomId() {
+            return roomId;
+        }
+        public String getRoomName() {
+            return roomName;
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(getRoomId(), getRoomName()));
         }
     }
 }

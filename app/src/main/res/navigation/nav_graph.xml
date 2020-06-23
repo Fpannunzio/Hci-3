@@ -24,9 +24,6 @@
             android:id="@+id/homes_to_room"
             app:destination="@id/room"
             app:enterAnim="@android:anim/fade_in" />
-        <argument
-            android:name="roomId"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/room"
@@ -39,6 +36,9 @@
             app:enterAnim="@android:anim/fade_in" />
         <argument
             android:name="roomId"
+            app:argType="string" />
+        <argument
+            android:name="roomName"
             app:argType="string" />
     </fragment>
 </navigation>

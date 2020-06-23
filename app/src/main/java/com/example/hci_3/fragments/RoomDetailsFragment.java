@@ -2,22 +2,30 @@ package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.hci_3.R;
 import com.example.hci_3.SpacesItemDecoration;
 import com.example.hci_3.adapters.DeviceAdapter;
-import com.example.hci_3.view_models.FavoriteViewModel;
 import com.example.hci_3.view_models.RoomDetailsViewModel;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +33,11 @@ import com.example.hci_3.view_models.RoomDetailsViewModel;
  * create an instance of this fragment.
  */
 public class RoomDetailsFragment extends Fragment {
+
     RecyclerView rv;
+    RoomDetailsViewModel model;
+    DeviceAdapter adapter;
+
 
     public RoomDetailsFragment() {
         // Required empty public constructor
@@ -43,18 +55,21 @@ public class RoomDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        model = new ViewModelProvider(this).get(RoomDetailsViewModel.class);
+
+        String roomId = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getRoomId();
+
+        model.setRoom(roomId);
+
+        adapter = new DeviceAdapter(model);
+
+        model.getDevices().observe(requireActivity(), adapter::setDevices);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_room, container, false);
-        assert getArguments() != null;
-        String roomId = RoomDetailsFragmentArgs.fromBundle(getArguments()).getRoomId();
-        RoomDetailsViewModel model = new RoomDetailsViewModel();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        DeviceAdapter adapter = new DeviceAdapter();
+        View view = inflater.inflate(R.layout.fragment_room, container, false);
 
         rv = view.findViewById(R.id.room_recycler);
 
@@ -64,13 +79,34 @@ public class RoomDetailsFragment extends Fragment {
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
-        if(getActivity() != null)
-            model.getDevices().observe(getActivity(), adapter::setDevices);
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
 
-        else
-            throw new RuntimeException("fragment is null");
+        String roomName = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getRoomName();
 
+        Objects.requireNonNull(actionBar).setTitle(roomName);
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        actionBar.setHomeButtonEnabled(true);
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        //inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) ) ||
+        super.onOptionsItemSelected(item);
     }
 }

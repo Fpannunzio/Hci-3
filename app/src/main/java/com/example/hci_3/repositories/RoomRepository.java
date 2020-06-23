@@ -31,6 +31,10 @@ public class RoomRepository {
         handler = new Handler();
     }
 
+    public void getRooms(String homeId, ApiClient.SuccessHandler<List<Room>> responseHandler, ApiClient.ErrorHandler errorHandler){
+        apiClient.getHomeRooms(homeId, responseHandler, errorHandler);
+    }
+
     public MutableLiveData<List<Room>> getRooms(){
         return rooms;
     }
@@ -46,7 +50,7 @@ public class RoomRepository {
         handler.removeCallbacksAndMessages(null);
     }
 
-    private void startPolling(){
+    public void startPolling(){
         // Para mi tiene que suscribirse al alarmManager
         int delay = 60000;
 

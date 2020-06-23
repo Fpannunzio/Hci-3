@@ -13,8 +13,8 @@ import java.util.List;
 public class RoutineViewModel extends ViewModel {
 
     private Boolean isPolling = false;
-    protected static RoutineRepository routineRepository = RoutineRepository.getInstance();
-    protected static DeviceRepository deviceRepository = DeviceRepository.getInstance();
+    protected RoutineRepository routineRepository = RoutineRepository.getInstance();
+    protected DeviceRepository deviceRepository = DeviceRepository.getInstance();
 
     public LiveData<List<Routine>> getRoutines(){
         return routineRepository.getRoutines();

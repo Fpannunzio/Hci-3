@@ -1,15 +1,14 @@
 package com.example.hci_3.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,10 @@ import android.view.ViewGroup;
 import com.example.hci_3.adapters.DeviceAdapter;
 import com.example.hci_3.R;
 import com.example.hci_3.SpacesItemDecoration;
-import com.example.hci_3.repositories.DeviceRepository;
+
 import com.example.hci_3.view_models.FavoriteViewModel;
+
+import java.util.Objects;
 
 
 /**
@@ -29,6 +30,8 @@ import com.example.hci_3.view_models.FavoriteViewModel;
 public class FavoritesFragment extends Fragment {
 
     RecyclerView rv;
+    FavoriteViewModel model;
+    DeviceAdapter adapter;
 
     public FavoritesFragment() {
         // Required empty public constructor
@@ -45,17 +48,17 @@ public class FavoritesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        model = new ViewModelProvider(this).get(FavoriteViewModel.class);
+
+        adapter = new DeviceAdapter(model);
+
+        model.getDevices().observe(requireActivity(), adapter::setDevices);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favoritos, container, false);
-
-        FavoriteViewModel model = new ViewModelProvider(this).get(FavoriteViewModel.class);
-
-        DeviceAdapter adapter = new DeviceAdapter();
 
         rv = view.findViewById(R.id.recyclerView);
 
@@ -65,8 +68,32 @@ public class FavoritesFragment extends Fragment {
 
         rv.addItemDecoration(new SpacesItemDecoration(30));
 
-        model.getDevices().observe(requireActivity(), adapter::setDevices);
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+
+        Objects.requireNonNull(actionBar).setTitle(R.string.favoritos);
+
+        actionBar.setDisplayHomeAsUpEnabled(false);
+
+        actionBar.setHomeButtonEnabled(false);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        model.continuePollingStates();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        model.pausePollingStates();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        model.stopPollingStates();
     }
 }

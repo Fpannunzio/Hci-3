@@ -26,6 +26,7 @@ public class HomesViewModel extends ViewModel {
     private LiveData<List<DeviceType>> deviceTypes;
     private Home currentHome;
     private Boolean isPollingHomes;
+    private Boolean isPollingRooms;
 
     public HomesViewModel(){
         homeRepository = HomeRepository.getInstance();
@@ -35,6 +36,7 @@ public class HomesViewModel extends ViewModel {
         rooms = roomRepository.getRooms();
         deviceTypes = Transformations.map(deviceRepository.getDevices(), this::getHomesDeviceTypes);
         isPollingHomes = false;
+        isPollingRooms = false;
     }
 
     public void startUpdatingHomes(){
@@ -44,9 +46,20 @@ public class HomesViewModel extends ViewModel {
         }
     }
 
+    public void startUpdatingRooms(){
+        if(!isPollingRooms) {
+            roomRepository.startPolling();
+            isPollingRooms = false;
+        }
+    }
+
     public void stopUpdatingHomes(){
         if(isPollingHomes) {
             homeRepository.stopPolling();
+            if(isPollingRooms) {
+                roomRepository.stopPolling();
+                isPollingRooms = true;
+            }
             isPollingHomes = false;
         }
     }

@@ -33,6 +33,8 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     //private AppBarConfiguration mAppBarConfiguration;
+    private NavController navController;
+    private  Toolbar toolbar;
 
     public static final String ACTION_ALARM_HANDLE = "com.example.hci_3.ALARM_HANDLE";
 
@@ -51,13 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar =  findViewById(R.id.toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         setSupportActionBar(toolbar);
+        //Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_back_arrow);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
@@ -83,12 +88,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
@@ -106,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+
 
     private void setAlarm(){
         final int INTERVAL = 60000;
