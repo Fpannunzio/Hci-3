@@ -55,7 +55,7 @@ public class VacuumView extends DeviceView {
         mDevName = findViewById(R.id.vacuum_name);
         mLocation = findViewById(R.id.vacuum_location);
         mState = findViewById(R.id.onStateVacuum);
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
         mSpinner = findViewById(R.id.locationSpinner);
@@ -129,6 +129,9 @@ public class VacuumView extends DeviceView {
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
+
+        // Aca updetear el select de los rooms con model.getRooms(device, devices -> {}, this::handleError)
+        // y posicionar el spinner en el lugar correcto
     }
 
     private void setLocation(String roomid){ executeAction("setLocation",new ArrayList<>(Collections.singletonList(roomid)), this::handleError);}

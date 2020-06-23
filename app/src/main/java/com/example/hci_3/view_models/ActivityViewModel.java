@@ -9,7 +9,7 @@ import com.example.hci_3.repositories.DeviceRepository;
 
 public class ActivityViewModel extends AndroidViewModel {
 
-    private static DeviceRepository deviceRepository = DeviceRepository.getInstance();
+    private DeviceRepository deviceRepository = DeviceRepository.getInstance();
 
     public ActivityViewModel(@NonNull Application application) {
         super(application);

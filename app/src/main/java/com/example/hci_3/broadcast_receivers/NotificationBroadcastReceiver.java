@@ -15,6 +15,7 @@ import com.example.hci_3.R;
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceDeserializer;
+import com.example.hci_3.api.LogEntry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -162,4 +163,3 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> gson.fromJson((String) e.getValue(), Device.class)));
     }
 }
-//comparision.keySet().stream().map(k -> k + " " + comparision.get(k) + "|").reduce(" ", String::concat)

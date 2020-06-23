@@ -4,7 +4,6 @@ import android.content.Context;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,16 +16,12 @@ import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
-import com.example.hci_3.api.DeviceStates.ACState;
 import com.example.hci_3.api.DeviceStates.LampState;
 import com.skydoves.colorpickerview.ColorPickerView;
 import com.skydoves.colorpickerview.listeners.ColorListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 public class LampView extends DeviceView {
 
@@ -58,7 +53,7 @@ public class LampView extends DeviceView {
         super.init(context);
         LayoutInflater.from(context).inflate(R.layout.lamp_view, this, true);
 
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
         mDevName = findViewById(R.id.lamp_name);

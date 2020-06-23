@@ -20,6 +20,7 @@ import java.util.List;
 public abstract class DeviceView extends ConstraintLayout {
     protected LiveData<Device> device;
     protected Context context;
+    DeviceViewModel model;
 
     public DeviceView(Context context) {
         super(context);
@@ -42,6 +43,10 @@ public abstract class DeviceView extends ConstraintLayout {
         setLayoutParams(layoutParams);
     }
 
+    public void setModel(DeviceViewModel model){
+        this.model = model;
+    }
+
     public void setDevice(LiveData<Device> device) {
         this.device = device;
         this.device.observe(getLifecycleOwner(), this::onDeviceRefresh);
@@ -56,12 +61,16 @@ public abstract class DeviceView extends ConstraintLayout {
 
     @SuppressWarnings("ConstantConditions")
     public void executeAction(String actionName, List<Object> params, ApiClient.ActionResponseHandler responseHandler, ApiClient.ErrorHandler errorHandler){
-        DeviceViewModel.executeAction(device.getValue().getId(), actionName, params, responseHandler, errorHandler);
+        model.executeAction(device.getValue().getId(), actionName, params, responseHandler, errorHandler);
     }
 
     @SuppressWarnings("ConstantConditions")
     public void executeAction(String actionName, List<Object> params, ApiClient.ErrorHandler errorHandler){
-        DeviceViewModel.executeAction(device.getValue().getId(), actionName, params, errorHandler);
+        model.executeAction(device.getValue().getId(), actionName, params, errorHandler);
+    }
+
+    public void executeAction(String actionName, ApiClient.ActionResponseHandler responseHandler, ApiClient.ErrorHandler errorHandler){
+        executeAction(actionName, new ArrayList<>(), responseHandler, errorHandler);
     }
 
     public void executeAction(String actionName, ApiClient.ErrorHandler errorHandler){

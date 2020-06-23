@@ -70,6 +70,12 @@
     <string name="cantidad">Cantidad</string>
     <string name="seleccione_hogar">Seleccione Hogar:</string>
     <string name="habitacion">Habitacion:</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="rutinas">Rutinas</string>
+    <string name="hogares">Hogares</string>
+    <string name="buscar">Buscar</string>
+    <string name="modoNocturno">Modo Nocturno</string>
+    <string name="search">Busqueda: %1$s</string>
 
     <string-array name="fuente_calor">
         <item>Convencional</item>
@@ -107,4 +113,5 @@
     </string-array>
     <string name="notifications_channel_name">Generales</string>
     <string name="notifications_channel_description">Mensajes generales de la aplicacion</string>
+    <string name="rutina_exitosa">La rutina fue ejecutada correctamente</string>
 </resources>

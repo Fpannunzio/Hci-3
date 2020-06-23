@@ -46,7 +46,7 @@ public class DoorView extends DeviceView {
         super.init(context);
         LayoutInflater.from(context).inflate(R.layout.door_view, this, true);
 
-        cardView = findViewById(R.id.cardView);
+        cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
         mDevName = findViewById(R.id.door_name);

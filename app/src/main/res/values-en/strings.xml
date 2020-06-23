@@ -70,6 +70,12 @@
     <string name="activa" translatable="false">Active</string>
     <string name="seleccione_hogar">"Choose home: "</string>
     <string name="habitacion">"Room: "</string>
+    <string name="favoritos">Favorites</string>
+    <string name="rutinas">Routines</string>
+    <string name="hogares">Homes</string>
+    <string name="buscar">Search</string>
+    <string name="modoNocturno">Dark Mode</string>
+    <string name="search">Searching: %1$s</string>
 
     <string-array name="fuente_calor">
         <item>Conventional</item>
@@ -105,6 +111,7 @@
         <item>Dance</item>
         <item>Latina</item>
     </string-array>
+    <string name="rutina_exitosa">The routine was executed correctly</string>
     <string name="notifications_channel_name">General</string>
     <string name="notifications_channel_description">General notifications for the app</string>
 </resources>
