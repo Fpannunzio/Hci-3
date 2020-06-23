@@ -31,6 +31,10 @@ public class RoomRepository {
         handler = new Handler();
     }
 
+    public void getRooms(String homeId, ApiClient.SuccessHandler<List<Room>> responseHandler, ApiClient.ErrorHandler errorHandler){
+        apiClient.getHomeRooms(homeId, responseHandler, errorHandler);
+    }
+
     public MutableLiveData<List<Room>> getRooms(){
         return rooms;
     }

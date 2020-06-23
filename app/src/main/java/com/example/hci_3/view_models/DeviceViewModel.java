@@ -10,7 +10,9 @@ import androidx.lifecycle.ViewModel;
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.DeviceState;
+import com.example.hci_3.api.Room;
 import com.example.hci_3.repositories.DeviceRepository;
+import com.example.hci_3.repositories.RoomRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 public abstract class DeviceViewModel extends ViewModel {
 
     protected DeviceRepository deviceRepository = DeviceRepository.getInstance();
+    protected RoomRepository roomRepository = RoomRepository.getInstance();
     protected List<StatePollingHandler> statePollingHandlers = new ArrayList<>();
 
     protected abstract LiveData<List<MutableLiveData<Device>>> assignDevicesTransformation();
@@ -32,6 +35,10 @@ public abstract class DeviceViewModel extends ViewModel {
 
     public LiveData<List<MutableLiveData<Device>>> getDevices(){
         return assignDevicesTransformation();
+    }
+
+    public void getDeviceRooms(Device device, ApiClient.SuccessHandler<List<Room>> responseHandler, ApiClient.ErrorHandler errorHandler){
+        roomRepository.getRooms(device.getId(), responseHandler, errorHandler);
     }
 
     public LiveData<DeviceState> addPollingState(Device device, int interval){

@@ -129,6 +129,9 @@ public class VacuumView extends DeviceView {
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
+
+        // Aca updetear el select de los rooms con model.getRooms(device, devices -> {}, this::handleError)
+        // y posicionar el spinner en el lugar correcto
     }
 
     private void setLocation(String roomid){ executeAction("setLocation",new ArrayList<>(Collections.singletonList(roomid)), this::handleError);}
