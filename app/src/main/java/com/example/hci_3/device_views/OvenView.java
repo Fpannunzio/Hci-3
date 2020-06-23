@@ -189,6 +189,7 @@ public class OvenView extends DeviceView {
         mTemperature.setText(getResources().getString(R.string.temp,
                 String.valueOf(state.getTemperature())));
 
+        // TODO: 6/23/2020 hacer que traiga el valor de los spinners desde la api
         // Hay que poner que se activen los botones con el estado
     }
 

@@ -180,6 +180,8 @@ public class SpeakerView extends DeviceView {
                 mPause.setImageResource(R.drawable.ic_pause);
             }
         });
+
+        // TODO: 6/23/2020 Falta la lista de reproduccion y traer el genero desde la api cuando arranca
     }
 
     private void updateFrequentlyUpdatingState(DeviceState uncastedState){
