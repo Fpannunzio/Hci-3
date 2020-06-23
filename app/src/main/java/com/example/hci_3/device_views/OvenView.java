@@ -34,10 +34,13 @@ public class OvenView extends DeviceView {
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
 
-
     private ArrayAdapter<CharSequence> fuenteAdapter;
     private ArrayAdapter<CharSequence> grillAdapter;
     private ArrayAdapter<CharSequence> conveccionAdapter;
+
+    private final String[] fuenteArray = getResources().getStringArray(R.array.fuente_calor);
+    private final String[]  grillArray= getResources().getStringArray(R.array.modo_grill);
+    private final String[] convectionArray = getResources().getStringArray(R.array.modo_conveccion);
 
     public OvenView(Context context) {
         super(context);
@@ -89,9 +92,8 @@ public class OvenView extends DeviceView {
         mGrill.setAdapter(grillAdapter);
         mConvection.setAdapter(conveccionAdapter);
 
-        final String[] fuenteArray = getResources().getStringArray(R.array.fuente_calor);
-        final String[]  grillArray= getResources().getStringArray(R.array.modo_grill);
-        final String[] convectionArray = getResources().getStringArray(R.array.modo_conveccion);
+
+
 
         mFont.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -206,55 +208,32 @@ public class OvenView extends DeviceView {
     }
 
     private void setHeat(String heatMode) {
-        switch (heatMode) {
-            case "Convencional": {
-                executeAction("setHeat", new ArrayList<>(Collections.singletonList("conventional")), this::handleError);
-                break;
-            }
-            case "Abajo": {
-                executeAction("setHeat", new ArrayList<>(Collections.singletonList("bottom")), this::handleError);
-                break;
-            }
-            case "Arriba": {
-                executeAction("setHeat", new ArrayList<>(Collections.singletonList("top")), this::handleError);
-                break;
-            }
-        }
+
+        if (fuenteArray[0].equals(heatMode))
+            executeAction("setHeat", new ArrayList<>(Collections.singletonList("conventional")), this::handleError);
+        else if(fuenteArray[1].equals(heatMode))
+            executeAction("setHeat", new ArrayList<>(Collections.singletonList("bottom")), this::handleError);
+        else
+            executeAction("setHeat", new ArrayList<>(Collections.singletonList("top")), this::handleError);
     }
 
     private void setGrill(String grillMode) {
-        switch (grillMode) {
-            case "Apagado": {
-                executeAction("setGrill", new ArrayList<>(Collections.singletonList("off")), this::handleError);
-                break;
-            }
-            case "Economico": {
-                executeAction("setGrill", new ArrayList<>(Collections.singletonList("eco")), this::handleError);
-                break;
-            }
-            case "Completo": {
-                executeAction("setGrill", new ArrayList<>(Collections.singletonList("large")), this::handleError);
-                break;
-            }
-        }
+
+        if (grillArray[0].equals(grillMode))
+            executeAction("setGrill", new ArrayList<>(Collections.singletonList("off")), this::handleError);
+        else if(grillArray[1].equals(grillMode))
+            executeAction("setGrill", new ArrayList<>(Collections.singletonList("eco")), this::handleError);
+        else
+            executeAction("setGrill", new ArrayList<>(Collections.singletonList("large")), this::handleError);
     }
 
     private void setConvection(String convectionMode) {
-        switch (convectionMode) {
-            case "Convencional": {
-                executeAction("setConvection", new ArrayList<>(Collections.singletonList("normal")), this::handleError);
-                break;
-            }
-            case "Apagado": {
-                executeAction("setConvection", new ArrayList<>(Collections.singletonList("off")), this::handleError);
-                break;
-            }
-            case "Economico": {
-                executeAction("setConvection", new ArrayList<>(Collections.singletonList("eco")), this::handleError);
-                break;
-            }
-        }
+
+        if (convectionArray[0].equals(convectionMode))
+            executeAction("setConvection", new ArrayList<>(Collections.singletonList("normal")), this::handleError);
+        else if(convectionArray[1].equals(convectionMode))
+            executeAction("setConvection", new ArrayList<>(Collections.singletonList("off")), this::handleError);
+        else
+            executeAction("setConvection", new ArrayList<>(Collections.singletonList("eco")), this::handleError);
     }
-
-
 }
