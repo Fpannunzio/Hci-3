@@ -129,7 +129,7 @@
     <string name="cantidad">Cantidad</string>
     <string name="seleccione_hogar">Seleccione Hogar:</string>
     <string name="habitacion">Habitacion:</string>
-    <string name="rutina_exitosa">Rutina exitosa</string>
+    <string name="rutina_exitosa">La rutina fue ejecutada correctamente</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
 <!--    <string name="notifications">notifications_key</string>-->
 </resources>

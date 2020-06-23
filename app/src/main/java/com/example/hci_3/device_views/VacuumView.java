@@ -121,6 +121,7 @@ public class VacuumView extends DeviceView {
         VacuumState state = (VacuumState) device.getState();
 
         mDevName.setText(getParsedName(device.getName()));
+
         mState.setText(getResources().getString(R.string.state,
                 state.getStatus().equals("active")? getResources().getString(R.string.activa) :state.getStatus().equals("docked")?
                         getResources().getString(R.string.cargandose) +  getResources().getString(R.string.batery_state, state.getBatteryLevel()) + "%":
@@ -129,6 +130,13 @@ public class VacuumView extends DeviceView {
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
+
+        if (state.getMode().equals("vacuum")){
+            
+        }
+
+        //hay que setear el string array programaticamente antes de hacer esto
+//        mSpinner.setSelection(locationAdapter.getPosition(state.getLocation().getName()));
     }
 
     private void setLocation(String roomid){ executeAction("setLocation",new ArrayList<>(Collections.singletonList(roomid)), this::handleError);}
