@@ -74,6 +74,9 @@
     <string name="favoritos">Favoritos</string>
     <string name="rutinas">Rutinas</string>
     <string name="hogares">Hogares</string>
+    <string name="buscar">Buscar</string>
+    <string name="modoNocturno">Modo Nocturno</string>
+    <string name="search">Busqueda: %1$s</string>
 
     <string-array name="fuente_calor">
         <item>Convencional</item>

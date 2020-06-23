@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.lifecycle.ViewModelProvider;
@@ -70,6 +72,7 @@ public class RoomDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
+        setHasOptionsMenu(true);
 
         rv = view.findViewById(R.id.room_recycler);
 
@@ -89,6 +92,7 @@ public class RoomDetailsFragment extends Fragment {
 
         actionBar.setHomeButtonEnabled(true);
 
+
         return view;
     }
 
@@ -102,6 +106,21 @@ public class RoomDetailsFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         //inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(RoomDetailsFragmentDirections.actionRoomToSearchFragment(query));
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override

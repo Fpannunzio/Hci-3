@@ -1,9 +1,14 @@
 package com.example.hci_3.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,6 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -41,6 +49,7 @@ public class HomesFragment extends Fragment {
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     RoomAdapter recyclerAdapter;
+    SharedPreferences sharedPreferences;
 
 
     public HomesFragment() {
@@ -70,6 +79,11 @@ public class HomesFragment extends Fragment {
         rooms = model.getRooms();
 
         rooms.observe(this, this::refreshRooms);
+
+        sharedPreferences = requireContext().getSharedPreferences("spinnerSP", Context.MODE_PRIVATE);
+
+
+
     }
 
     @Override
@@ -77,11 +91,19 @@ public class HomesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_homes, container, false);
 
+        setHasOptionsMenu(true);
+
         adapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item);
 
         spinner = view.findViewById(R.id.homes_spinner);
 
         spinner.setAdapter(adapter);
+        setHasOptionsMenu(true);
+
+        int pos = sharedPreferences.getInt("home_spinner_position", -1);
+        if(pos != -1)
+            spinner.setSelection(pos);
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -90,6 +112,10 @@ public class HomesFragment extends Fragment {
 
                 Home home = Objects.requireNonNull(homes.getValue()).get(arg2);
                 model.updateCurrentHome(home);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("home_spinner_position", arg2);
+                editor.apply();
+
             }
 
             @Override
@@ -117,7 +143,28 @@ public class HomesFragment extends Fragment {
 
         actionBar.setHomeButtonEnabled(false);
 
+
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(HomesFragmentDirections.actionHogaresToSearchFragment(query));
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -125,6 +172,7 @@ public class HomesFragment extends Fragment {
         super.onResume();
         model.startUpdatingHomes();
         model.startUpdatingRooms();
+
     }
 
     @Override
