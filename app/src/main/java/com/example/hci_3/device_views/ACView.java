@@ -31,6 +31,7 @@ public class ACView extends DeviceView {
     private MaterialButtonToggleGroup mTempGroup, mVertGroup, mHorGroup, mFanSpeedGroup;
     private Switch mSwitch;
     private ImageButton mMinus, mPlus;
+    private ACState state;
 
     private CardView cardView;
     private ConstraintLayout expandableLayout;
@@ -90,7 +91,7 @@ public class ACView extends DeviceView {
         });
 
         mMinus.setOnClickListener(v -> {
-            int temp = state.getTemperature() - 1;
+            int temp = getTemperatureValue() - 1;
 
             if(temp >= 18)
                 setTemperature(temp);
@@ -99,7 +100,7 @@ public class ACView extends DeviceView {
         });
 
         mPlus.setOnClickListener(v -> {
-            int temp = state.getTemperature() + 1;
+            int temp = getTemperatureValue() + 1;
 
             if(temp <= 38)
                 setTemperature(temp);
@@ -195,9 +196,14 @@ public class ACView extends DeviceView {
         });
     }
 
+    private int getTemperatureValue() {
+        String temp = (String) mTemperature.getText();
+        return Integer.parseInt(temp.substring(0, temp.indexOf('°')));
+    }
+
     @Override
     public void onDeviceRefresh(Device device) {
-        ACState state = (ACState) device.getState();
+        state = (ACState) device.getState();
 
         mDevName.setText(getParsedName(device.getName()));
 

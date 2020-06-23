@@ -76,6 +76,7 @@
     <string name="buscar">Buscar</string>
     <string name="modoNocturno">Modo Nocturno</string>
     <string name="search">Busqueda: %1$s</string>
+    <string name="ajustes">Ajustes</string>
 
     <string-array name="fuente_calor">
         <item>Convencional</item>

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,7 @@ public class BlindsView extends DeviceView {
     private Button mOpen, mClose;
     private SeekBar mSeekBar;
     private int level = 0;
+    private BlindsState state;
 
     public BlindsView(Context context) {
         super(context);
@@ -66,7 +68,7 @@ public class BlindsView extends DeviceView {
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
-        mLevel.setText(level + "%");
+
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
@@ -77,20 +79,40 @@ public class BlindsView extends DeviceView {
                 expandableLayout.setVisibility(View.GONE);
             }
         });
+
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(state.getStatus().equals("opened")) {
+                    level = progress;
+                    mLevel.setText(getResources().getString(R.string.blinds_level, level) + "%");
+                    setLevel();
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+
+        });
     }
 
     @Override
     public void onDeviceRefresh(Device device) {
-        BlindsState state = (BlindsState) device.getState();
+        state = (BlindsState) device.getState();
 
         mDevName.setText(getParsedName(device.getName()));
-
 
         mState.setText(getResources().getString(R.string.blinds_state,
                 state.getStatus().equals("opened")? getResources().getString(R.string.abierta) :state.getStatus().equals("opening")?
                         getResources().getString(R.string.abriendose): state.getStatus().equals("closing")?
                         getResources().getString(R.string.cerrandose) : getResources().getString(R.string.cerrada), state.getCurrentLevel()) + "%");
-
 
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
@@ -115,28 +137,6 @@ public class BlindsView extends DeviceView {
             mOpen.setBackgroundColor(Color.parseColor("#72E1C7"));
         }
 
-
-        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(state.getStatus().equals("opened")) {
-                    level = progress;
-                    mLevel.setText(getResources().getString(R.string.blinds_level, level) + "%");
-                    setLevel();
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-
-        });
         mOpen.setOnClickListener(v -> {
               if (state.getStatus().equals("closed")) {
                   open();
@@ -149,6 +149,9 @@ public class BlindsView extends DeviceView {
             } else
                 Toast.makeText(context, getResources().getString(R.string.blinds_close_error), Toast.LENGTH_LONG).show();
         });
+
+        mSeekBar.setProgress(state.getLevel());
+        mLevel.setText(state.getLevel() + "%");
     }
     private void open(){
         executeAction("open", this::handleError);

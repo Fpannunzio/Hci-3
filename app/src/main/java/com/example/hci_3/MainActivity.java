@@ -17,13 +17,15 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
-;
+
+import com.example.hci_3.fragments.FavoritesFragmentDirections;
 import com.example.hci_3.repositories.DeviceRepository;
 import com.example.hci_3.view_models.ActivityViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -57,10 +60,24 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+        Intent intent = getIntent();
+        Log.v("notif1", "estoy aca");
+        if(intent.getAction() != null && intent.getAction().equals("notifications")) {
+            Log.v("notif2", "estoy aca2");
+            String roomName = intent.getStringExtra("roomName");
+            String roomId = intent.getStringExtra("roomID");
+            navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName)));
+
+        }
+
+
         dataSyncBroadcastReceiver = new DataSyncBroadcastReceiver();
 
         setAlarm();
+
+
     }
+
 
     @Override
     protected void onResume() {

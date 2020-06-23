@@ -2,14 +2,21 @@ package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,13 +39,6 @@ public class RoutinesFragment extends Fragment {
 
     public RoutinesFragment() {
         // Required empty public constructor
-    }
-
-    public static RoutinesFragment newInstance(String param1, String param2) {
-        RoutinesFragment fragment = new RoutinesFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -76,6 +76,30 @@ public class RoutinesFragment extends Fragment {
         actionBar.setHomeButtonEnabled(false);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem settingsItem = menu.findItem(R.id.settings);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(RoutinesFragmentDirections.actionRutinasToSearchFragment(query));
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        settingsItem.setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(RoutinesFragmentDirections.actionRutinasToSettingsFragment());
+            return false;
+        });
     }
 
     @Override
