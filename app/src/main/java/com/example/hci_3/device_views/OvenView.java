@@ -141,7 +141,7 @@ public class OvenView extends DeviceView {
         });
 
         mMinus.setOnClickListener(v -> {
-            int temp = state.getTemperature() - 5;
+            int temp = getTemperatureValue() - 5;
 
             if (temp >= 90)
                 setTemperature(temp);
@@ -150,7 +150,8 @@ public class OvenView extends DeviceView {
         });
 
         mPlus.setOnClickListener(v -> {
-            int temp = state.getTemperature() + 5;
+            int temp = getTemperatureValue() + 5;
+
             if (temp <= 230)
                 setTemperature(temp);
             else
@@ -164,6 +165,11 @@ public class OvenView extends DeviceView {
             else
                 turnOff();
         });
+    }
+
+    private int getTemperatureValue() {
+        String temp = (String) mTemperature.getText();
+        return Integer.parseInt(temp.substring(0, temp.indexOf('°')));
     }
 
     @Override
