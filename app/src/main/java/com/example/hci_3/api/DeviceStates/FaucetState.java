@@ -89,16 +89,16 @@ public class FaucetState implements DeviceState {
 
         FaucetState fState = (FaucetState) state;
 
-        if( ! getStatus().equals(fState.getStatus()))
+        if(! getStatus().equals(fState.getStatus()))
             ans.put("status",fState.getStatus());
 
-        if( ! getQuantity().equals(fState.getQuantity()))
+        if(! getQuantity().equals(fState.getQuantity()))
             ans.put("quantity",fState.getQuantity().toString());
 
-        if( ! getUnit().equals(fState.getUnit()))
+        if(! getUnit().equals(fState.getUnit()))
             ans.put("unit",fState.getUnit());
 
-        if( ! getDispensedQuantity().equals(fState.getDispensedQuantity()))
+        if(! getDispensedQuantity().equals(fState.getDispensedQuantity()))
             ans.put("dispensedQuantity",fState.getDispensedQuantity().toString());
 
         return ans;
