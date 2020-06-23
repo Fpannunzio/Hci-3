@@ -69,6 +69,10 @@ public abstract class DeviceView extends ConstraintLayout {
         model.executeAction(device.getValue().getId(), actionName, params, errorHandler);
     }
 
+    public void executeAction(String actionName, ApiClient.ActionResponseHandler responseHandler, ApiClient.ErrorHandler errorHandler){
+        executeAction(actionName, new ArrayList<>(), responseHandler, errorHandler);
+    }
+
     public void executeAction(String actionName, ApiClient.ErrorHandler errorHandler){
         executeAction(actionName, new ArrayList<>(), errorHandler);
     }

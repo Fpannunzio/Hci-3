@@ -4,6 +4,7 @@ import android.content.Context;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +26,8 @@ import com.example.hci_3.api.DeviceStates.SpeakerState;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 
 public class SpeakerView extends DeviceView {
@@ -138,7 +141,6 @@ public class SpeakerView extends DeviceView {
             public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
-
         });
     }
 
@@ -214,5 +216,21 @@ public class SpeakerView extends DeviceView {
 
     private void setVolume(int volume){
         executeAction("setVolume",new ArrayList<>(Collections.singletonList(volume/10)), this::handleError);
+    }
+
+    // Returns Map with the following keys: [ title, artist, album, duration ]
+    @SuppressWarnings("unchecked")
+    private List<Map<String, Object>> parseGetPlaylistResult(Object result) {
+
+        List<Map<String, Object>> song;
+
+        try {
+            song = (List<Map<String, Object>>) result;
+        }
+        catch (Exception e) {
+            throw new IllegalStateException("getPlaylist result is incompatible with current code. Was expecting List<Map<String, Object>>");
+        }
+
+        return song;
     }
 }
