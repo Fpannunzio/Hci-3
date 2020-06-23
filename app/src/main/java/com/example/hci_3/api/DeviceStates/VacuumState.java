@@ -95,7 +95,7 @@ public class VacuumState implements DeviceState {
         if(!getBatteryLevel().equals(vState.getBatteryLevel()))
             ans.put("batteryLevel", vState.getBatteryLevel().toString());
 
-        if((getLocation() == null && vState.getLocation() != null) || ! getLocation().equals(vState.getLocation()))
+        if((getLocation() == null && vState.getLocation() != null) || (getLocation() != null && !getLocation().equals(vState.getLocation())))
             ans.put("room", vState.getLocation().getParsedName());
 
         return ans;

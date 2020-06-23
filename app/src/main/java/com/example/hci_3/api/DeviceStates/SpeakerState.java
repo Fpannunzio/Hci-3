@@ -101,8 +101,8 @@ public class SpeakerState implements DeviceState {
         if(!getVolume().equals(sState.getVolume()))
             ans.put("volume", sState.getVolume().toString());
 
-        if((getSong() == null && sState.getSong() != null) || !getSong().equals(sState.getSong()))
-            ans.put("song", sState.getSong().toString());
+        if((getSong() == null && sState.getSong() != null) || (getSong() != null && !getSong().equals(sState.getSong())))
+            ans.put("song", sState.getSong().getTitle());
 
         return ans;
     }
@@ -194,28 +194,6 @@ public class SpeakerState implements DeviceState {
             if (!(o instanceof Song)) return false;
             Song song = (Song) o;
             return Objects.equals(title, song.title);
-        }
-
-        public Map<String, String> compareToNewerVersion(SpeakerState.Song song) {
-
-            Map<String, String> ans = new HashMap<>();
-
-            if( ! getAlbum().equals(song.getAlbum()))
-                ans.put("album",song.getAlbum());
-
-            if( ! getArtist().equals(song.getArtist()))
-                ans.put("artist",song.getArtist());
-
-            if( ! getDuration().equals(song.getDuration()))
-                ans.put("duration",song.getDuration());
-
-            if( ! getProgress().equals(song.getProgress()))
-                ans.put("progress",song.getProgress());
-
-            if( ! getTitle().equals(song.getTitle()))
-                ans.put("title",song.getTitle());
-
-            return ans;
         }
     }
 }

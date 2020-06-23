@@ -30,11 +30,6 @@ import com.example.hci_3.view_models.FavoriteViewModel;
 import java.util.Objects;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FavoritesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FavoritesFragment extends Fragment {
 
     RecyclerView rv;
@@ -45,12 +40,6 @@ public class FavoritesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static FavoritesFragment newInstance(String param1, String param2) {
-        FavoritesFragment fragment = new FavoritesFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,31 +74,34 @@ public class FavoritesFragment extends Fragment {
 
         actionBar.setHomeButtonEnabled(false);
 
-
         return view;
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-            // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present.
 
-            MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem settingsItem = menu.findItem(R.id.settings);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(FavoritesFragmentDirections.actionFavoritosToSearchFragment(query));
+                return true;
 
-            final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(FavoritesFragmentDirections.actionFavoritosToSearchFragment(query));
-                    return true;
+            }
 
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    return false;
-                }
-            });
-        }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        settingsItem.setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(FavoritesFragmentDirections.actionFavoritosToSettingsFragment());
+            return false;
+        });
+    }
 
     @Override
     public void onResume() {
