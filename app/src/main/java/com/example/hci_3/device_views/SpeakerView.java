@@ -117,7 +117,7 @@ public class SpeakerView extends DeviceView {
 
         mPrevious.setOnClickListener(v -> previousSong());
 
-
+        mSeekBar.setMax(10);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -155,6 +155,8 @@ public class SpeakerView extends DeviceView {
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
+
+        mSeekBar.setProgress(state.getVolume());
 
         mPause.setOnClickListener(v -> {
             if(state.getStatus().equals("playing")) {
