@@ -15,7 +15,6 @@ import com.example.hci_3.R;
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceDeserializer;
-import com.example.hci_3.api.LogEntry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -23,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -50,7 +48,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         init(context);
-        ApiClient.getInstance().getDevices(list -> executorService.execute(() -> handleApiRequest(list,storedDevices, context)), (m, c) -> Log.w("uncriticalError", "NBR - Failed to get devices: " + m + " Code: " + c));
+        ApiClient.getInstance().getDevices(list -> executorService.execute(() -> handleApiRequest(list)), (m, c) -> Log.w("uncriticalError", "NBR - Failed to get devices: " + m + " Code: " + c));
     }
 
     @SuppressWarnings("unchecked")  //Solo se guardan integer. (Notification IDs)
@@ -65,14 +63,15 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
         notificationIDs = (Map<String, Integer>) notificationIDsSP.getAll();
 
-        lastNotificationID = notificationIDs.get(context.getString(R.string.last_notification_ID));
+        if((lastNotificationID = notificationIDs.get(context.getString(R.string.last_notification_ID))) == null )
+            lastNotificationID = 0;
 
         newDevices = new HashMap<>();
 
         this.context = context;
     }
 
-    private void handleApiRequest(List<Device> devices, Map<String, Device> storedDevices, Context context) {
+    private void handleApiRequest(List<Device> devices) {
 
         for(Device device: devices){
 
@@ -87,6 +86,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 for(Map.Entry<String,String> change : comparision.entrySet()) {
                     emitNotification(device, context.getString(R.string.notifications_device_stated_changed, change.getKey(), change.getValue()), change.getKey());
                 }
+                emitSummary(device);
 
                 if(!comparision.isEmpty()){
                     newDevices.put(device.getId(),device);
@@ -104,6 +104,22 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         }
 
         finish();
+    }
+
+    private void emitSummary(Device device) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, context.getString(R.string.notifications_standar_channel_ID))
+                .setSmallIcon(R.drawable.smartify_logo)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setStyle(new NotificationCompat.InboxStyle()
+                    .setSummaryText(device.getParsedName()))
+                .setGroupSummary(true)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(getIntent(device))
+                .setAutoCancel(true)
+                .setGroup(device.getId())
+                .setOnlyAlertOnce(true);
+
+        notificationManager.notify(getNotificationID(device.getId(),"summary"), builder.build());
     }
 
     private void finish() {
@@ -153,14 +169,17 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private PendingIntent getIntent(Device device){
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.setAction("notifications");
+        intent.setAction("notifications"); //TODO: pasar a R.Strings
         intent.putExtra("roomID", device.getRoom().getId());
         intent.putExtra("roomName", device.getRoom().getParsedName());
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
 
     private void emitNotification(Device device, String message, String event){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, context.getString(R.string.channel_id))
+
+        String channelID = device.isFav() ? context.getString(R.string.notifications_favorite_channel_ID) : context.getString(R.string.notifications_standar_channel_ID);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID)
                 .setSmallIcon(R.drawable.smartify_logo)
                 .setContentTitle(device.getParsedName())
                 .setContentText(message)

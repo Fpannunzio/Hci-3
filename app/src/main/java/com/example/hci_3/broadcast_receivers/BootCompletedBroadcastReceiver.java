@@ -25,7 +25,7 @@ public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
             CharSequence name = context.getString(R.string.notifications_channel_name);
             String description = context.getString(R.string.notifications_channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(context.getString(R.string.channel_id), name, importance);
+            NotificationChannel channel = new NotificationChannel(context.getString(R.string.notifications_standar_channel_ID), name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
