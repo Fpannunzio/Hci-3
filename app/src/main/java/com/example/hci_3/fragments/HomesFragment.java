@@ -118,6 +118,20 @@ public class HomesFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        model.startUpdatingHomes();
+        model.startUpdatingRooms();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        model.stopUpdatingHomes();
+    }
+
+
     private void refreshHomes(List<Home> homes){
         adapter.clear();
         adapter.addAll(homes.stream().map(Home::getName).collect(Collectors.toList()));

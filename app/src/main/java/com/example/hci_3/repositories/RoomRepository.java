@@ -46,7 +46,7 @@ public class RoomRepository {
         handler.removeCallbacksAndMessages(null);
     }
 
-    private void startPolling(){
+    public void startPolling(){
         // Para mi tiene que suscribirse al alarmManager
         int delay = 60000;
 
