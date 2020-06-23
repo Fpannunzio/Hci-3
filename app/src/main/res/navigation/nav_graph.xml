@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_favoritos_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_favoritos_to_room"
+            app:destination="@id/room" />
     </fragment>
     <fragment
         android:id="@+id/rutinas"

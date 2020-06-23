@@ -30,11 +30,6 @@ import com.example.hci_3.view_models.FavoriteViewModel;
 import java.util.Objects;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FavoritesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FavoritesFragment extends Fragment {
 
     RecyclerView rv;
@@ -45,12 +40,6 @@ public class FavoritesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static FavoritesFragment newInstance(String param1, String param2) {
-        FavoritesFragment fragment = new FavoritesFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

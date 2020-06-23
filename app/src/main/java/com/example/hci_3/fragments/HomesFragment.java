@@ -56,13 +56,6 @@ public class HomesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static HomesFragment newInstance(String param1, String param2) {
-        HomesFragment fragment = new HomesFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,8 +74,6 @@ public class HomesFragment extends Fragment {
         rooms.observe(this, this::refreshRooms);
 
         sharedPreferences = requireContext().getSharedPreferences("spinnerSP", Context.MODE_PRIVATE);
-
-
 
     }
 
