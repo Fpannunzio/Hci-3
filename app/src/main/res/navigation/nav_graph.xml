@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_favoritos_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_favoritos_to_room"
+            app:destination="@id/room" />
+        <action
+            android:id="@+id/action_favoritos_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/rutinas"
@@ -22,6 +28,9 @@
         <action
             android:id="@+id/action_rutinas_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_rutinas_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/hogares"
@@ -35,6 +44,9 @@
         <action
             android:id="@+id/action_hogares_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_hogares_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/room"
@@ -54,6 +66,9 @@
         <action
             android:id="@+id/action_room_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_room_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -64,4 +79,9 @@
             android:name="SearchInput"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.hci_3.fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

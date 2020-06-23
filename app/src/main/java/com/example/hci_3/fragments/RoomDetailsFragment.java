@@ -29,11 +29,6 @@ import com.example.hci_3.view_models.RoomDetailsViewModel;
 
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RoomDetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RoomDetailsFragment extends Fragment {
 
     RecyclerView rv;
@@ -45,13 +40,6 @@ public class RoomDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static RoomDetailsFragment newInstance(String param1, String param2) {
-        RoomDetailsFragment fragment = new RoomDetailsFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +95,7 @@ public class RoomDetailsFragment extends Fragment {
         //inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem settingsItem = menu.findItem(R.id.settings);
 
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -120,6 +109,10 @@ public class RoomDetailsFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
+        });
+        settingsItem.setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(RoomDetailsFragmentDirections.actionRoomToSettingsFragment());
+            return false;
         });
     }
 

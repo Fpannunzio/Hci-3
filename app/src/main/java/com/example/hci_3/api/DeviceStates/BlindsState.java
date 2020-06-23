@@ -66,19 +66,19 @@ public class BlindsState implements DeviceState {
     public Map<String, String> compareToNewerVersion(DeviceState state) {
         Map<String, String> ans = new HashMap<>();
 
-        if(! (state instanceof BlindsState))
-            return ans; //TODO: null or empty map
+        if(!(state instanceof BlindsState))
+            return ans;
 
         BlindsState bState = (BlindsState) state;
 
-        if( ! getStatus().equals(bState.getStatus()))
-            ans.put("status",bState.getStatus());
+        if(!getStatus().equals(bState.getStatus()))
+            ans.put("status", bState.getStatus());
 
-        if( ! getLevel().equals(bState.getLevel()))
-            ans.put("level",bState.getLevel().toString());
+        if(!getLevel().equals(bState.getLevel()))
+            ans.put("level", bState.getLevel().toString());
 
-        if( ! getCurrentLevel().equals(bState.getCurrentLevel()))
-            ans.put("currentLevel",bState.getCurrentLevel().toString());
+        if(!getCurrentLevel().equals(bState.getCurrentLevel()))
+            ans.put("currentLevel", bState.getCurrentLevel().toString());
 
         return ans;
 

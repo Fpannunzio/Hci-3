@@ -93,14 +93,6 @@ public class Device {
         return meta;
     }
 
-//    public void fav() {
-//        meta.fav = true;
-//    }
-
-//    public void unfav() {
-//        meta.fav = false;
-//    }
-
     public Boolean isFav() {
         return meta.fav;
     }
@@ -119,12 +111,12 @@ public class Device {
     }
 
     public Map<String, String> compareToNewerVersion(Device device){
-        if(! getId().equals(device.getId()))
+        if(!getId().equals(device.getId()))
             return null;
 
         Map<String,String> ans = new HashMap<>();
 
-        if(! this.getParsedName().equals(device.getParsedName()))
+        if(!this.getParsedName().equals(device.getParsedName()))
             ans.put("name",device.getParsedName());
 
         for(Map.Entry<String,String> entry : getMeta().compareToNewerVersion(device.getMeta()).entrySet()) {

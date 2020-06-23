@@ -75,6 +75,10 @@ public class LampView extends DeviceView {
 
         mSwitch.setChecked(state.getStatus().equals("on"));
 
+        mBrightness.setProgress(state.getBrightness());
+
+//        currentColor.setBackgroundColor(Integer.parseInt(state.getColor(), 16));
+
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));

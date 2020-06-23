@@ -109,28 +109,28 @@ public class ACState implements DeviceState {
     public Map<String, String> compareToNewerVersion(DeviceState state) {
         Map<String, String> ans = new HashMap<>();
 
-        if(! (state instanceof ACState))
-            return ans; //TODO: null or empty map
+        if(!(state instanceof ACState))
+            return ans;
 
         ACState acState = (ACState) state;
 
-        if( ! getStatus().equals(acState.getStatus()))
-            ans.put("status",acState.getStatus());
+        if(!getStatus().equals(acState.getStatus()))
+            ans.put("status", acState.getStatus());
 
-        if( ! getTemperature().equals(acState.getTemperature()))
-            ans.put("temperature",acState.getTemperature().toString());
+        if(!getTemperature().equals(acState.getTemperature()))
+            ans.put("temperature", acState.getTemperature().toString());
 
-        if( ! getFanSpeed().equals(acState.getFanSpeed()))
-            ans.put("fanSpeed",acState.getFanSpeed());
+        if(!getFanSpeed().equals(acState.getFanSpeed()))
+            ans.put("fanSpeed", acState.getFanSpeed());
 
-        if( ! getHorizontalSwing().equals(acState.getHorizontalSwing()))
-            ans.put("horizontalSwing",acState.getHorizontalSwing());
+        if(!getHorizontalSwing().equals(acState.getHorizontalSwing()))
+            ans.put("horizontalSwing", acState.getHorizontalSwing());
 
-        if( ! getVerticalSwing().equals(acState.getVerticalSwing()))
-            ans.put("verticalSwing",acState.getVerticalSwing());
+        if(!getVerticalSwing().equals(acState.getVerticalSwing()))
+            ans.put("verticalSwing", acState.getVerticalSwing());
 
-        if( ! getMode().equals(acState.getStatus()))
-            ans.put("mode",acState.getStatus());
+        if(!getMode().equals(acState.getStatus()))
+            ans.put("mode", acState.getStatus());
 
         return ans;
     }

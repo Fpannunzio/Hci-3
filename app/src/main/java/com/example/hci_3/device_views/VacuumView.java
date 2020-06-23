@@ -55,7 +55,7 @@ public class VacuumView extends DeviceView {
         mDevName = findViewById(R.id.vacuum_name);
         mLocation = findViewById(R.id.vacuum_location);
         mState = findViewById(R.id.onStateVacuum);
-        cardView = findViewById(R.id.room_card);
+        cardView = findViewById(R.id.cardView);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
         mSpinner = findViewById(R.id.locationSpinner);
@@ -112,7 +112,6 @@ public class VacuumView extends DeviceView {
                     setMode("mop");
             }
         });
-
     }
 
     @Override
@@ -121,6 +120,7 @@ public class VacuumView extends DeviceView {
         VacuumState state = (VacuumState) device.getState();
 
         mDevName.setText(getParsedName(device.getName()));
+
         mState.setText(getResources().getString(R.string.state,
                 state.getStatus().equals("active")? getResources().getString(R.string.activa) :state.getStatus().equals("docked")?
                         getResources().getString(R.string.cargandose) +  getResources().getString(R.string.batery_state, state.getBatteryLevel()) + "%":
@@ -129,6 +129,10 @@ public class VacuumView extends DeviceView {
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
+
+
+        //hay que setear el string array programaticamente antes de hacer esto
+//        mSpinner.setSelection(locationAdapter.getPosition(state.getLocation().getName()));
 
         // Aca updetear el select de los rooms con model.getRooms(device, devices -> {}, this::handleError)
         // y posicionar el spinner en el lugar correcto
@@ -139,12 +143,15 @@ public class VacuumView extends DeviceView {
     private void start(){
         executeAction("start", this::handleError);
     }
+
     private void pause(){
         executeAction("pause", this::handleError);
     }
+
     private void dock(){
         executeAction("dock", this::handleError);
     }
+
     private void setMode(String value){
         executeAction("setMode", new ArrayList<>(Collections.singletonList(value)), this::handleError);
     }

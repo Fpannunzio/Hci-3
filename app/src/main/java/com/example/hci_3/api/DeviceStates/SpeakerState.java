@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SpeakerState implements DeviceState {
 
@@ -86,23 +87,22 @@ public class SpeakerState implements DeviceState {
     public Map<String, String> compareToNewerVersion(DeviceState state) {
         Map<String, String> ans = new HashMap<>();
 
-        if(! (state instanceof SpeakerState))
-            return ans; //TODO: null or empty map
+        if(!(state instanceof SpeakerState))
+            return ans;
 
         SpeakerState sState = (SpeakerState) state;
 
-        if( ! getStatus().equals(sState.getStatus()))
-            ans.put("status",sState.getStatus());
+        if(!getStatus().equals(sState.getStatus()))
+            ans.put("status", sState.getStatus());
 
-        if( ! getGenre().equals(sState.getGenre()))
-            ans.put("genre",sState.getGenre());
+        if(!getGenre().equals(sState.getGenre()))
+            ans.put("genre", sState.getGenre());
 
-        if( ! getVolume().equals(sState.getVolume()))
-            ans.put("volume",sState.getVolume().toString());
+        if(!getVolume().equals(sState.getVolume()))
+            ans.put("volume", sState.getVolume().toString());
 
-        for(Map.Entry<String,String> entry : getSong().compareToNewerVersion(sState.getSong()).entrySet()) {
-            ans.put("song." + entry.getKey(), entry.getValue());
-        }
+        if((getSong() == null && sState.getSong() != null) || (getSong() != null && !getSong().equals(sState.getSong())))
+            ans.put("song", sState.getSong().getTitle());
 
         return ans;
     }
@@ -188,26 +188,12 @@ public class SpeakerState implements DeviceState {
                     '}';
         }
 
-        public Map<String, String> compareToNewerVersion(SpeakerState.Song song) {
-
-            Map<String, String> ans = new HashMap<>();
-
-            if( ! getAlbum().equals(song.getAlbum()))
-                ans.put("album",song.getAlbum());
-
-            if( ! getArtist().equals(song.getArtist()))
-                ans.put("artist",song.getArtist());
-
-            if( ! getDuration().equals(song.getDuration()))
-                ans.put("duration",song.getDuration());
-
-            if( ! getProgress().equals(song.getProgress()))
-                ans.put("progress",song.getProgress());
-
-            if( ! getTitle().equals(song.getTitle()))
-                ans.put("title",song.getTitle());
-
-            return ans;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Song)) return false;
+            Song song = (Song) o;
+            return Objects.equals(title, song.title);
         }
     }
 }
