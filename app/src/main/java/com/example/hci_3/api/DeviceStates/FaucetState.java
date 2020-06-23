@@ -85,21 +85,21 @@ public class FaucetState implements DeviceState {
         Map<String, String> ans = new HashMap<>();
 
         if(! (state instanceof FaucetState))
-            return ans; //TODO: null or empty map
+            return ans;
 
         FaucetState fState = (FaucetState) state;
 
         if( ! getStatus().equals(fState.getStatus()))
-            ans.put("status",fState.getStatus());
+            ans.put("status", fState.getStatus());
 
-        if( ! getQuantity().equals(fState.getQuantity()))
-            ans.put("quantity",fState.getQuantity().toString());
+        if((getQuantity() == null && fState.getQuantity() != null) || !getQuantity().equals(fState.getQuantity()))
+            ans.put("quantity", fState.getQuantity().toString());
 
-        if( ! getUnit().equals(fState.getUnit()))
-            ans.put("unit",fState.getUnit());
+        if((getUnit() == null && fState.getUnit() != null) || !getUnit().equals(fState.getUnit()))
+            ans.put("unit", fState.getUnit());
 
-        if( ! getDispensedQuantity().equals(fState.getDispensedQuantity()))
-            ans.put("dispensedQuantity",fState.getDispensedQuantity().toString());
+        if((getDispensedQuantity() == null && fState.getDispensedQuantity() != null) || !getDispensedQuantity().equals(fState.getDispensedQuantity()))
+            ans.put("dispensedQuantity", fState.getDispensedQuantity().toString());
 
         return ans;
     }

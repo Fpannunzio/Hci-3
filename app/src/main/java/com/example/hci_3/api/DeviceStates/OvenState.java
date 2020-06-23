@@ -94,25 +94,25 @@ public class OvenState implements DeviceState {
     public Map<String, String> compareToNewerVersion(DeviceState state) {
         Map<String, String> ans = new HashMap<>();
 
-        if(! (state instanceof OvenState))
-            return ans; //TODO: null or empty map
+        if(!(state instanceof OvenState))
+            return ans;
 
         OvenState oState = (OvenState) state;
 
-        if( ! getStatus().equals(oState.getStatus()))
-            ans.put("status",oState.getStatus());
+        if(!getStatus().equals(oState.getStatus()))
+            ans.put("status", oState.getStatus());
 
-        if( ! getConvection().equals(oState.getConvection()))
-            ans.put("convection",oState.getConvection());
+        if(!getConvection().equals(oState.getConvection()))
+            ans.put("convection", oState.getConvection());
 
-        if( ! getGrill().equals(oState.getGrill()))
-            ans.put("grill",oState.getGrill());
+        if(!getGrill().equals(oState.getGrill()))
+            ans.put("grill", oState.getGrill());
 
-        if( ! getHeat().equals(oState.getHeat()))
-            ans.put("heat",oState.getHeat());
+        if(!getHeat().equals(oState.getHeat()))
+            ans.put("heat", oState.getHeat());
 
-        if( ! getTemperature().equals(oState.getTemperature()))
-            ans.put("temperature",oState.getTemperature().toString());
+        if(!getTemperature().equals(oState.getTemperature()))
+            ans.put("temperature", oState.getTemperature().toString());
 
         return ans;
     }

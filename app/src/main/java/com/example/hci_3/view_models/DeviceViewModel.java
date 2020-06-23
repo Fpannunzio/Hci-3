@@ -37,7 +37,7 @@ public abstract class DeviceViewModel extends ViewModel {
         return assignDevicesTransformation();
     }
 
-    public void getDeviceRooms(Device device, ApiClient.SuccessHandler<List<Room>> responseHandler, ApiClient.ErrorHandler errorHandler){
+    public void getRooms(Device device, ApiClient.SuccessHandler<List<Room>> responseHandler, ApiClient.ErrorHandler errorHandler){
         roomRepository.getRooms(device.getId(), responseHandler, errorHandler);
     }
 

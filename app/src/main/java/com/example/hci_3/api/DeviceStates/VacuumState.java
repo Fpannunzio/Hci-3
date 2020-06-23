@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class VacuumState implements DeviceState {
 
@@ -80,23 +81,22 @@ public class VacuumState implements DeviceState {
     public Map<String, String> compareToNewerVersion(DeviceState state) {
         Map<String, String> ans = new HashMap<>();
 
-        if(! (state instanceof VacuumState))
-            return ans; //TODO: null or empty map
+        if(!(state instanceof VacuumState))
+            return ans;
 
         VacuumState vState = (VacuumState) state;
 
-        if( ! getStatus().equals(vState.getStatus()))
-            ans.put("status",vState.getStatus());
+        if(!getStatus().equals(vState.getStatus()))
+            ans.put("status", vState.getStatus());
 
-        if( ! getMode().equals(vState.getMode()))
-            ans.put("mode",vState.getMode());
+        if(!getMode().equals(vState.getMode()))
+            ans.put("mode", vState.getMode());
 
-        if( ! getBatteryLevel().equals(vState.getBatteryLevel()))
-            ans.put("batteryLevel",vState.getBatteryLevel().toString());
+        if(!getBatteryLevel().equals(vState.getBatteryLevel()))
+            ans.put("batteryLevel", vState.getBatteryLevel().toString());
 
-        for(Map.Entry<String,String> entry : getLocation().compareToNewerVersion(vState.getLocation()).entrySet()) {
-            ans.put("room." + entry.getKey(), entry.getValue());
-        }
+        if((getLocation() == null && vState.getLocation() != null) || ! getLocation().equals(vState.getLocation()))
+            ans.put("room", vState.getLocation().getParsedName());
 
         return ans;
     }
@@ -132,6 +132,11 @@ public class VacuumState implements DeviceState {
             this.name = name;
         }
 
+        public String getParsedName(){
+            String[] aux = this.name.split("_");
+            return aux[aux.length - 1];
+        }
+
         @NonNull
         @Override
         public String toString() {
@@ -141,16 +146,12 @@ public class VacuumState implements DeviceState {
                     '}';
         }
 
-        public Map<String, String> compareToNewerVersion(VacuumState.Location location) {
-            Map<String, String> ans = new HashMap<>();
-
-            if( ! getId().equals(location.getId()))
-                ans.put("id",location.getId());
-
-            if( ! getName().equals(location.getName()))
-                ans.put("name",location.getName());
-
-            return ans;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Location)) return false;
+            Location location = (Location) o;
+            return Objects.equals(id, location.id);
         }
     }
 }

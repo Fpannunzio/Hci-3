@@ -52,16 +52,16 @@ public class DoorState implements DeviceState {
     public Map<String, String> compareToNewerVersion(DeviceState state) {
         Map<String, String> ans = new HashMap<>();
 
-        if(! (state instanceof DoorState))
-            return ans; //TODO: null or empty map
+        if(!(state instanceof DoorState))
+            return ans;
 
         DoorState dState = (DoorState) state;
 
-        if( ! getStatus().equals(dState.getStatus()))
-            ans.put("status",dState.getStatus());
+        if(!getStatus().equals(dState.getStatus()))
+            ans.put("status", dState.getStatus());
 
-        if( ! getLock().equals(dState.getLock()))
-            ans.put("lock",dState.getLock());
+        if(!getLock().equals(dState.getLock()))
+            ans.put("lock", dState.getLock());
 
         return ans;
     }

@@ -112,7 +112,6 @@ public class VacuumView extends DeviceView {
                     setMode("mop");
             }
         });
-
     }
 
     @Override
@@ -144,12 +143,15 @@ public class VacuumView extends DeviceView {
     private void start(){
         executeAction("start", this::handleError);
     }
+
     private void pause(){
         executeAction("pause", this::handleError);
     }
+
     private void dock(){
         executeAction("dock", this::handleError);
     }
+
     private void setMode(String value){
         executeAction("setMode", new ArrayList<>(Collections.singletonList(value)), this::handleError);
     }
