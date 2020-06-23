@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.hci_3.R;
 import com.example.hci_3.SpacesItemDecoration;
@@ -32,8 +34,6 @@ import com.example.hci_3.adapters.RoomAdapter;
 import com.example.hci_3.api.Home;
 import com.example.hci_3.api.Room;
 import com.example.hci_3.view_models.HomesViewModel;
-
-
 
 import java.util.List;
 import java.util.Objects;
@@ -50,6 +50,7 @@ public class HomesFragment extends Fragment {
     ArrayAdapter<CharSequence> adapter;
     RoomAdapter recyclerAdapter;
     SharedPreferences sharedPreferences;
+    String spinnerValue = null;
 
 
     public HomesFragment() {
@@ -81,9 +82,6 @@ public class HomesFragment extends Fragment {
         rooms.observe(this, this::refreshRooms);
 
         sharedPreferences = requireContext().getSharedPreferences("spinnerSP", Context.MODE_PRIVATE);
-
-
-
     }
 
     @Override
@@ -98,12 +96,13 @@ public class HomesFragment extends Fragment {
         spinner = view.findViewById(R.id.homes_spinner);
 
         spinner.setAdapter(adapter);
+
         setHasOptionsMenu(true);
 
-        int pos = sharedPreferences.getInt("home_spinner_position", -1);
-        if(pos != -1)
-            spinner.setSelection(pos);
+        spinnerValue = sharedPreferences.getString("home_spinner_value", null);
 
+        if(spinnerValue != null && adapter.getPosition(spinnerValue) != -1)
+            spinner.setSelection(adapter.getPosition(spinnerValue));
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -112,10 +111,8 @@ public class HomesFragment extends Fragment {
 
                 Home home = Objects.requireNonNull(homes.getValue()).get(arg2);
                 model.updateCurrentHome(home);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("home_spinner_position", arg2);
-                editor.apply();
-
+                //noinspection ConstantConditions
+                updateSpinnerValue(adapter.getItem(arg2).toString());
             }
 
             @Override
@@ -142,7 +139,6 @@ public class HomesFragment extends Fragment {
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         actionBar.setHomeButtonEnabled(false);
-
 
         return view;
     }
@@ -172,7 +168,6 @@ public class HomesFragment extends Fragment {
         super.onResume();
         model.startUpdatingHomes();
         model.startUpdatingRooms();
-
     }
 
     @Override
@@ -181,14 +176,44 @@ public class HomesFragment extends Fragment {
         model.stopUpdatingHomes();
     }
 
-
     private void refreshHomes(List<Home> homes){
+
         adapter.clear();
         adapter.addAll(homes.stream().map(Home::getName).collect(Collectors.toList()));
         adapter.notifyDataSetChanged();
+
+        if(adapter.getCount() == 0){
+            // Que mostramos si no hay casas??
+            updateSpinnerValue(null);
+            return;
+        }
+
+        int newPosition = -1;
+        if(spinnerValue != null)
+            newPosition = adapter.getPosition(spinnerValue);
+
+        if(newPosition == -1) {
+            newPosition = 0;
+            if(spinnerValue != null)
+                Toast.makeText(requireContext(), getResources().getString(R.string.spinner_invalid_home_name), Toast.LENGTH_LONG).show();
+        }
+
+        //noinspection ConstantConditions
+        updateSpinnerValue(adapter.getItem(newPosition).toString());
+        spinner.setSelection(newPosition);
     }
 
     private void refreshRooms(List<Room> rooms){
         recyclerAdapter.setRooms(rooms);
+    }
+
+    private void updateSpinnerValue(String value){
+
+        if((value == null && spinnerValue != null) || (value != null && !value.equals(spinnerValue))) {
+            spinnerValue = value;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("home_spinner_value", spinnerValue);
+            editor.apply();
+        }
     }
 }
