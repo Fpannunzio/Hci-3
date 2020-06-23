@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SpeakerState implements DeviceState {
 
     @SerializedName("status")
@@ -77,6 +80,31 @@ public class SpeakerState implements DeviceState {
                 ", genre='" + genre + '\'' +
                 ", song=" + song +
                 '}';
+    }
+
+    @Override
+    public Map<String, String> compareToNewerVersion(DeviceState state) {
+        Map<String, String> ans = new HashMap<>();
+
+        if(! (state instanceof SpeakerState))
+            return ans; //TODO: null or empty map
+
+        SpeakerState sState = (SpeakerState) state;
+
+        if( ! getStatus().equals(sState.getStatus()))
+            ans.put("status",sState.getStatus());
+
+        if( ! getGenre().equals(sState.getGenre()))
+            ans.put("genre",sState.getGenre());
+
+        if( ! getVolume().equals(sState.getVolume()))
+            ans.put("volume",sState.getVolume().toString());
+
+        for(Map.Entry<String,String> entry : getSong().compareToNewerVersion(sState.getSong()).entrySet()) {
+            ans.put("song." + entry.getKey(), entry.getValue());
+        }
+
+        return ans;
     }
 
     public static class Song {
@@ -158,6 +186,28 @@ public class SpeakerState implements DeviceState {
                     ", duration='" + duration + '\'' +
                     ", progress='" + progress + '\'' +
                     '}';
+        }
+
+        public Map<String, String> compareToNewerVersion(SpeakerState.Song song) {
+
+            Map<String, String> ans = new HashMap<>();
+
+            if( ! getAlbum().equals(song.getAlbum()))
+                ans.put("album",song.getAlbum());
+
+            if( ! getArtist().equals(song.getArtist()))
+                ans.put("artist",song.getArtist());
+
+            if( ! getDuration().equals(song.getDuration()))
+                ans.put("duration",song.getDuration());
+
+            if( ! getProgress().equals(song.getProgress()))
+                ans.put("progress",song.getProgress());
+
+            if( ! getTitle().equals(song.getTitle()))
+                ans.put("title",song.getTitle());
+
+            return ans;
         }
     }
 }

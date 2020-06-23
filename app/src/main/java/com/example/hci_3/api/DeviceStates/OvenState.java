@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class OvenState implements DeviceState {
 
     @SerializedName("status")
@@ -85,5 +88,32 @@ public class OvenState implements DeviceState {
                 ", grill='" + grill + '\'' +
                 ", convection='" + convection + '\'' +
                 '}';
+    }
+
+    @Override
+    public Map<String, String> compareToNewerVersion(DeviceState state) {
+        Map<String, String> ans = new HashMap<>();
+
+        if(! (state instanceof OvenState))
+            return ans; //TODO: null or empty map
+
+        OvenState oState = (OvenState) state;
+
+        if( ! getStatus().equals(oState.getStatus()))
+            ans.put("status",oState.getStatus());
+
+        if( ! getConvection().equals(oState.getConvection()))
+            ans.put("convection",oState.getConvection());
+
+        if( ! getGrill().equals(oState.getGrill()))
+            ans.put("grill",oState.getGrill());
+
+        if( ! getHeat().equals(oState.getHeat()))
+            ans.put("heat",oState.getHeat());
+
+        if( ! getTemperature().equals(oState.getTemperature()))
+            ans.put("temperature",oState.getTemperature().toString());
+
+        return ans;
     }
 }

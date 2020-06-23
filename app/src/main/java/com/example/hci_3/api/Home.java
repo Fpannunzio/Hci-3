@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Home {
 
     @SerializedName("id")
@@ -50,5 +53,19 @@ public class Home {
                 ", name='" + name + '\'' +
                 ", meta=" + meta +
                 '}';
+    }
+
+    public Map<String, String> compareToNewerVersion(Home home) {
+        Map<String, String> ans = new HashMap<>();
+
+        if(! getName().equals(home.getName()))
+            ans.put("name", home.getName());
+
+        if(getMeta() != null)
+            for(Map.Entry<String,String> entry : getMeta().compareToNewerVersion(home.getMeta()).entrySet()) {
+                ans.put("meta." + entry.getKey(), entry.getValue());
+            }
+
+        return ans;
     }
 }

@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LampState implements DeviceState {
 
     @SerializedName("status")
@@ -57,5 +60,26 @@ public class LampState implements DeviceState {
                 ", color='" + color + '\'' +
                 ", brightness=" + brightness +
                 '}';
+    }
+
+    @Override
+    public Map<String, String> compareToNewerVersion(DeviceState state) {
+        Map<String, String> ans = new HashMap<>();
+
+        if(! (state instanceof LampState))
+            return ans; //TODO: null or empty map
+
+        LampState lState = (LampState) state;
+
+        if( ! getStatus().equals(lState.getStatus()))
+            ans.put("status",lState.getStatus());
+
+        if( ! getColor().equals(lState.getColor()))
+            ans.put("color",lState.getColor());
+
+        if( ! getBrightness().equals(lState.getBrightness()))
+            ans.put("brightness",lState.getBrightness().toString());
+
+        return ans;
     }
 }

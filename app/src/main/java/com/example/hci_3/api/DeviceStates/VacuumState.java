@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class VacuumState implements DeviceState {
 
     @SerializedName("status")
@@ -73,6 +76,31 @@ public class VacuumState implements DeviceState {
                 '}';
     }
 
+    @Override
+    public Map<String, String> compareToNewerVersion(DeviceState state) {
+        Map<String, String> ans = new HashMap<>();
+
+        if(! (state instanceof VacuumState))
+            return ans; //TODO: null or empty map
+
+        VacuumState vState = (VacuumState) state;
+
+        if( ! getStatus().equals(vState.getStatus()))
+            ans.put("status",vState.getStatus());
+
+        if( ! getMode().equals(vState.getMode()))
+            ans.put("mode",vState.getMode());
+
+        if( ! getBatteryLevel().equals(vState.getBatteryLevel()))
+            ans.put("batteryLevel",vState.getBatteryLevel().toString());
+
+        for(Map.Entry<String,String> entry : getLocation().compareToNewerVersion(vState.getLocation()).entrySet()) {
+            ans.put("room." + entry.getKey(), entry.getValue());
+        }
+
+        return ans;
+    }
+
     public static class Location {
 
         @SerializedName("id")
@@ -111,6 +139,18 @@ public class VacuumState implements DeviceState {
                     "id='" + id + '\'' +
                     ", name='" + name + '\'' +
                     '}';
+        }
+
+        public Map<String, String> compareToNewerVersion(VacuumState.Location location) {
+            Map<String, String> ans = new HashMap<>();
+
+            if( ! getId().equals(location.getId()))
+                ans.put("id",location.getId());
+
+            if( ! getName().equals(location.getName()))
+                ans.put("name",location.getName());
+
+            return ans;
         }
     }
 }

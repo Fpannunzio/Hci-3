@@ -9,12 +9,20 @@
         android:id="@+id/favoritos"
         android:name="com.example.hci_3.fragments.FavoritesFragment"
         android:label="fragment_favoritos"
-        tools:layout="@layout/fragment_favoritos" />
+        tools:layout="@layout/fragment_favoritos" >
+        <action
+            android:id="@+id/action_favoritos_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/rutinas"
         android:name="com.example.hci_3.fragments.RoutinesFragment"
         android:label="fragment_rutinas"
-        tools:layout="@layout/fragment_rutinas" />
+        tools:layout="@layout/fragment_rutinas" >
+        <action
+            android:id="@+id/action_rutinas_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/hogares"
         android:name="com.example.hci_3.fragments.HomesFragment"
@@ -24,6 +32,9 @@
             android:id="@+id/homes_to_room"
             app:destination="@id/room"
             app:enterAnim="@android:anim/fade_in" />
+        <action
+            android:id="@+id/action_hogares_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/room"
@@ -39,6 +50,18 @@
             app:argType="string" />
         <argument
             android:name="roomName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_room_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.hci_3.fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <argument
+            android:name="SearchInput"
             app:argType="string" />
     </fragment>
 </navigation>

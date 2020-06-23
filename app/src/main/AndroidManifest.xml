@@ -17,6 +17,12 @@
 <!--                <action android:name="com.example.hci_3.ALARM_HANDLE"/>-->
 <!--            </intent-filter>-->
 <!--        </receiver>-->
+        <receiver android:name="com.example.hci_3.broadcast_receivers.BootCompletedBroadcastReceiver">
+            <intent-filter>
+                <!-- REGISTER TO RECEIVE BOOT_COMPLETED EVENTS -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <receiver android:name=".MainActivity$AlarmHandlerBroadcastReceiver" />
 

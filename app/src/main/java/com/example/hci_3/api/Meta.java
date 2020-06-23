@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Meta {
 
     @SerializedName("fav")
@@ -26,6 +29,14 @@ public class Meta {
         this.desc = desc;
     }
 
+    public Boolean getFav() {
+        return fav;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -33,5 +44,17 @@ public class Meta {
                 "fav=" + fav +
                 ", desc=" + desc +
                 '}';
+    }
+
+    public Map<String, String> compareToNewerVersion(Meta meta){
+        Map<String, String> ans = new HashMap<>();
+
+        if(getFav() != null && ! getFav().equals(meta.getFav()))
+            ans.put("fav", meta.getFav().toString());
+
+        if(getDesc() != null && ! getDesc().equals(meta.getDesc()))
+            ans.put("desc", meta.getDesc());
+
+        return ans;
     }
 }

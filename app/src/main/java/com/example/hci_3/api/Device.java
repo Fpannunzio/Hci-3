@@ -6,6 +6,9 @@ import com.example.hci_3.api.DeviceStates.DeviceState;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Device {
 
     @SerializedName("id")
@@ -57,6 +60,11 @@ public class Device {
         return name;
     }
 
+    public String getParsedName(){
+        String[] aux = this.name.split("_");
+        return aux[aux.length - 1];
+    }
+
     public DeviceType getDeviceType() {
         return deviceType;
     }
@@ -79,6 +87,10 @@ public class Device {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public Meta getMeta() {
+        return meta;
     }
 
 //    public void fav() {
@@ -104,5 +116,29 @@ public class Device {
                 ", room=" + room +
                 ", meta=" + meta +
                 '}';
+    }
+
+    public Map<String, String> compareToNewerVersion(Device device){
+        if(! getId().equals(device.getId()))
+            return null;
+
+        Map<String,String> ans = new HashMap<>();
+
+        if(! this.getParsedName().equals(device.getParsedName()))
+            ans.put("name",device.getParsedName());
+
+        for(Map.Entry<String,String> entry : getMeta().compareToNewerVersion(device.getMeta()).entrySet()) {
+            ans.put("meta." + entry.getKey(), entry.getValue());
+        }
+
+        for(Map.Entry<String,String> entry : getRoom().compareToNewerVersion(device.getRoom()).entrySet()) {
+            ans.put("room." + entry.getKey(), entry.getValue());
+        }
+
+        for(Map.Entry<String,String> entry : getState().compareToNewerVersion(device.getState()).entrySet()) {
+            ans.put("state." + entry.getKey(), entry.getValue());
+        }
+
+        return ans;
     }
 }
