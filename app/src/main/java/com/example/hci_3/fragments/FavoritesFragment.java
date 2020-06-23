@@ -50,7 +50,7 @@ public class FavoritesFragment extends Fragment {
 
         model = new ViewModelProvider(this).get(FavoriteViewModel.class);
 
-        adapter = new DeviceAdapter();
+        adapter = new DeviceAdapter(model);
 
         model.getDevices().observe(requireActivity(), adapter::setDevices);
     }
@@ -77,5 +77,23 @@ public class FavoritesFragment extends Fragment {
         actionBar.setHomeButtonEnabled(false);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        model.continuePollingStates();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        model.pausePollingStates();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        model.stopPollingStates();
     }
 }

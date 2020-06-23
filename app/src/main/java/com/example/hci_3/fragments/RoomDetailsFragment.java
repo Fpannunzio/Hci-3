@@ -61,7 +61,7 @@ public class RoomDetailsFragment extends Fragment {
 
         model.setRoom(roomId);
 
-        adapter = new DeviceAdapter();
+        adapter = new DeviceAdapter(model);
 
         model.getDevices().observe(requireActivity(), adapter::setDevices);
     }

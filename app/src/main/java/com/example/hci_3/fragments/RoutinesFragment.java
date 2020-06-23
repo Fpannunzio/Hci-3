@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,13 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.hci_3.adapters.DeviceAdapter;
 import com.example.hci_3.R;
 import com.example.hci_3.SpacesItemDecoration;
 import com.example.hci_3.adapters.RoutineAdapter;
 import com.example.hci_3.api.Routine;
-import com.example.hci_3.repositories.DeviceRepository;
-import com.example.hci_3.view_models.FavoriteViewModel;
 import com.example.hci_3.view_models.RoutineViewModel;
 
 import java.util.List;
@@ -80,6 +76,18 @@ public class RoutinesFragment extends Fragment {
         actionBar.setHomeButtonEnabled(false);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        model.startPolling();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        model.stopPolling();
     }
 
     private void refreshRoutines(List<Routine> routines) {

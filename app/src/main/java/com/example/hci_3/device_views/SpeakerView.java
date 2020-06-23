@@ -20,6 +20,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
+import com.example.hci_3.api.DeviceStates.DeviceState;
 import com.example.hci_3.api.DeviceStates.SpeakerState;
 
 import java.util.ArrayList;
@@ -75,6 +76,10 @@ public class SpeakerView extends DeviceView {
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
+
+        Device dev = device.getValue();
+
+        model.addPollingState(dev, 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
 
         mGenre.setAdapter(genreAdapter);
         final String[] generos = getResources().getStringArray(R.array.genres);
@@ -169,12 +174,16 @@ public class SpeakerView extends DeviceView {
                 mSwitch.setChecked(true);
                 play();
                 mPause.setImageResource(R.drawable.ic_pause);
-
             }
-
-
         });
+    }
 
+    private void updateFrequentlyUpdatingState(DeviceState uncastedState){
+        SpeakerState state = (SpeakerState) uncastedState;
+
+        // Aca pongamos (en principio, a discutir) solamente los cambios que tienen que suceder mucho
+
+        //mDevName.setText(state.getSong().getProgress());
     }
 
     private void play(){
@@ -184,6 +193,7 @@ public class SpeakerView extends DeviceView {
     private void stop(){
         executeAction("stop", this::handleError);
     }
+
     private void nextSong(){
         executeAction("nextSong", this::handleError);
     }
@@ -195,6 +205,7 @@ public class SpeakerView extends DeviceView {
     private void pause(){
         executeAction("pause", this::handleError);
     }
+
     private void resume(){
         executeAction("resume", this::handleError);
     }

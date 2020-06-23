@@ -12,9 +12,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
-import com.example.hci_3.api.DeviceDeserializer;
+import com.example.hci_3.api.DeviceStates.DeviceState;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +85,10 @@ public class DeviceRepository {
 
     public void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.ErrorHandler errorHandler){
         executeAction(deviceId, actionName, params, (bool, res) -> {}, errorHandler);
+    }
+
+    public <T extends DeviceState> void getDeviceState(String deviceId, Class<T> stateClass, ApiClient.SuccessHandler<T> successHandler, ApiClient.ErrorHandler errorHandler){
+        apiClient.getDeviceState(deviceId, stateClass, successHandler, errorHandler);
     }
 
     public void updateDevices(){
