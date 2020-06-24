@@ -130,7 +130,7 @@
     <string name="habitacion">Habitacion:</string>
     <string name="notifications_channel_name">Generales</string>
     <string name="notifications_channel_description">Mensajes generales de la aplicacion</string>
-    <string name="channel_id" translatable="false">generalNotifications</string>
+    <string name="notifications_standar_channel_ID" translatable="false">standarNotificationsChannelID</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
     <string name="favoritos">Favoritos</string>
@@ -144,6 +144,38 @@
     <string name="ajustes">Ajustes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="stored_devices_SP_key" translatable="false">storedDevicesSPKey</string>
+    <string name="notification_IDs_SP_key" translatable="false">notificationsIDsSPKey</string>
+    <string name="last_notification_ID" translatable="false">lastNotificationID</string>
+    <string name="notifications_device_stated_changed">Se modifico %1$s, el valor actual es %2$s</string>
+    <string name="notifications_device_added">%1$s fue agregado.</string>
+    <string name="notifications_device_deleted">El dispositivo %1$s fue borrado</string>
+    <string name="notifications_favorite_channel_ID" translatable="false">favoriteNorificationChannelID</string>
+    <string name="grill">Modo de grill</string>
+    <string name="heat">Modo de calor</string>
+    <string name="status">Estado</string>
+    <string name="mode">Modo</string>
+    <string name="temperature">Temperatura</string>
+    <string name="fanSpeed">Velocidad de ventilador</string>
+    <string name="horizontalSwing">Desplazamiento horizontal</string>
+    <string name="verticalSwing">Desplazamiento vertical</string>
+    <string name="level">Nivel maximo</string>
+    <string name="currentLevel">Nivel actual</string>
+    <string name="lock">Traba</string>
+    <string name="batteryLevel">Nivel de bateria</string>
+    <string name="quantity">Cantidad</string>
+    <string name="unit">Unidad</string>
+    <string name="dispensedQuantity">Cantidad dispensada</string>
+    <string name="color">Color</string>
+    <string name="brightness">Brillo</string>
+    <string name="convection">Conveccion</string>
+    <string name="genre">Genero</string>
+    <string name="volume">Volumen</string>
+    <string name="song">Cancion</string>
+    <string name="name">Nombre</string>
+    <string name="meta.fav">Favorito</string>
+    <string name="room.name">Nombre de la habitacion</string>
+    <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->

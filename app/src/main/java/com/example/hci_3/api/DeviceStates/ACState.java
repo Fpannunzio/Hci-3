@@ -129,8 +129,8 @@ public class ACState implements DeviceState {
         if(!getVerticalSwing().equals(acState.getVerticalSwing()))
             ans.put("verticalSwing", acState.getVerticalSwing());
 
-        if(!getMode().equals(acState.getStatus()))
-            ans.put("mode", acState.getStatus());
+        if(!getMode().equals(acState.getMode()))
+            ans.put("mode", acState.getMode());
 
         return ans;
     }
