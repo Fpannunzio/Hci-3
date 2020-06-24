@@ -144,4 +144,6 @@
     <string name="room.name">Nombre de la habitacion</string>
     <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
+    <string name="routine_description">Tarjeta de rutina</string>
+    <string name="current_color">Color actual</string>
 </resources>

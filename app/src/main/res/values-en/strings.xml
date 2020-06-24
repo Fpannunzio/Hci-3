@@ -143,4 +143,6 @@
     <string name="room.name">Room name</string>
     <string name="room.home.name">Home name</string>
     <string name="spinner_invalid_home_name">The home selected was removed, or it\'s name was changed</string>
+    <string name="routine_description">Routine\'s card</string>
+    <string name="current_color">Current color</string>
 </resources>

@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             style="@style/CardView.Light">
@@ -49,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-
+                        android:textColor="@color/colorText"
                         android:textSize="18sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:textSize="22sp"
-                        android:textColor="@color/colorText"
+                        android:textColor="@color/colorCardTitle"
                         app:layout_constraintBottom_toTopOf="@+id/speaker_state"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toBottomOf="@+id/speaker_location" />
@@ -72,6 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:textSize="16sp"
+                        android:textColor="@color/colorTextSubtitle"
                         app:layout_constraintTop_toBottomOf="@+id/speaker_name"
                         app:layout_constraintStart_toEndOf="@+id/imageView" />
 
@@ -81,6 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:textSize="16sp"
+                        android:textColor="@color/colorTextSubtitle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/speaker_state"
                         app:layout_constraintStart_toEndOf="@+id/imageView" />
@@ -92,7 +95,8 @@
                         android:background="@drawable/ripple_effect"
                         android:contentDescription="@string/extend_arrow"
                         android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                        android:tint="@color/colorPrimary"
+                        android:tint="@color/colorButtons"
+                        android:layout_marginEnd="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -118,10 +122,10 @@
                             android:layout_width="50dp"
                             android:layout_height="30dp"
                             android:layout_marginStart="10dp"
-                            android:shadowColor="@color/colorPrimary"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:theme="@style/SwitchTheme"/>
 
                         <ImageButton
                             android:id="@+id/speaker_previous"
@@ -130,6 +134,7 @@
                             android:background="@drawable/ripple_effect"
                             android:contentDescription="@string/previous"
                             android:src="@drawable/ic_previous"
+                            android:tint="@color/buttonImagesColor"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/speaker_pause"
                             app:layout_constraintStart_toEndOf="@+id/speaker_switch"
@@ -142,6 +147,7 @@
                             android:background="@drawable/ripple_effect"
                             android:contentDescription="@string/play"
                             android:src="@drawable/ic_play"
+                            android:tint="@color/buttonImagesColor"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/speaker_next"
                             app:layout_constraintStart_toEndOf="@+id/speaker_previous"
@@ -154,6 +160,7 @@
                             android:background="@drawable/ripple_effect"
                             android:contentDescription="@string/next"
                             android:src="@drawable/ic_next"
+                            android:tint="@color/buttonImagesColor"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/speaker_pause"
@@ -173,6 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
+                            android:tint="@color/buttonImagesColor"
                             android:src="@drawable/ic_baseline_volume_up_24"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/speaker_seekbar"
@@ -184,6 +192,8 @@
                             android:id="@+id/speaker_seekbar"
                             android:layout_width="300dp"
                             android:layout_height="wrap_content"
+                            android:progressTint="@color/colorButtons"
+                            android:thumbTint="@color/colorButtons"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -206,6 +216,7 @@
                             android:layout_marginStart="30dp"
                             android:layout_marginBottom="20dp"
                             android:text="@string/genero"
+                            android:textColor="@color/colorTextSubtitle"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"

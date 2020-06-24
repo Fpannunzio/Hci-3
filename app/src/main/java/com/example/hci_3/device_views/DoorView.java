@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
@@ -92,19 +93,23 @@ public class DoorView extends DeviceView {
 
         if(state.getStatus().equals("opened")) {
             mBlock.setClickable(false);
-            mBlock.setBackgroundColor(Color.parseColor("#71A69A"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mBlock.setBackgroundColor(Color.parseColor(colorHex));
         }
         else {
             mBlock.setClickable(true);
-            mBlock.setBackgroundColor(Color.parseColor("#72E1C7"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mBlock.setBackgroundColor(Color.parseColor(colorHex));
         }
         if(state.getLock().equals("locked")) {
             mOpen.setClickable(false);
-            mOpen.setBackgroundColor(Color.parseColor("#71A69A"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
         }
         else {
             mOpen.setClickable(true);
-            mOpen.setBackgroundColor(Color.parseColor("#72E1C7"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
         }
 
         mOpen.setOnClickListener(v -> {

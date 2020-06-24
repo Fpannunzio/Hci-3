@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             style="@style/CardView.Light">
@@ -46,6 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:textSize="18sp"
+                        android:textColor="@color/colorText"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +56,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/colorText"
+                        android:textColor="@color/colorCardTitle"
                         android:textSize="22sp"
                         app:layout_constraintBottom_toTopOf="@+id/oven_state"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -66,6 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:textSize="18sp"
+                        android:textColor="@color/colorTextSubtitle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView" />
 
@@ -73,13 +76,14 @@
                         android:id="@+id/expandBtn"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginTop="12dp"
                         android:background="@drawable/ripple_effect"
+                        android:contentDescription="@string/extend_arrow"
                         android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                        android:tint="@color/colorPrimary"
+                        android:tint="@color/colorButtons"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:contentDescription="@string/extend_arrow" />
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,7 +100,8 @@
                         android:layout_marginStart="10dp"
                         android:shadowColor="#72E1C7"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:theme="@style/SwitchTheme"/>
 
                     <ImageButton
                         android:id="@+id/oven_minus"
@@ -106,6 +111,7 @@
                         android:layout_marginTop="4dp"
                         android:src="@drawable/ic_minus"
                         android:background="@drawable/ripple_effect"
+                        android:tint="@color/buttonImagesColor"
                         app:layout_constraintStart_toEndOf="@+id/oven_switch"
                         app:layout_constraintTop_toTopOf="parent"
                         android:contentDescription="@string/minus_button"/>
@@ -116,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="4dp"
-
+                        android:textColor="@color/colorTextSubtitle"
                         android:textSize="20sp"
                         app:layout_constraintStart_toEndOf="@+id/oven_minus"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -130,6 +136,7 @@
                         android:background="@drawable/ripple_effect"
                         android:contentDescription="@string/plus_button"
                         android:src="@drawable/ic_plus"
+                        android:tint="@color/buttonImagesColor"
                         app:layout_constraintStart_toEndOf="@+id/oven_temp"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -142,6 +149,7 @@
                         android:textSize="18sp"
                         android:layout_marginTop="10dp"
                         android:layout_marginStart="30dp"
+                        android:textColor="@color/colorTextSubtitle"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/oven_switch" />
 
@@ -163,6 +171,7 @@
                         android:text="@string/modoGrill"
                         android:textStyle="bold"
                         android:textSize="18sp"
+                        android:textColor="@color/colorTextSubtitle"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/fuenteCalor"/>
 
@@ -183,6 +192,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginStart="30dp"
                         android:textSize="18sp"
+                        android:textColor="@color/colorTextSubtitle"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/modoGrill" />
 
