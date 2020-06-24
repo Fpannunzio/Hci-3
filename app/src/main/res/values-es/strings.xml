@@ -144,4 +144,25 @@
     <string name="room.name">Nombre de la habitacion</string>
     <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
+    <string name="classical">Clasica</string>
+    <string name="opened">Abierta</string>
+    <string name="opening">Abriendose</string>
+    <string name="closing">Cerrandose</string>
+    <string name="closed">Cerada</string>
+    <string name="on">Prendido</string>
+    <string name="conventional">Convencional</string>
+    <string name="bottom">Abajo</string>
+    <string name="top">Arriba</string>
+    <string name="large">Completo</string>
+    <string name="eco">Economico</string>
+    <string name="off">Apagado</string>
+    <string name="normal">Normal</string>
+    <string name="cool">Frio</string>
+    <string name="unlocked">Desbloqueada</string>
+    <string name="locked">Bloqueada</string>
+    <string name="docked">Trapear</string>
+    <string name="inactive">Inacvtiva</string>
+    <string name="active">Activa</string>
+    <string name="playing">Reproduciendo</string>
+    <string name="paused">Pausado</string>
 </resources>

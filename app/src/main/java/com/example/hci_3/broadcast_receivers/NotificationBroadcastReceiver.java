@@ -90,14 +90,27 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 final Map<String, String> comparision = olderDev.compareToNewerVersion(device);
 
                 for(Map.Entry<String,String> change : comparision.entrySet()) {
-                    int eventID;
+                    String event, value;
+                    int eventID, valueID;
                     if(change.getKey().startsWith("state")){
                         String[] aux = change.getKey().split("\\.");
                         eventID = context.getResources().getIdentifier(aux[aux.length - 1],"string", context.getPackageName());
                     } else{
                         eventID = context.getResources().getIdentifier(change.getKey(),"string", context.getPackageName());
                     }
-                    emitNotification(device, context.getString(R.string.notifications_device_stated_changed, context.getString(eventID), change.getValue()), change.getKey());
+
+                    if(eventID == 0)
+                        event = change.getKey();
+                    else
+                        event = context.getString(eventID);
+
+                    valueID = context.getResources().getIdentifier(change.getValue(),"string", context.getPackageName());
+                    if(!change.getValue().matches("-?[0-9]+") && valueID != 0)
+                        value = context.getString(valueID);
+                    else
+                        value = change.getValue();
+
+                    emitNotification(device, context.getString(R.string.notifications_device_stated_changed, event, value), change.getKey());
                 }
 
                 if(!comparision.isEmpty()){
@@ -194,6 +207,8 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.smartify_logo)
                 .setContentTitle(device.getParsedName())
                 .setContentText(message)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(getIntent(device))
