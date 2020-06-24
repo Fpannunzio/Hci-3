@@ -198,6 +198,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         intent.setAction("notifications"); //TODO: pasar a R.Strings
         intent.putExtra("roomID", device.getRoom().getId());
         intent.putExtra("roomName", device.getRoom().getParsedName());
+        intent.putExtra("homeName", device.getRoom().getHome().getName());
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
 

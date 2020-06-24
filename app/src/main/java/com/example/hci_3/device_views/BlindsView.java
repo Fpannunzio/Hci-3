@@ -92,14 +92,11 @@ public class BlindsView extends DeviceView {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
-
         });
     }
 
