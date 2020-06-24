@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -17,7 +18,10 @@
 <!--                <action android:name="com.example.hci_3.ALARM_HANDLE"/>-->
 <!--            </intent-filter>-->
 <!--        </receiver>-->
-        <receiver android:name="com.example.hci_3.broadcast_receivers.BootCompletedBroadcastReceiver">
+
+        <!-- ... -->
+        <receiver android:name="com.example.hci_3.broadcast_receivers.BootCompletedBroadcastReceiver"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <!-- REGISTER TO RECEIVE BOOT_COMPLETED EVENTS -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
