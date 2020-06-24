@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
             Log.v("notif2", "estoy aca2");
             String roomName = intent.getStringExtra("roomName");
             String roomId = intent.getStringExtra("roomID");
-            navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName)));
+            Log.v("homename", roomName);
+            //String homeName = intent.getStringExtra("homeName");
+            //navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName), Objects.requireNonNull(homeName)));
         }
 
         dataSyncBroadcastReceiver = new DataSyncBroadcastReceiver();

@@ -61,10 +61,12 @@
     <string name="state" translatable="false">%1$s</string>
     <string name="door_state" translatable="false">%1$s - %2$s</string>
     <string name="lamp_state" translatable="false">%1s -</string>
-    <string name="temp_state" translatable="false">%1$s - %2$d°C</string>
+    <string name="temp_state" translatable="false">%1$s - %2$s - %3$d°C</string>
+    <string name="room_title" translatable="false">%1$s - %2$s</string>
+
     <string name="speaker_state" translatable="false">%1$s: %2$s</string>
     <string name="blinds_state" translatable="false">%1$s-%2$d</string>
-    <string name="batery_state">Bateria: %1$d</string>
+
     <string name="disp_location" translatable="false">%1$s | %2$s</string>
     <string name="faucet_amount" translatable="false">%1$d %2$s</string>
     <string name="blinds_level" translatable="false">%1$d</string>
@@ -98,7 +100,7 @@
     <string name="modo">Modo</string>
     <string name="desplazamiento_aspas">Desplazamiento de aspas</string>
     <string name="vertical">Vertical:</string>
-    <string name="auto">auto</string>
+    <string name="auto">Auto</string>
     <string name="veintidos" translatable="false">22</string>
     <string name="cuarentaycinco" translatable="false">45</string>
     <string name="sesentaysiete" translatable="false">67</string>
@@ -143,7 +145,7 @@
     <string name="search">Busqueda: %1$s</string>
     <string name="ajustes">Ajustes</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="stored_devices_SP_key" translatable="false">storedDevicesSPKey</string>
     <string name="notification_IDs_SP_key" translatable="false">notificationsIDsSPKey</string>
     <string name="last_notification_ID" translatable="false">lastNotificationID</string>
@@ -202,13 +204,17 @@
     <string name="unlocked">Desbloqueada</string>
 <!--    <string name="vacuum">Aspirar</string>-->
     <string name="docked">Trapear</string>
-    <string name="inactive">Inacvtiva</string>
+    <string name="inactive">Inactiva</string>
     <string name="active">Activa</string>
     <string name="playing">Reproduciendo</string>
     <string name="paused">Pausado</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
+    <string name="dispensando">Dispensando %1$g</string>
+    <string name="faucet_double_amount" translatable="false">%1$g %2$s</string>
+    <string name="batery_state">Bateria: %1$d</string>
     <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Sera asignada a su habitacion.</string>
     <string name="room.home.name">Nombre del hogar</string>
+
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>

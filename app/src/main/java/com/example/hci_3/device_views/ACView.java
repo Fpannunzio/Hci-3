@@ -1,6 +1,8 @@
 package com.example.hci_3.device_views;
 
 import android.content.Context;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.util.AttributeSet;
 
 import android.util.Log;
@@ -15,8 +17,6 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import androidx.lifecycle.LiveData;
-import androidx.transition.AutoTransition;
-import androidx.transition.TransitionManager;
 
 import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
@@ -84,12 +84,13 @@ public class ACView extends DeviceView {
 
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
-                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                android.transition.TransitionManager.beginDelayedTransition(cardView, new android.transition.AutoTransition());
                 expandableLayout.setVisibility(View.VISIBLE);
-                // Falta rotar la flecha
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
             } else {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.GONE);
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
 
@@ -153,7 +154,7 @@ public class ACView extends DeviceView {
         mDevName.setText(getParsedName(device.getName()));
 
         mState.setText(getResources().getString(R.string.temp_state,
-                status.equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
+                status.equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado), state.getMode(),
                 state.getTemperature()));
 
         mTemperature.setText(getResources().getString(R.string.temp,

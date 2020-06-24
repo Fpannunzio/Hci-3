@@ -1,5 +1,6 @@
 package com.example.hci_3.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public static class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView mRoomName;
-        private String roomId, roomName;
+        private String roomId, roomName, homeName;
 
 
         public RoomViewHolder(@NonNull View itemView) {
@@ -71,6 +72,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         public void setRoom(Room room) {
             roomId = room.getId();
             roomName = getParsedName(room.getName());
+            if(room.getHome() != null)
+                Log.v("homename", room.getHome().getName());
             mRoomName.setText(roomName);
         }
 
@@ -84,11 +87,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         public String getRoomName() {
             return roomName;
         }
+        public String getHomeNameName() {
+            return homeName;
+        }
 
 
         @Override
         public void onClick(View v) {
-            Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(getRoomId(), getRoomName()));
+            Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(getRoomId(), getRoomName(),getHomeNameName()));
         }
     }
 }

@@ -46,11 +46,11 @@
     <string name="plus_button">Plus button</string>
     <string name="frio">Cold</string>
     <string name="calor">Heat</string>
-    <string name="ventilacion">ventilation</string>
+    <string name="ventilacion">Ventilation</string>
     <string name="modo">Mode</string>
     <string name="desplazamiento_aspas">Blade displacement</string>
     <string name="vertical">Vertical:</string>
-    <string name="auto">auto</string>
+    <string name="auto">Auto</string>
     <string name="horizontal">Horizontal:</string>
     <string name="velocidad_ventilador">Fan speed:</string>
     <string name="speaker">Speaker image</string>
@@ -76,6 +76,7 @@
     <string name="buscar">Search</string>
     <string name="modoNocturno">Dark Mode</string>
     <string name="search">Searching: %1$s</string>
+    <string name="dispensando">Dispensing %1$g</string>
     <string name="ajustes">Settings</string>
     <string-array name="fuente_calor">
         <item>Conventional</item>
