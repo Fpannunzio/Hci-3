@@ -61,7 +61,7 @@
     <string name="state" translatable="false">%1$s</string>
     <string name="door_state" translatable="false">%1$s - %2$s</string>
     <string name="lamp_state" translatable="false">%1s -</string>
-    <string name="temp_state" translatable="false">%1$s-%2$d°C</string>
+    <string name="temp_state" translatable="false">%1$s - %2$d°C</string>
     <string name="speaker_state" translatable="false">%1$s: %2$s</string>
     <string name="blinds_state" translatable="false">%1$s-%2$d</string>
     <string name="batery_state">Bateria: %1$d</string>
@@ -177,6 +177,7 @@
     <string name="room.name">Nombre de la habitacion</string>
     <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
+    <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Sera asignada a su habitacion.</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>

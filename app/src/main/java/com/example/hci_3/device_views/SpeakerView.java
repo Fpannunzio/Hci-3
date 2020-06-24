@@ -94,9 +94,9 @@ public class SpeakerView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
-
         Device dev = device.getValue();
 
+        //noinspection ConstantConditions
         state = (SpeakerState) dev.getState();
 
         model.addPollingState(dev, 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
@@ -194,6 +194,7 @@ public class SpeakerView extends DeviceView {
             ArrayList<String> toPlaylist = new ArrayList<>();
             playlistAdapter.clear();
             for (Map<String, Object> song : map){
+                //noinspection ConstantConditions
                 toPlaylist.add(song.get("title").toString());
             }
             playlistAdapter.addAll(toPlaylist);

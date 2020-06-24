@@ -144,4 +144,5 @@
     <string name="room.name">Nombre de la habitacion</string>
     <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
+    <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Será asignada a su habitacion.</string>
 </resources>

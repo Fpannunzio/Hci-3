@@ -105,7 +105,8 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"><!--android:visibility="gone"-->
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+                    android:visibility="gone">
 
                     <com.google.android.material.button.MaterialButtonToggleGroup
                         android:id="@+id/vacuum_onstate_group"

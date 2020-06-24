@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String ACTION_ALARM = "com.example.hci_3.ALARM";
     public static final String ACTION_ALARM_HANDLE = "com.example.hci_3.ALARM_HANDLE";
-    public static final int INTERVAL = 60000;
+    public static final int INTERVAL = 30000;
 
     BroadcastReceiver dataSyncBroadcastReceiver;
     ActivityViewModel model;
