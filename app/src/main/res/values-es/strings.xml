@@ -143,4 +143,5 @@
     <string name="meta.fav">Favorito</string>
     <string name="room.name">Nombre de la habitacion</string>
     <string name="room.home.name">Nombre del hogar</string>
+    <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
 </resources>
