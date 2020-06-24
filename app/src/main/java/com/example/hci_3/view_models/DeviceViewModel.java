@@ -38,7 +38,7 @@ public abstract class DeviceViewModel extends ViewModel {
     }
 
     public void getRooms(Device device, ApiClient.SuccessHandler<List<Room>> responseHandler, ApiClient.ErrorHandler errorHandler){
-        roomRepository.getRooms(device.getId(), responseHandler, errorHandler);
+        roomRepository.getRooms(device.getRoom().getHome().getId(), responseHandler, errorHandler);
     }
 
     public LiveData<DeviceState> addPollingState(Device device, int interval){

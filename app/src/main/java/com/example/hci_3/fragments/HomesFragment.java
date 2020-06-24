@@ -115,8 +115,6 @@ public class HomesFragment extends Fragment {
 
         recyclerAdapter = new RoomAdapter();
 
-       // recyclerAdapter.setOnClickListener(v -> Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(recyclerAdapter.getRoomId(), recyclerAdapter.getRoomName())));
-
         rv = view.findViewById(R.id.room_recycler);
 
         rv.setLayoutManager(new LinearLayoutManager(requireContext()));
