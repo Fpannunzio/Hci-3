@@ -1,14 +1,21 @@
 package com.example.hci_3.broadcast_receivers;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.SystemClock;
 import android.util.Log;
 
+import com.example.hci_3.MainActivity;
 import com.example.hci_3.R;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
     @Override
@@ -32,5 +39,23 @@ public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    private void setAlarm(Context context){
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Intent notificationReceiverIntent = new Intent(context, MainActivity.AlarmHandlerBroadcastReceiver.class);
+        notificationReceiverIntent.setAction(MainActivity.ACTION_ALARM);
+
+        PendingIntent notificationReceiverPendingIntent =
+                PendingIntent.getBroadcast(context, 0, notificationReceiverIntent, 0);
+
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime() + MainActivity.INTERVAL,
+                MainActivity.INTERVAL,
+                notificationReceiverPendingIntent);
+
+        Log.d("pruebaBroadcast", "Single alarm set on:" + DateFormat.getDateTimeInstance().format(new Date()));
     }
 }

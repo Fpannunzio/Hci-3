@@ -32,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
     //private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
 
+    public static final String ACTION_ALARM = "com.example.hci_3.ALARM";
     public static final String ACTION_ALARM_HANDLE = "com.example.hci_3.ALARM_HANDLE";
+    public static final int INTERVAL = 60000;
 
     BroadcastReceiver dataSyncBroadcastReceiver;
     ActivityViewModel model;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         DeviceRepository.getInstance().updateDevices();
 
         setContentView(R.layout.activity_main);
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -67,17 +68,12 @@ public class MainActivity extends AppCompatActivity {
             String roomName = intent.getStringExtra("roomName");
             String roomId = intent.getStringExtra("roomID");
             navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName)));
-
         }
-
 
         dataSyncBroadcastReceiver = new DataSyncBroadcastReceiver();
 
         setAlarm();
-
-
     }
-
 
     @Override
     protected void onResume() {
@@ -109,15 +105,19 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-
     private void setAlarm(){
-        final int INTERVAL = 60000;
+        boolean alarmUp = PendingIntent.getBroadcast(this, 0,
+                new Intent(ACTION_ALARM), PendingIntent.FLAG_NO_CREATE) != null;
+
+        Log.v("pruebabroadcast", String.valueOf(alarmUp));
+
+        if(alarmUp)
+            return;
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         Intent notificationReceiverIntent = new Intent(MainActivity.this, AlarmHandlerBroadcastReceiver.class);
-        notificationReceiverIntent.setAction(ACTION_ALARM_HANDLE);
+        notificationReceiverIntent.setAction(ACTION_ALARM);
 
         PendingIntent notificationReceiverPendingIntent =
                 PendingIntent.getBroadcast(this, 0, notificationReceiverIntent, 0);

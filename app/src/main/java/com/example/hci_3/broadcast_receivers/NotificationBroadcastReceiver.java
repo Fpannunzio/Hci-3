@@ -41,6 +41,13 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
         Log.v("pruebaBroadcast", "Notification Broadcast");
 
+        boolean notificationsActive = context.getSharedPreferences("settings",
+                Context.MODE_PRIVATE).getBoolean("notifications", true);
+
+        if(!notificationsActive)
+            return;
+
+
         updateSharedPreferences(context.getSharedPreferences("tobias", Context.MODE_PRIVATE));
 
         Map<String, Device> storedDevices = getSharedPreferences(preferences);
