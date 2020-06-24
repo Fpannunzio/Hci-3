@@ -27,7 +27,7 @@ public class DeviceRepository {
     private MutableLiveData<List<MutableLiveData<Device>>> devices;
     private Map<String, MutableLiveData<Device>> idToDeviceMap;
     private Application application;
-    private Handler handler;
+    //private Handler handler;
 
     private DeviceRepository(){
         apiClient = ApiClient.getInstance();
@@ -35,16 +35,16 @@ public class DeviceRepository {
         idToDeviceMap = new HashMap<>();
 
         // Para mi tiene que ser un alarmManager
-        handler = new Handler();
-        int delay = 5000;
-
-        handler.postDelayed(new Runnable(){
-            @Override
-            public void run(){
-                handler.postDelayed(this, delay);
-                updateDevices();
-            }
-        }, delay);
+//        handler = new Handler();
+//        int delay = 5000;
+//
+//        handler.postDelayed(new Runnable(){
+//            @Override
+//            public void run(){
+//                handler.postDelayed(this, delay);
+//                updateDevices();
+//            }
+//        }, delay);
     }
 
     public static synchronized DeviceRepository getInstance() {
