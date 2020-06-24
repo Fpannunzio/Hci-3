@@ -48,7 +48,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         boolean notificationsActive = context.getSharedPreferences("settings",
-                Context.MODE_PRIVATE).getBoolean("notifications", true);
+                Context.MODE_PRIVATE).getBoolean("notificationsActive", true);
 
         if(!notificationsActive)
             return;
@@ -115,12 +115,10 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 newDevices.put(storedDevice.getId(),null);
             }
         }
-
         finish();
     }
 
     private void emitSummary(Device device) {
-
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, getChannelID(device))
                 .setSmallIcon(R.drawable.smartify_logo)
