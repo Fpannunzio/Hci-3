@@ -166,4 +166,7 @@
     <string name="active">Active</string>
     <string name="playing">Playing</string>
     <string name="paused">Paused</string>
+    <string name="abajo">Bottom</string>
+    <string name="arriba">Up</string>
+    <string name="completo">Complete</string>
 </resources>

@@ -214,6 +214,9 @@
     <string name="batery_state">Bateria: %1$d</string>
     <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Sera asignada a su habitacion.</string>
     <string name="room.home.name">Nombre del hogar</string>
+    <string name="abajo">Abajo</string>
+    <string name="arriba">Arriba</string>
+    <string name="completo">Completo</string>
 
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
