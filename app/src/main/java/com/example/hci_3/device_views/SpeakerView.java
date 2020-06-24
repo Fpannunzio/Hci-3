@@ -86,7 +86,7 @@ public class SpeakerView extends DeviceView {
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
 
-        playlistAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1);
+        playlistAdapter = new ArrayAdapter<>(context, android.R.layout.simple_expandable_list_item_1);
         genreAdapter = ArrayAdapter.createFromResource(context, R.array.genres, android.R.layout.simple_spinner_item);
     }
 
@@ -195,7 +195,7 @@ public class SpeakerView extends DeviceView {
             playlistAdapter.clear();
             for (Map<String, Object> song : map){
                 //noinspection ConstantConditions
-                toPlaylist.add(song.get("title").toString());
+                toPlaylist.add(song.get("artist").toString().concat(" - ").concat(song.get("title").toString()));
             }
             playlistAdapter.addAll(toPlaylist);
             playlistAdapter.notifyDataSetChanged();

@@ -144,4 +144,25 @@
     <string name="room.home.name">Home name</string>
     <string name="spinner_invalid_home_name">The home selected was removed, or it\'s name was changed</string>
     <string name="invalid_vacuum_location">The room which the vacuum was assigned to was deleted. It will be assigned to it\'s room.</string>
+    <string name="classical">Classical</string>
+    <string name="opened">Opened</string>
+    <string name="opening">Opening</string>
+    <string name="closing">Closing</string>
+    <string name="closed">Closed</string>
+    <string name="on">On</string>
+    <string name="conventional">Conventional</string>
+    <string name="bottom">Bottom</string>
+    <string name="top">Top</string>
+    <string name="large">Large</string>
+    <string name="eco">Eco</string>
+    <string name="off">Off</string>
+    <string name="normal">Normal</string>
+    <string name="cool">Cool</string>
+    <string name="locked">Locked</string>
+    <string name="unlocked">Unlocked</string>
+    <string name="docked">Docked</string>
+    <string name="inactive">Inactive</string>
+    <string name="active">Active</string>
+    <string name="playing">Playing</string>
+    <string name="paused">Paused</string>
 </resources>

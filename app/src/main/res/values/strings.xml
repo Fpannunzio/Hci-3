@@ -175,9 +175,40 @@
     <string name="name">Nombre</string>
     <string name="meta.fav">Favorito</string>
     <string name="room.name">Nombre de la habitacion</string>
-    <string name="room.home.name">Nombre del hogar</string>
+    <string name="classical">Clasica</string>
+    <string name="country" translatable="false">Country</string>
+    <string name="dance" translatable="false">Dance</string>
+    <string name="latina" translatable="false">Latina</string>
+    <string name="pop" translatable="false">Pop</string>
+    <string name="rock" translatable="false">Rock</string>
+    <string name="opened">Abierta</string>
+    <string name="opening">Abriendose</string>
+    <string name="closing">Cerrandose</string>
+    <string name="closed">Cerada</string>
+<!--    <string name="true">Verdadero</string>-->
+<!--    <string name="false">Falso</string>-->
+    <string name="on">Prendido</string>
+<!--    <string name="off">Apagado</string>-->
+    <string name="conventional">Convencional</string>
+    <string name="bottom">Abajo</string>
+    <string name="top">Arriba</string>
+    <string name="large">Completo</string>
+    <string name="eco">Economico</string>
+    <string name="off">Apagado</string>
+    <string name="normal">Normal</string>
+    <string name="cool">Frio</string>
+<!--    <string name="heat">Calor</string>-->
+    <string name="locked">Bloqueada</string>
+    <string name="unlocked">Desbloqueada</string>
+<!--    <string name="vacuum">Aspirar</string>-->
+    <string name="docked">Trapear</string>
+    <string name="inactive">Inacvtiva</string>
+    <string name="active">Activa</string>
+    <string name="playing">Reproduciendo</string>
+    <string name="paused">Pausado</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
     <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Sera asignada a su habitacion.</string>
+    <string name="room.home.name">Nombre del hogar</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>
