@@ -31,6 +31,12 @@ public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
             // or other notification behaviors after this
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
+
+            name = "Favoritos";
+            description = "Mensajes para los dispositivios facoritos";
+            channel = new NotificationChannel(context.getString(R.string.notifications_favorite_channel_ID), name, importance);
+            channel.setDescription(description);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

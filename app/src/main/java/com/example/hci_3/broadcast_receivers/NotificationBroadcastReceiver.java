@@ -30,7 +30,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private Gson gson;
     private SharedPreferences storedDevicesSP, notificationIDsSP;
     private NotificationManagerCompat notificationManager;
-    private Integer notificationIDCounter;
     Map<String, Device> storedDevices, newDevices;
     Map<String,Integer> notificationIDs;
     Integer lastNotificationID;
@@ -84,11 +83,18 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 final Map<String, String> comparision = olderDev.compareToNewerVersion(device);
 
                 for(Map.Entry<String,String> change : comparision.entrySet()) {
-                    emitNotification(device, context.getString(R.string.notifications_device_stated_changed, change.getKey(), change.getValue()), change.getKey());
+                    int eventID;
+                    if(change.getKey().startsWith("state")){
+                        String[] aux = change.getKey().split("\\.");
+                        eventID = context.getResources().getIdentifier(aux[aux.length - 1],"string", context.getPackageName());
+                    } else{
+                        eventID = context.getResources().getIdentifier(change.getKey(),"string", context.getPackageName());
+                    }
+                    emitNotification(device, context.getString(R.string.notifications_device_stated_changed, context.getString(eventID), change.getValue()), change.getKey());
                 }
-                emitSummary(device);
 
                 if(!comparision.isEmpty()){
+                    emitSummary(device);
                     newDevices.put(device.getId(),device);
                 }
             }
@@ -107,7 +113,9 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void emitSummary(Device device) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, context.getString(R.string.notifications_standar_channel_ID))
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, getChannelID(device))
                 .setSmallIcon(R.drawable.smartify_logo)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setStyle(new NotificationCompat.InboxStyle()
@@ -177,9 +185,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
     private void emitNotification(Device device, String message, String event){
 
-        String channelID = device.isFav() ? context.getString(R.string.notifications_favorite_channel_ID) : context.getString(R.string.notifications_standar_channel_ID);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, getChannelID(device))
                 .setSmallIcon(R.drawable.smartify_logo)
                 .setContentTitle(device.getParsedName())
                 .setContentText(message)
@@ -191,5 +197,9 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 .setOnlyAlertOnce(true);
 
         notificationManager.notify(getNotificationID(device.getId(),event), builder.build());
+    }
+
+    private String getChannelID(Device device) {
+        return device.isFav() ? context.getString(R.string.notifications_favorite_channel_ID) : context.getString(R.string.notifications_standar_channel_ID);
     }
 }
