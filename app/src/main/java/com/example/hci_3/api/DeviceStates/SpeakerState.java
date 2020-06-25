@@ -193,7 +193,7 @@ public class SpeakerState implements DeviceState {
             if (this == o) return true;
             if (!(o instanceof Song)) return false;
             Song song = (Song) o;
-            return Objects.equals(title, song.title);
+            return title.equals(song.title);
         }
     }
 }
