@@ -192,11 +192,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         preferencesEditor.apply();
     }
 
-    private Map<String, Device> getSharedPreferences(SharedPreferences preferences){
-        return preferences.getAll().entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> gson.fromJson((String) e.getValue(), Device.class)));
-    }
-
     private Integer getNotificationID(String deviceID, String event){
         String notificationIDKey = deviceID + "." + event;
         Integer notificationID = notificationIDs.get(notificationIDKey);
@@ -212,9 +207,9 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.setAction("notifications"); //TODO: pasar a R.Strings
         intent.putExtra("roomID", device.getRoom().getId());
-        intent.putExtra("roomName", device.getRoom().getParsedName() + device.getRoom().getHome().getName());
-        //intent.putExtra("homeName", );
-        return PendingIntent.getActivity(context, 0, intent, 0);
+        intent.putExtra("roomName", device.getRoom().getParsedName());
+        intent.putExtra("homeName", device.getRoom().getHome().getName());
+        return PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
     }
 
     private void emitNotification(Device device, String message, String event){
