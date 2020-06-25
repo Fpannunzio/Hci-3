@@ -1,9 +1,12 @@
 package com.example.hci_3.device_views;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -71,13 +74,22 @@ public class LampView extends DeviceView {
 
         mDevName.setText(getParsedName(device.getName()));
 
-        mState.setText(getResources().getString(R.string.lamp_state, state.getStatus().equals("on") ? getResources().getString(R.string.prendido):getResources().getString(R.string.apagado)));
+        mState.setText(getResources().getString(R.string.lamp_state, state.getStatus().equals("on") ? getResources().getString(R.string.prendido)
+                + " - " + getResources().getString(R.string.brillo) + ": " + state.getBrightness() + "%"
+                :getResources().getString(R.string.apagado)));
 
         mSwitch.setChecked(state.getStatus().equals("on"));
 
         mBrightness.setProgress(state.getBrightness());
 
-//        currentColor.setBackgroundColor(Integer.parseInt(state.getColor(), 16));
+        Log.v("color", state.getColor());
+
+        colorPickerView.selectByHsv(getColor(state.getColor()));
+
+        //Log.v("color", )
+
+        currentColor.setBackgroundColor(getColor(state.getColor()));
+        //currentColor.setBackgroundColor(Integer.parseInt(state.getColor(), 16));
 
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
@@ -105,15 +117,12 @@ public class LampView extends DeviceView {
             }
         });
 
-        colorPickerView.setColorListener(new ColorListener() {
-            @Override
-            public void onColorSelected(int color, boolean fromUser) {
-                currentColor.setBackgroundColor(color);
-                color &= 0x00FFFFFF; // Mascara para sacar el alpha al color
-                String hexColor = Integer.toHexString(color);
-                setColor(hexColor);
-                state.setColor(hexColor);
-            }
+        colorPickerView.setColorListener((ColorListener) (color, fromUser) -> {
+            //currentColor.setBackgroundColor(color);
+            color &= 0x00FFFFFF; // Mascara para sacar el alpha al color
+            String hexColor = Integer.toHexString(color);
+            setColor(hexColor);
+            //state.setColor(hexColor);
         });
 
         mSwitch.setOnCheckedChangeListener(((buttonView, isChecked) -> {
@@ -156,5 +165,15 @@ public class LampView extends DeviceView {
 
     private void setBrightness(int value){
         executeAction("setBrightness", new ArrayList<>(Collections.singletonList(value)), this::handleError);
+    }
+
+    private int getColor(String hex){
+        StringBuilder hexBuilder = new StringBuilder(hex);
+
+        while(hexBuilder.length() < 6)
+            hexBuilder.insert(0, '0');
+        hexBuilder.insert(0, "#");
+
+        return Color.parseColor(hexBuilder.toString());
     }
 }

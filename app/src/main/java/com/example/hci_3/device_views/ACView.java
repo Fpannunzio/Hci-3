@@ -38,6 +38,7 @@ public class ACView extends DeviceView {
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
     private Map<String, Integer> modeToIdMap;
+    private Map<String, Integer> modeToStringMap;
     private Map<String, Integer> verticalToIdMap;
     private Map<String, Integer> horizontalToIdMap;
     private Map<String, Integer> fanSpeedToIdMap;
@@ -154,7 +155,8 @@ public class ACView extends DeviceView {
         mDevName.setText(getParsedName(device.getName()));
 
         mState.setText(getResources().getString(R.string.temp_state,
-                status.equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado), state.getMode(),
+                status.equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
+                getResources().getString(modeToStringMap.get(state.getMode())),
                 state.getTemperature()));
 
         mTemperature.setText(getResources().getString(R.string.temp,
@@ -210,6 +212,7 @@ public class ACView extends DeviceView {
 
     private void setUpMaps(){
         modeToIdMap = new HashMap<>();
+        modeToStringMap = new HashMap<>();
         verticalToIdMap = new HashMap<>();
         horizontalToIdMap = new HashMap<>();
         fanSpeedToIdMap = new HashMap<>();
@@ -217,12 +220,15 @@ public class ACView extends DeviceView {
 
         // Mode
         modeToIdMap.put("cool", R.id.cold_button);
+        modeToStringMap.put("cool", R.string.ac_cool);
         idToActionMap.put(R.id.cold_button, "cool");
 
         modeToIdMap.put("heat", R.id.heat_button);
+        modeToStringMap.put("heat", R.string.ac_heat);
         idToActionMap.put(R.id.heat_button, "heat");
 
         modeToIdMap.put("fan", R.id.ventilation_button);
+        modeToStringMap.put("fan", R.string.ac_fan);
         idToActionMap.put(R.id.ventilation_button, "fan");
 
         // Vertical Swing

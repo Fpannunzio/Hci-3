@@ -176,4 +176,8 @@
     <string name="defaultNotificationsText">Dispositivos no favoritos</string>
     <string name="extraSettingsText">Ajustes Extra</string>
     <string name="themeText">Tema oscuro</string>
+    <string name="ac_heat">Calor</string>
+    <string name="ac_cool">Frio</string>
+    <string name="ac_fan">Ventilador</string>
+    <string name="brillo">Brillo</string>
 </resources>

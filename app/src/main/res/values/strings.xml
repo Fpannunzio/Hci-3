@@ -60,12 +60,12 @@
     <string name="temp" translatable="false"> %1$s°C </string>
     <string name="state" translatable="false">%1$s</string>
     <string name="door_state" translatable="false">%1$s - %2$s</string>
-    <string name="lamp_state" translatable="false">%1s -</string>
+    <string name="lamp_state" translatable="false">%1$s - </string>
     <string name="temp_state" translatable="false">%1$s - %2$s - %3$d°C</string>
     <string name="room_title" translatable="false">%1$s - %2$s</string>
 
     <string name="speaker_state" translatable="false">%1$s: %2$s</string>
-    <string name="blinds_state" translatable="false">%1$s-%2$d</string>
+    <string name="blinds_state" translatable="false">%1$s - %2$d</string>
 
     <string name="disp_location" translatable="false">%1$s | %2$s</string>
     <string name="faucet_amount" translatable="false">%1$d %2$s</string>
@@ -225,6 +225,10 @@
     <string name="extraSettingsText">Ajustes Extra</string>
     <string name="themeText">Tema oscuro</string>
     <string name="settingsFile">setings</string>
+    <string name="ac_heat">Calor</string>
+    <string name="ac_cool">Frio</string>
+    <string name="ac_fan">Ventilador</string>
+    <string name="brillo">Brillo</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>

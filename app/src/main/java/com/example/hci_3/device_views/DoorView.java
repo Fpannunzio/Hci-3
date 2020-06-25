@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -54,14 +53,11 @@ public class DoorView extends DeviceView {
         mState = findViewById(R.id.onStateDoor);
         mOpen = findViewById(R.id.door_open);
         mBlock = findViewById(R.id.door_block);
-
     }
 
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
-
-
 
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
@@ -99,6 +95,7 @@ public class DoorView extends DeviceView {
             mBlock.setClickable(true);
             mBlock.setBackgroundColor(Color.parseColor("#72E1C7"));
         }
+
         if(state.getLock().equals("locked")) {
             mOpen.setClickable(false);
             mOpen.setBackgroundColor(Color.parseColor("#71A69A"));
@@ -109,7 +106,7 @@ public class DoorView extends DeviceView {
         }
 
         mOpen.setOnClickListener(v -> {
-            DoorState aux = ((DoorState)device.getState());
+            DoorState aux = ((DoorState)this.device.getValue().getState());
             if(aux.getLock().equals("unlocked")) {
                 if (aux.getStatus().equals("closed")) {
                     open();
@@ -124,7 +121,7 @@ public class DoorView extends DeviceView {
                 state.getStatus().equals("opened")? getResources().getString(R.string.cerrar) : getResources().getString(R.string.abrir)));
 
         mBlock.setOnClickListener(v -> {
-            DoorState aux = ((DoorState)device.getState());
+            DoorState aux = ((DoorState)this.device.getValue().getState());
             if(aux.getStatus().equals("closed")){
                 if(aux.getLock().equals("unlocked")) {
                     lock();
@@ -140,11 +137,9 @@ public class DoorView extends DeviceView {
                 state.getLock().equals("locked")? getResources().getString(R.string.desbloquer) : getResources().getString(R.string.bloquear)));
     }
     private void open(){
-        Log.v("door1", "estoy aca");
         executeAction("open", this::handleError);
     }
     private void close(){
-        Log.v("door2", "estoy aca");
         executeAction("close", this::handleError);
     }
 
