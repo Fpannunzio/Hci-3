@@ -2,11 +2,9 @@ package com.example.hci_3.device_views;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -82,14 +80,9 @@ public class LampView extends DeviceView {
 
         mBrightness.setProgress(state.getBrightness());
 
-        Log.v("color", state.getColor());
-
         colorPickerView.selectByHsv(getColor(state.getColor()));
 
-        //Log.v("color", )
-
         currentColor.setBackgroundColor(getColor(state.getColor()));
-        //currentColor.setBackgroundColor(Integer.parseInt(state.getColor(), 16));
 
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
@@ -102,8 +95,6 @@ public class LampView extends DeviceView {
 
         @SuppressWarnings("ConstantConditions")
         LampState state = (LampState) device.getValue().getState();
-
-        // Aca se cargan la funcionalidad de los elementos UI
 
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
@@ -118,11 +109,12 @@ public class LampView extends DeviceView {
         });
 
         colorPickerView.setColorListener((ColorListener) (color, fromUser) -> {
-            //currentColor.setBackgroundColor(color);
+            if(color == -260)
+                color = getColor(((LampState) device.getValue().getState()).getColor());
+
             color &= 0x00FFFFFF; // Mascara para sacar el alpha al color
             String hexColor = Integer.toHexString(color);
             setColor(hexColor);
-            //state.setColor(hexColor);
         });
 
         mSwitch.setOnCheckedChangeListener(((buttonView, isChecked) -> {
@@ -135,7 +127,7 @@ public class LampView extends DeviceView {
         mBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                state.setBrightness(progress);
+                ((LampState) device.getValue().getState()).setBrightness(progress);
                 setBrightness(progress);
             }
 

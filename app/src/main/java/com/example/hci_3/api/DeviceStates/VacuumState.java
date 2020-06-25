@@ -151,7 +151,7 @@ public class VacuumState implements DeviceState {
             if (this == o) return true;
             if (!(o instanceof Location)) return false;
             Location location = (Location) o;
-            return Objects.equals(id, location.id);
+            return id.equals(location.id);
         }
     }
 }
