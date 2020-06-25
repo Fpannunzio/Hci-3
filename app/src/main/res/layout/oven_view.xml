@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            app:cardBackgroundColor="@color/cardBackground"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp"
             style="@style/CardView.Light">
@@ -45,6 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        android:textColor="@color/colorText"
                         android:textSize="18sp"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +56,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/colorText"
+                        android:textColor="@color/colorCardTitle"
                         android:textSize="22sp"
                         app:layout_constraintBottom_toTopOf="@+id/oven_state"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -66,6 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:textSize="18sp"
+                        android:textColor="@color/colorTextSubtitle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView" />
 
@@ -78,7 +81,7 @@
                         android:background="@drawable/ripple_effect"
                         android:contentDescription="@string/extend_arrow"
                         android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                        android:tint="@color/colorPrimary"
+                        android:tint="@color/colorButtons"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,9 +98,9 @@
                         android:layout_width="50dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="10dp"
-                        android:shadowColor="@color/colorPrimary"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:theme="@style/SwitchTheme"/>
 
                     <ImageButton
                         android:id="@+id/oven_minus"
@@ -105,6 +108,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/ripple_effect"
                         android:layout_marginStart="80dp"
+                        android:tint="@color/buttonImagesColor"
                         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                         app:layout_constraintStart_toEndOf="@+id/oven_switch"
                         app:layout_constraintTop_toTopOf="parent"
@@ -116,7 +120,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-
                         android:textSize="20sp"
                         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                         app:layout_constraintStart_toEndOf="@+id/oven_minus"
@@ -127,7 +130,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:background="#FFFFFF"
+                        android:background="@drawable/ripple_effect"
+                        android:tint="@color/buttonImagesColor"
                         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                         app:layout_constraintStart_toEndOf="@+id/oven_temp"
                         app:layout_constraintTop_toTopOf="parent"
@@ -149,6 +153,7 @@
                             android:text="@string/fuenteDeCalor"
                             android:textSize="18sp"
                             android:textStyle="bold"
+                            android:textColor="@color/colorTextSubtitle"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/heat_source_group"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -161,28 +166,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="25dp"
-                            android:layout_marginEnd="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:singleSelection="true">
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/conventional_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/conventional" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/bottom_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="103dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/abajo" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/top_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="112dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/arriba" />
@@ -201,6 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/modoGrill"
+                            android:textColor="@color/colorTextSubtitle"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
@@ -211,28 +217,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:layout_marginEnd="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView3"
                             app:singleSelection="true">
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/grill_off_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/apagado" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/grill_eco_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/eco" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/grill_comp"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="154dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/completo" />
@@ -249,6 +255,7 @@
                             android:text="@string/modoConveccion"
                             android:textSize="18sp"
                             android:textStyle="bold"
+                            android:textColor="@color/colorTextSubtitle"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/grill_toggle_group" />
 
@@ -257,28 +264,28 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:layout_marginEnd="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView4"
                             app:singleSelection="true">
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/convection_off_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/apagado" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/convection_eco_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/eco" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/convection_con_button"
-                                style="?attr/materialButtonOutlinedStyle"
+                                style="@style/outlinedButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/conventional" />
