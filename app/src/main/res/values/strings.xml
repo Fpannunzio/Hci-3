@@ -208,6 +208,13 @@
     <string name="paused">Pausado</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
     <string name="room.home.name">Nombre del hogar</string>
+    <string name="notificationsTitle">Notificaciones</string>
+    <string name="allNotificationsText">Todas las notificaciones</string>
+    <string name="favoriteNotificationsText">Dispositivos favoritos</string>
+    <string name="defaultNotificationsText">Dispositivos no favoritos</string>
+    <string name="extraSettingsText">Ajustes Extra</string>
+    <string name="themeText">Tema oscuro</string>
+    <string name="settingsFile">setings</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>

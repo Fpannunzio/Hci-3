@@ -164,4 +164,11 @@
     <string name="active">Active</string>
     <string name="playing">Playing</string>
     <string name="paused">Paused</string>
+    <string name="settingsFile">setings</string>
+    <string name="notificationsTitle">Notifications</string>
+    <string name="allNotificationsText">All notifications</string>
+    <string name="favoriteNotificationsText">Favorite devices</string>
+    <string name="defaultNotificationsText">Non favorite devices</string>
+    <string name="extraSettingsText">Extra ajustments</string>
+    <string name="themeText">Dark theme</string>
 </resources>

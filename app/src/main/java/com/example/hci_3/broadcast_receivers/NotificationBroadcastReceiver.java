@@ -28,13 +28,14 @@ import java.util.stream.Collectors;
 
 public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private Gson gson;
-    private SharedPreferences storedDevicesSP, notificationIDsSP;
+    private SharedPreferences storedDevicesSP, notificationIDsSP, settingsSP;
     private NotificationManagerCompat notificationManager;
     Map<String, Device> storedDevices, newDevices;
     Map<String,Integer> notificationIDs;
     Integer lastNotificationID;
     Context context;
     ExecutorService executorService;
+    boolean favoriteDevicesNotifications, defaultDevicesNotifications;
 
     public NotificationBroadcastReceiver() {
         super();
@@ -47,8 +48,13 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        boolean notificationsActive = context.getSharedPreferences("settings",
-                Context.MODE_PRIVATE).getBoolean("notificationsActive", true);
+        settingsSP = context.getSharedPreferences(context.getString(R.string.settingsFile), Context.MODE_PRIVATE);
+
+        boolean notificationsActive = settingsSP.getBoolean(String.valueOf(R.id.allNotificationsSwitch), true);
+
+        favoriteDevicesNotifications = settingsSP.getBoolean(String.valueOf(R.id.favoriteNotificationsSwitch), true);
+
+        defaultDevicesNotifications = settingsSP.getBoolean(String.valueOf(R.id.defaultNotificationsSwitch), true);
 
         if(!notificationsActive)
             return;
@@ -80,42 +86,43 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private void handleApiRequest(List<Device> devices) {
 
         for(Device device: devices){
+            if(validateSendNotification(device)){
+                Device olderDev = storedDevices.get(device.getId());
 
-            Device olderDev = storedDevices.get(device.getId());
+                if( olderDev == null ) {
+                    emitNotification(device,context.getString(R.string.notifications_device_added, device.getParsedName()),"device.added");
+                    newDevices.put(device.getId(),device);
+                } else {
+                    final Map<String, String> comparision = olderDev.compareToNewerVersion(device);
 
-            if( olderDev == null ) {
-                emitNotification(device,context.getString(R.string.notifications_device_added, device.getParsedName()),"device.added");
-                newDevices.put(device.getId(),device);
-            } else {
-                final Map<String, String> comparision = olderDev.compareToNewerVersion(device);
+                    for(Map.Entry<String,String> change : comparision.entrySet()) {
+                        String event, value;
+                        int eventID, valueID;
+                        if(change.getKey().startsWith("state")){
+                            String[] aux = change.getKey().split("\\.");
+                            eventID = context.getResources().getIdentifier(aux[aux.length - 1],"string", context.getPackageName());
+                        } else{
+                            eventID = context.getResources().getIdentifier(change.getKey(),"string", context.getPackageName());
+                        }
 
-                for(Map.Entry<String,String> change : comparision.entrySet()) {
-                    String event, value;
-                    int eventID, valueID;
-                    if(change.getKey().startsWith("state")){
-                        String[] aux = change.getKey().split("\\.");
-                        eventID = context.getResources().getIdentifier(aux[aux.length - 1],"string", context.getPackageName());
-                    } else{
-                        eventID = context.getResources().getIdentifier(change.getKey(),"string", context.getPackageName());
+                        if(eventID == 0)
+                            event = change.getKey();
+                        else
+                            event = context.getString(eventID);
+
+                        valueID = context.getResources().getIdentifier(change.getValue(),"string", context.getPackageName());
+                        if(!change.getValue().matches("-?[0-9]+") && valueID != 0)
+                            value = context.getString(valueID);
+                        else
+                            value = change.getValue();
+
+                        emitNotification(device, context.getString(R.string.notifications_device_stated_changed, event, value), change.getKey());
                     }
 
-                    if(eventID == 0)
-                        event = change.getKey();
-                    else
-                        event = context.getString(eventID);
-
-                    valueID = context.getResources().getIdentifier(change.getValue(),"string", context.getPackageName());
-                    if(!change.getValue().matches("-?[0-9]+") && valueID != 0)
-                        value = context.getString(valueID);
-                    else
-                        value = change.getValue();
-
-                    emitNotification(device, context.getString(R.string.notifications_device_stated_changed, event, value), change.getKey());
-                }
-
-                if(!comparision.isEmpty()){
-                    emitSummary(device);
-                    newDevices.put(device.getId(),device);
+                    if(!comparision.isEmpty()){
+                        emitSummary(device);
+                        newDevices.put(device.getId(),device);
+                    }
                 }
             }
         }
@@ -123,12 +130,20 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         List<String> newDevIDs = devices.stream().map(Device::getId).collect(Collectors.toList());
 
         for(Device storedDevice : storedDevices.values()){
-            if(!newDevIDs.contains(storedDevice.getId())){
-                emitNotification(storedDevice,context.getString(R.string.notifications_device_deleted, storedDevice.getParsedName()), "device.deleted");
-                newDevices.put(storedDevice.getId(),null);
+            if(validateSendNotification(storedDevice)){
+                if(!newDevIDs.contains(storedDevice.getId())){
+                    emitNotification(storedDevice,context.getString(R.string.notifications_device_deleted, storedDevice.getParsedName()), "device.deleted");
+                    newDevices.put(storedDevice.getId(),null);
+                }
             }
         }
         finish();
+    }
+
+    private boolean validateSendNotification(Device device) {
+        if(device.isFav())
+            return favoriteDevicesNotifications;
+        return defaultDevicesNotifications;
     }
 
     private void emitSummary(Device device) {
