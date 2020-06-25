@@ -121,7 +121,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
                     if(!comparision.isEmpty()){
                         emitSummary(device);
-                        newDevices.put(device.getId(),device);
+                        newDevices.put(device.getId(), device);
                     }
                 }
             }

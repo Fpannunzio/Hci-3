@@ -18,14 +18,12 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
 
-import com.example.hci_3.fragments.FavoritesFragmentDirections;
 import com.example.hci_3.repositories.DeviceRepository;
 import com.example.hci_3.view_models.ActivityViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String ACTION_ALARM = "com.example.hci_3.ALARM";
     public static final String ACTION_ALARM_HANDLE = "com.example.hci_3.ALARM_HANDLE";
-    public static final int INTERVAL = 30000;
+    public static final int INTERVAL = 60000;
 
     BroadcastReceiver dataSyncBroadcastReceiver;
     ActivityViewModel model;
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         model = new ViewModelProvider(this).get(ActivityViewModel.class);
 
-        model.updateDevices();
+        model.startPollingDevices();
 
         DeviceRepository.getInstance().updateDevices();
 
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             //navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName), Objects.requireNonNull(homeName)));
         }
 
-        dataSyncBroadcastReceiver = new DataSyncBroadcastReceiver();
+        dataSyncBroadcastReceiver = new KillNotificationBroadcastReceiver();
 
         setAlarm();
     }
@@ -81,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        model.startPollingDevices();
         IntentFilter filter = new IntentFilter(ACTION_ALARM_HANDLE);
         filter.setPriority(2);
         registerReceiver(dataSyncBroadcastReceiver, filter);
@@ -90,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
+        model.stopPollingDevices();
         unregisterReceiver(dataSyncBroadcastReceiver);
     }
 
@@ -143,14 +143,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static class DataSyncBroadcastReceiver extends BroadcastReceiver {
+    public static class KillNotificationBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.v("pruebaBroadcast", "dataSyncBroadcast");
-
-            DeviceRepository.getInstance().updateDevices();
-
             abortBroadcast();
         }
     }

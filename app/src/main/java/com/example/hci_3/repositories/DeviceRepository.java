@@ -27,24 +27,32 @@ public class DeviceRepository {
     private MutableLiveData<List<MutableLiveData<Device>>> devices;
     private Map<String, MutableLiveData<Device>> idToDeviceMap;
     private Application application;
-//    private Handler handler;
+    private Handler handler;
 
     private DeviceRepository(){
         apiClient = ApiClient.getInstance();
         devices = new MutableLiveData<>();
         idToDeviceMap = new HashMap<>();
+        handler = new Handler();
+    }
 
-        // Para mi tiene que ser un alarmManager
-//        handler = new Handler();
-//        int delay = 5000;
-//
-//        handler.postDelayed(new Runnable(){
-//            @Override
-//            public void run(){
-//                handler.postDelayed(this, delay);
-//                updateDevices();
-//            }
-//        }, delay);
+    public void startPolling(){
+        int delay = 10000;
+
+        if(devices.getValue() == null || devices.getValue().isEmpty())
+            updateDevices();
+
+        handler.postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                updateDevices();
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+    }
+
+    public void stopPolling(){
+        handler.removeCallbacksAndMessages(null);
     }
 
     public static synchronized DeviceRepository getInstance() {
@@ -144,8 +152,4 @@ public class DeviceRepository {
         editor.putString(device.getId(), json);
         Log.v("hola", "hola");
     }
-
-//    public enum DeviceDataState {
-//        UNCHANGED, UPDATED, REMOVED, ADDED
-//    }
 }

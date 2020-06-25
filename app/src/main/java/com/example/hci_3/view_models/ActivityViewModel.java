@@ -10,13 +10,24 @@ import com.example.hci_3.repositories.DeviceRepository;
 public class ActivityViewModel extends AndroidViewModel {
 
     private DeviceRepository deviceRepository = DeviceRepository.getInstance();
+    private Boolean isPolling = false;
 
     public ActivityViewModel(@NonNull Application application) {
         super(application);
         deviceRepository.setApplication(application);
     }
 
-    public void updateDevices() {
-        deviceRepository.updateDevices();
+    public void startPollingDevices(){
+        if(!isPolling){
+            deviceRepository.startPolling();
+            isPolling = true;
+        }
+    }
+
+    public void stopPollingDevices(){
+        if(isPolling){
+            deviceRepository.stopPolling();
+            isPolling = false;
+        }
     }
 }
