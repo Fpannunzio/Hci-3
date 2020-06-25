@@ -15,12 +15,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Button;
 
 import com.example.hci_3.fragments.FavoritesFragmentDirections;
 import com.example.hci_3.repositories.DeviceRepository;
@@ -128,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
     private void setAlarm(){
         boolean alarmUp = PendingIntent.getBroadcast(this, 0,
                 new Intent(ACTION_ALARM), PendingIntent.FLAG_NO_CREATE) != null;
-
-        Log.v("pruebabroadcast", String.valueOf(alarmUp));
 
         if(alarmUp)
             return;

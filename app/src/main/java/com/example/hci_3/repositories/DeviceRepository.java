@@ -82,6 +82,12 @@ public class DeviceRepository {
                 apiClient.getDeviceState(deviceId, device.getState().getClass(), state -> {
                     device.setState(state);
                     ldDevice.postValue(device);
+
+                    SharedPreferences.Editor editor = application.getSharedPreferences("tobias", Application.MODE_PRIVATE).edit();
+                    Gson gson = new Gson();
+                    updatePreference(editor, gson, device);
+                    editor.apply();
+
                     responseHandler.handle(true, result);
                 }, (m, c) -> Log.w("uncriticalError", "Failed to get device state: " + m + " Code: " + c));
 
@@ -150,6 +156,5 @@ public class DeviceRepository {
     private void updatePreference(SharedPreferences.Editor editor, Gson gson, Device device){
         String json = gson.toJson(device);
         editor.putString(device.getId(), json);
-        Log.v("hola", "hola");
     }
 }

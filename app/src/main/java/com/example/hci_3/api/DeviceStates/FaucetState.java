@@ -89,17 +89,20 @@ public class FaucetState implements DeviceState {
 
         FaucetState fState = (FaucetState) state;
 
-        if(!getStatus().equals(fState.getStatus()))
+        if((getQuantity() != null && fState.getStatus().equals("opened") && fState.getQuantity() == null) || (fState.getQuantity() != null && getStatus().equals("opened") && getQuantity() == null))
+            ans.put("status", "dispensing" + fState.getQuantity() + fState.getUnit());
+
+        else if(!getStatus().equals(fState.getStatus()))
             ans.put("status", fState.getStatus());
 
-        if((getQuantity() == null && fState.getQuantity() != null) || (getQuantity() != null && !getQuantity().equals(fState.getQuantity())))
-            ans.put("quantity", fState.getQuantity().toString());
-
-        if((getUnit() == null && fState.getUnit() != null) || (getUnit() != null && !getUnit().equals(fState.getUnit())))
-            ans.put("unit", fState.getUnit());
-
-        if((getDispensedQuantity() == null && fState.getDispensedQuantity() != null) || (getDispensedQuantity() != null && !getDispensedQuantity().equals(fState.getDispensedQuantity())))
-            ans.put("dispensedQuantity", fState.getDispensedQuantity().toString());
+//        if((getQuantity() == null && fState.getQuantity() != null) || (getQuantity() != null && !getQuantity().equals(fState.getQuantity())))
+//            ans.put("quantity", fState.getQuantity().toString());
+//
+//        if((getUnit() == null && fState.getUnit() != null) || (getUnit() != null && !getUnit().equals(fState.getUnit())))
+//            ans.put("unit", fState.getUnit());
+//
+//        if((getDispensedQuantity() == null && fState.getDispensedQuantity() != null) || (getDispensedQuantity() != null && !getDispensedQuantity().equals(fState.getDispensedQuantity())))
+//            ans.put("dispensedQuantity", fState.getDispensedQuantity().toString());
 
         return ans;
     }
