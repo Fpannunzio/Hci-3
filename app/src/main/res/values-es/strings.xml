@@ -180,4 +180,6 @@
     <string name="ac_cool">Frio</string>
     <string name="ac_fan">Ventilador</string>
     <string name="brillo">Brillo</string>
+    <string name="routine_description">Tarjeta de rutina</string>
+    <string name="current_color">Color actual</string>
 </resources>
