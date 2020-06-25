@@ -73,8 +73,9 @@ public class RoomDetailsFragment extends Fragment {
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
 
         String roomName = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getRoomName();
+        String homeName = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getHomeName();
 
-        Objects.requireNonNull(actionBar).setTitle(roomName);
+        Objects.requireNonNull(actionBar).setTitle(getResources().getString(R.string.room_title, roomName, homeName));
 
         actionBar.setDisplayHomeAsUpEnabled(true);
 

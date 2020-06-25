@@ -46,11 +46,11 @@
     <string name="plus_button">Plus button</string>
     <string name="frio">Cold</string>
     <string name="calor">Heat</string>
-    <string name="ventilacion">ventilation</string>
+    <string name="ventilacion">Ventilation</string>
     <string name="modo">Mode</string>
     <string name="desplazamiento_aspas">Blade displacement</string>
     <string name="vertical">Vertical:</string>
-    <string name="auto">auto</string>
+    <string name="auto">Auto</string>
     <string name="horizontal">Horizontal:</string>
     <string name="velocidad_ventilador">Fan speed:</string>
     <string name="speaker">Speaker image</string>
@@ -76,6 +76,7 @@
     <string name="buscar">Search</string>
     <string name="modoNocturno">Dark Mode</string>
     <string name="search">Searching: %1$s</string>
+    <string name="dispensando">Dispensing %1$g</string>
     <string name="ajustes">Settings</string>
     <string-array name="fuente_calor">
         <item>Conventional</item>
@@ -143,6 +144,7 @@
     <string name="room.name">Room name</string>
     <string name="room.home.name">Home name</string>
     <string name="spinner_invalid_home_name">The home selected was removed, or it\'s name was changed</string>
+    <string name="invalid_vacuum_location">The room which the vacuum was assigned to was deleted. It will be assigned to it\'s room.</string>
     <string name="classical">Classical</string>
     <string name="opened">Opened</string>
     <string name="opening">Opening</string>
@@ -164,6 +166,9 @@
     <string name="active">Active</string>
     <string name="playing">Playing</string>
     <string name="paused">Paused</string>
+    <string name="abajo">Bottom</string>
+    <string name="arriba">Up</string>
+    <string name="completo">Complete</string>
     <string name="settingsFile">setings</string>
     <string name="notificationsTitle">Notifications</string>
     <string name="allNotificationsText">All notifications</string>

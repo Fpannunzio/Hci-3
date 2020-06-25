@@ -36,7 +36,7 @@ public class DeviceRepository {
 
         // Para mi tiene que ser un alarmManager
 //        handler = new Handler();
-//        int delay = 60000;
+//        int delay = 5000;
 //
 //        handler.postDelayed(new Runnable(){
 //            @Override

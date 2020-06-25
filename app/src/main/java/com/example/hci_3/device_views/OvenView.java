@@ -6,10 +6,7 @@ import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,26 +18,25 @@ import androidx.lifecycle.LiveData;
 import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.OvenState;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OvenView extends DeviceView {
     private TextView mDevName, mState, mTemperature, mLocation;
     private Switch mSwitch;
     private ImageButton mMinus, mPlus;
-    private Spinner mFont, mGrill, mConvection;
+    private MaterialButtonToggleGroup mFont, mGrill, mConvection;
     private CardView cardView;
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
-
-    private ArrayAdapter<CharSequence> fuenteAdapter;
-    private ArrayAdapter<CharSequence> grillAdapter;
-    private ArrayAdapter<CharSequence> conveccionAdapter;
-
-    private final String[] fuenteArray = getResources().getStringArray(R.array.fuente_calor);
-    private final String[]  grillArray= getResources().getStringArray(R.array.modo_grill);
-    private final String[] convectionArray = getResources().getStringArray(R.array.modo_conveccion);
+    private Map<String, Integer> modeToIdMap;
+    private Map<String, Integer> grillToIdMap;
+    private Map<String, Integer> conventionalToIdMap;
+    private Map<Integer, String> idToActionMap;
 
     public OvenView(Context context) {
         super(context);
@@ -71,74 +67,42 @@ public class OvenView extends DeviceView {
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
 
+        mFont = findViewById(R.id.heat_source_group);
+        mGrill = findViewById(R.id.grill_toggle_group);
+        mConvection = findViewById(R.id.conventional_toggle_group);
 
-        mFont = findViewById(R.id.oven_fuente);
-        mGrill = findViewById(R.id.oven_grill);
-        mConvection = findViewById(R.id.oven_conveccion);
-
-        fuenteAdapter = ArrayAdapter.createFromResource(context, R.array.fuente_calor, android.R.layout.simple_spinner_item);
-        grillAdapter = ArrayAdapter.createFromResource(context, R.array.modo_grill, android.R.layout.simple_spinner_item);
-        conveccionAdapter = ArrayAdapter.createFromResource(context, R.array.modo_conveccion, android.R.layout.simple_spinner_item);
+        setUpMaps();
     }
 
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
-        @SuppressWarnings("ConstantConditions")
-        OvenState state = (OvenState) device.getValue().getState();
 
-        mFont.setAdapter(fuenteAdapter);
-        mGrill.setAdapter(grillAdapter);
-        mConvection.setAdapter(conveccionAdapter);
-
-
-
-
-        mFont.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                setHeat(fuenteArray[arg2]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
+        mFont.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked)
+                setHeat(idToActionMap.get(checkedId));
         });
 
-        mGrill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                setGrill(grillArray[arg2]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
+        mGrill.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked)
+                setGrill(idToActionMap.get(checkedId));
         });
 
-        mConvection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                setConvection(convectionArray[arg2]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
+        mConvection.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked)
+                setConvection(idToActionMap.get(checkedId));
         });
 
         extendBtn.setOnClickListener(v -> {
-            if (expandableLayout.getVisibility() == View.GONE) {
+            if (expandableLayout.getVisibility() == View.GONE){
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.VISIBLE);
-                // Falta rotar la flecha
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
             } else {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.GONE);
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
 
@@ -185,14 +149,19 @@ public class OvenView extends DeviceView {
                 device.getRoom().getHome().getName()));
 
         mState.setText(getResources().getString(R.string.temp_state,
-                state.getStatus().equals("on") ? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
+                state.getStatus().equals("on") ? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado), state.getHeat(),
                 ((OvenState) device.getState()).getTemperature()));
 
         mTemperature.setText(getResources().getString(R.string.temp,
                 String.valueOf(state.getTemperature())));
 
-        // TODO: 6/23/2020 hacer que traiga el valor de los spinners desde la api
-        // Hay que poner que se activen los botones con el estado
+        mSwitch.setChecked(state.getStatus().equals("on"));
+
+        mFont.check(modeToIdMap.get(state.getHeat()));
+
+        mGrill.check(grillToIdMap.get(state.getGrill()));
+
+        mConvection.check(conventionalToIdMap.get(state.getConvection()));
     }
 
     private void turnOn(){
@@ -208,32 +177,52 @@ public class OvenView extends DeviceView {
     }
 
     private void setHeat(String heatMode) {
-
-        if (fuenteArray[0].equals(heatMode))
-            executeAction("setHeat", new ArrayList<>(Collections.singletonList("conventional")), this::handleError);
-        else if(fuenteArray[1].equals(heatMode))
-            executeAction("setHeat", new ArrayList<>(Collections.singletonList("bottom")), this::handleError);
-        else
-            executeAction("setHeat", new ArrayList<>(Collections.singletonList("top")), this::handleError);
+        executeAction("setHeat", new ArrayList<>(Collections.singletonList(heatMode)), this::handleError);
     }
 
     private void setGrill(String grillMode) {
-
-        if (grillArray[0].equals(grillMode))
-            executeAction("setGrill", new ArrayList<>(Collections.singletonList("off")), this::handleError);
-        else if(grillArray[1].equals(grillMode))
-            executeAction("setGrill", new ArrayList<>(Collections.singletonList("eco")), this::handleError);
-        else
-            executeAction("setGrill", new ArrayList<>(Collections.singletonList("large")), this::handleError);
+        executeAction("setGrill", new ArrayList<>(Collections.singletonList(grillMode)), this::handleError);
     }
 
     private void setConvection(String convectionMode) {
+        executeAction("setConvection", new ArrayList<>(Collections.singletonList(convectionMode)), this::handleError);
+    }
 
-        if (convectionArray[0].equals(convectionMode))
-            executeAction("setConvection", new ArrayList<>(Collections.singletonList("normal")), this::handleError);
-        else if(convectionArray[1].equals(convectionMode))
-            executeAction("setConvection", new ArrayList<>(Collections.singletonList("off")), this::handleError);
-        else
-            executeAction("setConvection", new ArrayList<>(Collections.singletonList("eco")), this::handleError);
+    private void setUpMaps(){
+        modeToIdMap = new HashMap<>();
+        grillToIdMap = new HashMap<>();
+        conventionalToIdMap = new HashMap<>();
+        idToActionMap = new HashMap<>();
+
+        // Mode
+        modeToIdMap.put("conventional", R.id.conventional_button);
+        idToActionMap.put(R.id.conventional_button, "conventional");
+
+        modeToIdMap.put("bottom", R.id.bottom_button);
+        idToActionMap.put(R.id.bottom_button, "bottom");
+
+        modeToIdMap.put("top", R.id.top_button);
+        idToActionMap.put(R.id.top_button, "top");
+
+        //grill mode
+        grillToIdMap.put("off", R.id.grill_off_button);
+        idToActionMap.put(R.id.grill_off_button, "off");
+
+        grillToIdMap.put("large", R.id.grill_comp);
+        idToActionMap.put(R.id.grill_comp, "large");
+
+        grillToIdMap.put("eco", R.id.grill_eco_button);
+        idToActionMap.put(R.id.grill_eco_button, "eco");
+
+        // Horizontal Swing
+        conventionalToIdMap.put("normal", R.id.convection_con_button);
+        idToActionMap.put(R.id.convection_con_button, "normal");
+
+        conventionalToIdMap.put("eco", R.id.convection_eco_button);
+        idToActionMap.put(R.id.convection_eco_button, "eco");
+
+        conventionalToIdMap.put("off", R.id.convection_off_button);
+        idToActionMap.put(R.id.convection_off_button, "off");
+
     }
 }

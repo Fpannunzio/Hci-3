@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String ACTION_ALARM = "com.example.hci_3.ALARM";
     public static final String ACTION_ALARM_HANDLE = "com.example.hci_3.ALARM_HANDLE";
-    public static final int INTERVAL = 60000;
+    public static final int INTERVAL = 30000;
 
     BroadcastReceiver dataSyncBroadcastReceiver;
     ActivityViewModel model;
@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
             Log.v("notif2", "estoy aca2");
             String roomName = intent.getStringExtra("roomName");
             String roomId = intent.getStringExtra("roomID");
-            navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName)));
+            Log.v("homename", roomName);
+            //String homeName = intent.getStringExtra("homeName");
+            //navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName), Objects.requireNonNull(homeName)));
         }
 
         dataSyncBroadcastReceiver = new DataSyncBroadcastReceiver();

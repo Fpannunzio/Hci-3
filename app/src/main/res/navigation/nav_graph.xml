@@ -69,6 +69,9 @@
         <action
             android:id="@+id/action_room_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <argument
+            android:name="homeName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

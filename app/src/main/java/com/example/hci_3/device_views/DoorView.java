@@ -67,10 +67,11 @@ public class DoorView extends DeviceView {
             if (expandableLayout.getVisibility() == View.GONE){
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.VISIBLE);
-                // Falta rotar la flecha
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
             } else {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.GONE);
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
     }
@@ -136,7 +137,7 @@ public class DoorView extends DeviceView {
         });
 
         mBlock.setText(getResources().getString(R.string.state,
-                state.getLock().equals("lock")? getResources().getString(R.string.desbloquer) : getResources().getString(R.string.bloquear)));
+                state.getLock().equals("locked")? getResources().getString(R.string.desbloquer) : getResources().getString(R.string.bloquear)));
     }
     private void open(){
         Log.v("door1", "estoy aca");

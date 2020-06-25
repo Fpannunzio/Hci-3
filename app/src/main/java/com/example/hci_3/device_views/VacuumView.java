@@ -4,7 +4,6 @@ import android.content.Context;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,10 +22,13 @@ import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 
 import com.example.hci_3.api.DeviceStates.VacuumState;
+import com.example.hci_3.api.Room;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -37,6 +40,7 @@ public class VacuumView extends DeviceView {
     private ImageButton extendBtn;
     private Spinner mSpinner;
     private MaterialButtonToggleGroup mStateGroup, mModeGroup;
+    private Map<String, Integer> actionToButtonMap;
     private ArrayAdapter<InfoRoom> locationAdapter;
     private InfoRoom currentRoom;
 
@@ -68,6 +72,8 @@ public class VacuumView extends DeviceView {
         mStateGroup = findViewById(R.id.vacuum_onstate_group);
         mModeGroup = findViewById(R.id.vacuum_mode_group);
         locationAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item);
+
+        initActionToButtonMap();
     }
 
     @Override
@@ -77,17 +83,16 @@ public class VacuumView extends DeviceView {
         mSpinner.setAdapter(locationAdapter);
 
         extendBtn.setOnClickListener(v -> {
-            if (expandableLayout.getVisibility() == View.GONE) {
+            if (expandableLayout.getVisibility() == View.GONE){
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.VISIBLE);
-                // Falta rotar la flecha
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
             } else {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.GONE);
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
-
-
 
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -104,7 +109,6 @@ public class VacuumView extends DeviceView {
             }
         });
 
-
         mStateGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
                 if (checkedId == R.id.on_button)
@@ -115,6 +119,7 @@ public class VacuumView extends DeviceView {
                     pause();
             }
         });
+
         mModeGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
                 if (checkedId == R.id.aspirar_button)
@@ -130,37 +135,50 @@ public class VacuumView extends DeviceView {
 
         VacuumState state = (VacuumState) device.getState();
 
+        String status = state.getStatus();
+
         mDevName.setText(getParsedName(device.getName()));
 
         mState.setText(getResources().getString(R.string.state,
-                state.getStatus().equals("active")? getResources().getString(R.string.activa) :state.getStatus().equals("docked")?
-                        getResources().getString(R.string.cargandose) +  getResources().getString(R.string.batery_state, state.getBatteryLevel()) + "%":
+                status.equals("active")? getResources().getString(R.string.activa) + " - " + getResources().getString(R.string.batery_state, state.getBatteryLevel()) + "%" : status.equals("docked")?
+                        getResources().getString(R.string.cargandose) + " - " + getResources().getString(R.string.batery_state, state.getBatteryLevel()) + "%":
                         getResources().getString(R.string.apagada)));
 
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
 
+        //noinspection ConstantConditions
+        mStateGroup.check(actionToButtonMap.get(status));
 
+        //noinspection ConstantConditions
+        mModeGroup.check(actionToButtonMap.get(state.getMode()));
+
+        if (status.equals("active")) {
+            mSpinner.setEnabled(true);
+            mSpinner.setClickable(true);
+        } else {
+            mSpinner.setEnabled(false);
+            mSpinner.setClickable(false);
+        }
+
+        currentRoom = (state.getLocation() != null)?
+                new InfoRoom(state.getLocation().getParsedName(), state.getLocation().getId()) :
+                new InfoRoom(device.getRoom().getParsedName(), device.getRoom().getId());
+
+        if(locationAdapter.getCount() > 0)
+            updateLocationSpinner();
 
         model.getRooms(device, rooms -> {
             locationAdapter.clear();
             locationAdapter.addAll(rooms.stream().map(room -> new InfoRoom(room.getParsedName(), room.getId())).collect(Collectors.toList()));
             locationAdapter.notifyDataSetChanged();
-            int aux = locationAdapter.getPosition(currentRoom);
-            if( aux == -1)
-                aux = 0;
-            mSpinner.setSelection(aux);
+
+            updateLocationSpinner();
         }, this::handleError);
-
-        //hay que setear el string array programaticamente antes de hacer esto
-//        mSpinner.setSelection(locationAdapter.getPosition(state.getLocation().getName()));
-
-        // Aca updetear el select de los rooms con model.getRooms(device, devices -> {}, this::handleError)
-        // y posicionar el spinner en el lugar correcto
     }
 
-    private void setLocation(String roomid){ executeAction("setLocation",new ArrayList<>(Collections.singletonList(roomid)), this::handleError);}
+    private void setLocation(String roomid){ executeAction("setLocation", new ArrayList<>(Collections.singletonList(roomid)), this::handleError);}
 
     private void start(){
         executeAction("start", this::handleError);
@@ -176,6 +194,29 @@ public class VacuumView extends DeviceView {
 
     private void setMode(String value){
         executeAction("setMode", new ArrayList<>(Collections.singletonList(value)), this::handleError);
+    }
+
+    private void updateLocationSpinner(){
+        int newPosition = locationAdapter.getPosition(currentRoom);
+
+        if(newPosition == -1){
+            //noinspection ConstantConditions
+            Room room = device.getValue().getRoom();
+
+            currentRoom = new InfoRoom(room.getParsedName(), room.getId());
+            newPosition = locationAdapter.getPosition(currentRoom);
+            Toast.makeText(context, getResources().getString(R.string.invalid_vacuum_location), Toast.LENGTH_LONG).show();
+        }
+        mSpinner.setSelection(newPosition);
+    }
+
+    private void initActionToButtonMap(){
+        actionToButtonMap = new HashMap<>();
+        actionToButtonMap.put("vacuum", R.id.aspirar_button);
+        actionToButtonMap.put("mop", R.id.trapear_button);
+        actionToButtonMap.put("active", R.id.on_button);
+        actionToButtonMap.put("inactive", R.id.off_button);
+        actionToButtonMap.put("docked", R.id.charge_button);
     }
 
     private static class InfoRoom {
@@ -201,7 +242,7 @@ public class VacuumView extends DeviceView {
             if (this == o) return true;
             if (!(o instanceof InfoRoom)) return false;
             InfoRoom infoRoom = (InfoRoom) o;
-            return Objects.equals(roomName, infoRoom.roomName);
+            return Objects.equals(roomId, infoRoom.roomId);
         }
     }
 }

@@ -1,8 +1,11 @@
 package com.example.hci_3.device_views;
 
 import android.content.Context;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.util.AttributeSet;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,8 +17,6 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import androidx.lifecycle.LiveData;
-import androidx.transition.AutoTransition;
-import androidx.transition.TransitionManager;
 
 import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
@@ -25,17 +26,22 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 import java.util.ArrayList;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ACView extends DeviceView {
     private TextView mDevName, mState, mTemperature, mLocation;
     private MaterialButtonToggleGroup mTempGroup, mVertGroup, mHorGroup, mFanSpeedGroup;
     private Switch mSwitch;
     private ImageButton mMinus, mPlus;
-    private ACState state;
-
     private CardView cardView;
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
+    private Map<String, Integer> modeToIdMap;
+    private Map<String, Integer> verticalToIdMap;
+    private Map<String, Integer> horizontalToIdMap;
+    private Map<String, Integer> fanSpeedToIdMap;
+    private Map<Integer, String> idToActionMap;
 
     public ACView(Context context) {
         super(context);
@@ -68,25 +74,23 @@ public class ACView extends DeviceView {
         cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
+
+        setUpMaps();
     }
 
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
-        @SuppressWarnings("ConstantConditions")
-        ACState state = (ACState) device.getValue().getState();
-
-        // Aca se cargan la funcionalidad de los elementos UI
-
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
-                TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
+                android.transition.TransitionManager.beginDelayedTransition(cardView, new android.transition.AutoTransition());
                 expandableLayout.setVisibility(View.VISIBLE);
-                // Falta rotar la flecha
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
             } else {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.GONE);
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
 
@@ -116,83 +120,23 @@ public class ACView extends DeviceView {
         });
 
         mTempGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (isChecked) {
-                if (checkedId == R.id.cold_button)
-                    setMode("cold");
-                else if (checkedId == R.id.heat_button)
-                    setMode("heat");
-                else
-                    setMode("fan");
-            }
+            if (isChecked)
+                setMode(idToActionMap.get(checkedId));
         });
 
         mVertGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (isChecked) {
-                switch (checkedId) {
-                    case R.id.v_auto_button:
-                        setVerticalSwing("auto");
-                        break;
-                    case R.id.v_22_button:
-                        setVerticalSwing("22");
-                        break;
-                    case R.id.v_45_button:
-                        setVerticalSwing("45");
-                        break;
-                    case R.id.v_67_button:
-                        setVerticalSwing("67");
-                        break;
-                    case R.id.v_90_button:
-                        setVerticalSwing("90");
-                        break;
-                }
-            }
+            if (isChecked)
+                setVerticalSwing(idToActionMap.get(checkedId));
         });
 
         mHorGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (isChecked) {
-                switch (checkedId) {
-                    case R.id.h_auto_button:
-                        setHorizontalSwing("auto");
-                        break;
-                    case R.id.h_n90_button:
-                        setHorizontalSwing("-90");
-                        break;
-                    case R.id.h_n45_button:
-                        setHorizontalSwing("-45");
-                        break;
-                    case R.id.h_0_button:
-                        setHorizontalSwing("0");
-                        break;
-                    case R.id.h_45_button:
-                        setHorizontalSwing("45");
-                        break;
-                    case R.id.h_90_button:
-                        setHorizontalSwing("90");
-                        break;
-                }
-            }
+            if (isChecked)
+                setHorizontalSwing(idToActionMap.get(checkedId));
         });
 
         mFanSpeedGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (isChecked) {
-                switch (checkedId) {
-                    case R.id.fs_auto_button:
-                        setFanSpeed("auto");
-                        break;
-                    case R.id.fs_25_button:
-                        setFanSpeed("25");
-                        break;
-                    case R.id.fs_50_button:
-                        setFanSpeed("50");
-                        break;
-                    case R.id.fs_75_button:
-                        setFanSpeed("75");
-                        break;
-                    case R.id.fs_100_button:
-                        setFanSpeed("100");
-                        break;
-                }
-            }
+            if (isChecked)
+                setFanSpeed(idToActionMap.get(checkedId));
         });
     }
 
@@ -203,12 +147,14 @@ public class ACView extends DeviceView {
 
     @Override
     public void onDeviceRefresh(Device device) {
-        state = (ACState) device.getState();
+        ACState state = (ACState) device.getState();
+
+        String status = state.getStatus();
 
         mDevName.setText(getParsedName(device.getName()));
 
         mState.setText(getResources().getString(R.string.temp_state,
-                state.getStatus().equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
+                status.equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado), state.getMode(),
                 state.getTemperature()));
 
         mTemperature.setText(getResources().getString(R.string.temp,
@@ -218,7 +164,20 @@ public class ACView extends DeviceView {
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
 
-        // Estaria bueno que se coloreen los buttonGroup segun el estado!
+        mSwitch.setChecked(status.equals("on"));
+
+        Log.v("damn", state.getVerticalSwing());
+        //noinspection ConstantConditions
+        mVertGroup.check(verticalToIdMap.get(state.getVerticalSwing()));
+
+        //noinspection ConstantConditions
+        mHorGroup.check(horizontalToIdMap.get(state.getHorizontalSwing()));
+
+        //noinspection ConstantConditions
+        mFanSpeedGroup.check(fanSpeedToIdMap.get(state.getFanSpeed()));
+
+        //noinspection ConstantConditions
+        mTempGroup.check(modeToIdMap.get(state.getMode()));
     }
 
     private void turnOn(){
@@ -247,6 +206,75 @@ public class ACView extends DeviceView {
 
     private void setFanSpeed(String value){
         executeAction("setFanSpeed", new ArrayList<>(Collections.singletonList(value)), this::handleError);
+    }
+
+    private void setUpMaps(){
+        modeToIdMap = new HashMap<>();
+        verticalToIdMap = new HashMap<>();
+        horizontalToIdMap = new HashMap<>();
+        fanSpeedToIdMap = new HashMap<>();
+        idToActionMap = new HashMap<>();
+
+        // Mode
+        modeToIdMap.put("cool", R.id.cold_button);
+        idToActionMap.put(R.id.cold_button, "cool");
+
+        modeToIdMap.put("heat", R.id.heat_button);
+        idToActionMap.put(R.id.heat_button, "heat");
+
+        modeToIdMap.put("fan", R.id.ventilation_button);
+        idToActionMap.put(R.id.ventilation_button, "fan");
+
+        // Vertical Swing
+        verticalToIdMap.put("auto", R.id.v_auto_button);
+        idToActionMap.put(R.id.v_auto_button, "auto");
+
+        verticalToIdMap.put("22", R.id.v_22_button);
+        idToActionMap.put(R.id.v_22_button, "22");
+
+        verticalToIdMap.put("45", R.id.v_45_button);
+        idToActionMap.put(R.id.v_45_button, "45");
+
+        verticalToIdMap.put("67", R.id.v_67_button);
+        idToActionMap.put(R.id.v_67_button, "67");
+
+        verticalToIdMap.put("90", R.id.v_90_button);
+        idToActionMap.put(R.id.v_90_button, "90");
+
+        // Horizontal Swing
+        horizontalToIdMap.put("auto", R.id.h_auto_button);
+        idToActionMap.put(R.id.h_auto_button, "auto");
+
+        horizontalToIdMap.put("-90", R.id.h_n90_button);
+        idToActionMap.put(R.id.h_n90_button, "-90");
+
+        horizontalToIdMap.put("-45", R.id.h_n45_button);
+        idToActionMap.put(R.id.h_n45_button, "-45");
+
+        horizontalToIdMap.put("0", R.id.h_0_button);
+        idToActionMap.put(R.id.h_0_button, "0");
+
+        horizontalToIdMap.put("45", R.id.h_45_button);
+        idToActionMap.put(R.id.h_45_button, "45");
+
+        horizontalToIdMap.put("90", R.id.h_90_button);
+        idToActionMap.put(R.id.h_90_button, "90");
+
+        // Fan Speed
+        fanSpeedToIdMap.put("auto", R.id.fs_auto_button);
+        idToActionMap.put(R.id.fs_auto_button, "auto");
+
+        fanSpeedToIdMap.put("25", R.id.fs_25_button);
+        idToActionMap.put(R.id.fs_25_button, "25");
+
+        fanSpeedToIdMap.put("50", R.id.fs_50_button);
+        idToActionMap.put(R.id.fs_50_button, "50");
+
+        fanSpeedToIdMap.put("75", R.id.fs_75_button);
+        idToActionMap.put(R.id.fs_75_button, "75");
+
+        fanSpeedToIdMap.put("100", R.id.fs_100_button);
+        idToActionMap.put(R.id.fs_100_button, "100");
     }
 }
 

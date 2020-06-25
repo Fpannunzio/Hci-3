@@ -6,6 +6,7 @@ import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +24,9 @@ import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
+import com.example.hci_3.api.DeviceStates.DeviceState;
 import com.example.hci_3.api.DeviceStates.FaucetState;
+
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -33,9 +36,9 @@ public class FaucetView extends DeviceView {
     private CardView cardView;
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
-    private Integer quantity = 1;
+    private Integer quantity = 1, auxiliar;
     private String unit;
-
+    private boolean flag = false;
 
     private TextView mDevName, mState,  mLocation, mAmount;
     private Button mOpen, mDispense;
@@ -85,14 +88,17 @@ public class FaucetView extends DeviceView {
         FaucetState state = (FaucetState) Objects.requireNonNull(device.getValue()).getState();
         mUnitSpinner.setAdapter(unitAdapter);
 
+        model.addPollingState(device.getValue(), 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
+
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.VISIBLE);
-                // Falta rotar la flecha
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
             } else {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.GONE);
+                extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
 
@@ -113,11 +119,13 @@ public class FaucetView extends DeviceView {
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                quantity = progress;
-                if(quantity == 0)
-                    quantity=1;
-                state.setQuantity(quantity);
-                mAmount.setText(getResources().getString(R.string.faucet_amount, quantity, unit));
+                if (state.getStatus().equals("closed")) {
+                    quantity = progress;
+                    if(quantity == 0)
+                        quantity=1;
+                    state.setQuantity(quantity);
+                    mAmount.setText(getResources().getString(R.string.faucet_amount, quantity, unit));
+                }
             }
 
             @Override
@@ -140,21 +148,9 @@ public class FaucetView extends DeviceView {
 
         mDevName.setText(getParsedName(device.getName()));
 
-        mState.setText(getResources().getString(R.string.state,
-                state.getStatus().equals("opened")? getResources().getString(R.string.abierto) : getResources().getString(R.string.cerrado)));
-
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
-
-        if(state.getStatus().equals("opened")) {
-            mDispense.setClickable(false);
-            mDispense.setBackgroundColor(Color.parseColor("#71A69A"));
-        }
-        else {
-            mDispense.setClickable(true);
-            mDispense.setBackgroundColor(Color.parseColor("#72E1C7"));
-        }
 
         mOpen.setOnClickListener(v -> {
             FaucetState aux = (FaucetState) device.getState();
@@ -191,5 +187,36 @@ public class FaucetView extends DeviceView {
         aux.add(quantity);
         aux.add(unit);
         executeAction("dispense",aux,this::handleError);
+    }
+
+    private void updateFrequentlyUpdatingState(DeviceState uncastedState){
+        FaucetState state = (FaucetState) uncastedState;
+
+
+        mState.setText(getResources().getString(R.string.state,
+                state.getStatus().equals("opened")? state.getDispensedQuantity() != null? getResources().getString(R.string.dispensando, state.getDispensedQuantity()) : getResources().getString(R.string.abierto) : getResources().getString(R.string.cerrado)));
+
+
+        if (state.getStatus().equals("opened") ) {
+            flag = true;
+            mDispense.setClickable(false);
+            mDispense.setBackgroundColor(Color.parseColor("#71A69A"));
+            if(state.getDispensedQuantity() == null)
+                mState.setText(getResources().getString(R.string.abierto));
+            else {
+                Log.v("quantity", state.getQuantity().toString());
+                mState.setText(getResources().getString(R.string.dispensando, state.getDispensedQuantity()));
+                mSeekBar.setProgress(state.getQuantity()- state.getDispensedQuantity().intValue());
+                mAmount.setText(getResources().getString(R.string.faucet_double_amount, state.getQuantity() - state.getDispensedQuantity(), unit));
+            }
+        }else {
+            mState.setText(getResources().getString(R.string.cerrado));
+            mDispense.setClickable(true);
+            mDispense.setBackgroundColor(Color.parseColor("#72E1C7"));
+            if(flag) {
+                mAmount.setText(getResources().getString(R.string.faucet_amount, 1, unit));
+                flag=false;
+            }
+        }
     }
 }

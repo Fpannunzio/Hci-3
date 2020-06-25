@@ -51,7 +51,7 @@
     <string name="modo">Modo</string>
     <string name="desplazamiento_aspas">Desplazamiento de aspas</string>
     <string name="vertical">Vertical:</string>
-    <string name="auto">auto</string>
+    <string name="auto">Auto</string>
     <string name="horizontal">Horizontal:</string>
     <string name="velocidad_ventilador">Velocidad del ventilador:</string>
     <string name="speaker">Imagen de parlante</string>
@@ -77,7 +77,7 @@
     <string name="modoNocturno">Modo Nocturno</string>
     <string name="search">Busqueda: %1$s</string>
     <string name="ajustes">Ajustes</string>
-
+    <string name="dispensando">Dispensando %1$g</string>
     <string-array name="fuente_calor">
         <item>Convencional</item>
         <item>Abajo</item>
@@ -144,6 +144,7 @@
     <string name="room.name">Nombre de la habitacion</string>
     <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
+    <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Será asignada a su habitacion.</string>
     <string name="classical">Clasica</string>
     <string name="opened">Abierta</string>
     <string name="opening">Abriendose</string>
@@ -161,10 +162,13 @@
     <string name="unlocked">Desbloqueada</string>
     <string name="locked">Bloqueada</string>
     <string name="docked">Trapear</string>
-    <string name="inactive">Inacvtiva</string>
+    <string name="inactive">Inactiva</string>
     <string name="active">Activa</string>
     <string name="playing">Reproduciendo</string>
     <string name="paused">Pausado</string>
+    <string name="abajo">Abajo</string>
+    <string name="arriba">Arriba</string>
+    <string name="completo">Completo</string>
     <string name="settingsFile">setings</string>
     <string name="notificationsTitle">Notificaciones</string>
     <string name="allNotificationsText">Todas las notificaciones</string>
