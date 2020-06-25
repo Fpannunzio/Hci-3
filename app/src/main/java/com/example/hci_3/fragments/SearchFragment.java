@@ -2,14 +2,22 @@ package com.example.hci_3.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -68,5 +76,37 @@ public class SearchFragment extends Fragment {
         actionBar.setHomeButtonEnabled(true);
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem settingsItem = menu.findItem(R.id.settings);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(SearchFragmentDirections.actionSearchFragmentSelf(query));
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        settingsItem.setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(SearchFragmentDirections.actionSearchFragmentToSettingsFragment());
+            return false;
+        });
+
     }
 }
