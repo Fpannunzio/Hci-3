@@ -189,4 +189,5 @@
     <string name="notificactions_message_name">El dispositivo cambio de nombre, ahora se llama %1$s</string>
     <string name="notificactions_message_device.added">El dispositivo fue agregado y esta disponible para usar</string>
     <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
+    <string name="mop">Trapear</string>
 </resources>

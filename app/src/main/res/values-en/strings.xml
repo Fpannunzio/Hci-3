@@ -189,4 +189,5 @@
     <string name="notificactions_message_name">"The device name was changed to "</string>
     <string name="notificactions_message_device.added">The device was added and is ready to use</string>
     <string name="notificactions_message_device.deleted">The device was removed from the system</string>
+    <string name="mop">Mop</string>
 </resources>

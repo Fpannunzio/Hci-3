@@ -101,7 +101,7 @@ public class SpeakerState implements DeviceState {
         if(!getVolume().equals(sState.getVolume()))
             ans.put("volume", sState.getVolume().toString());
 
-        if(getSong() != null && !getSong().equals(sState.getSong()))
+        if( getSong() != null && sState.getSong() != null && !getSong().equals(sState.getSong()))
             ans.put("song", sState.getSong().getTitle());
 
         return ans;
@@ -193,7 +193,7 @@ public class SpeakerState implements DeviceState {
             if (this == o) return true;
             if (!(o instanceof Song)) return false;
             Song song = (Song) o;
-            return Objects.equals(title, song.title);
+            return title.equals(song.title);
         }
     }
 }
