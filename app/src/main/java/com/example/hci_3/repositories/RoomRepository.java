@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.hci_3.api.ApiClient;
+import com.example.hci_3.api.Home;
 import com.example.hci_3.api.Room;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class RoomRepository {
     private ApiClient apiClient;
     private MutableLiveData<List<Room>> rooms;
     private Handler handler;
-    private String lastHomeQueriedId;
+    private Home lastHomeQueried;
 
     public static synchronized RoomRepository getInstance() {
         if (instance == null) {
@@ -39,11 +40,11 @@ public class RoomRepository {
         return rooms;
     }
 
-    public void setHomeToQuery(String homeId){
+    public void setHomeToQuery(Home home){
         stopPolling();
-        lastHomeQueriedId = homeId;
+        lastHomeQueried = home;
         startPolling();
-        updateRooms(homeId);
+        updateRooms(home);
     }
 
     public void stopPolling(){
@@ -58,18 +59,19 @@ public class RoomRepository {
             @Override
             public void run() {
                 handler.postDelayed(this, delay);
-                updateRooms(lastHomeQueriedId);
+                updateRooms(lastHomeQueried);
             }}, delay);
     }
 
-    private void updateRooms(String homeId){
-        apiClient.getHomeRooms(homeId,
-                this::updateRoomList,
+    private void updateRooms(Home home){
+        apiClient.getHomeRooms(home.getId(),
+                rooms -> updateRoomList(rooms, home),
                 (m, c) -> Log.w("uncriticalError", "Failed to get homes: " + m + " Code: " + c)
         );
     }
 
-    private void updateRoomList(List<Room> rooms){
+    private void updateRoomList(List<Room> rooms, Home home){
+        rooms.forEach(room -> room.setHome(home));
         this.rooms.postValue(rooms);
     }
 }

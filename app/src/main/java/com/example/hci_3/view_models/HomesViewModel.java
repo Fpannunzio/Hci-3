@@ -66,7 +66,7 @@ public class HomesViewModel extends ViewModel {
 
     public void updateCurrentHome(Home home){
         currentHome = home;
-        roomRepository.setHomeToQuery(home.getId());
+        roomRepository.setHomeToQuery(home);
     }
 
     public LiveData<List<Home>> getHomes(){

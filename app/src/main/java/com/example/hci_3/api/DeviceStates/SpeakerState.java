@@ -101,7 +101,7 @@ public class SpeakerState implements DeviceState {
         if(!getVolume().equals(sState.getVolume()))
             ans.put("volume", sState.getVolume().toString());
 
-        if((getSong() == null && sState.getSong() != null) || (getSong() != null && !getSong().equals(sState.getSong())))
+        if(getSong() != null && !getSong().equals(sState.getSong()))
             ans.put("song", sState.getSong().getTitle());
 
         return ans;

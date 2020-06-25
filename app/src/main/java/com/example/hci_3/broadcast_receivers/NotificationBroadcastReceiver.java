@@ -236,9 +236,9 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.setAction("notifications"); //TODO: pasar a R.Strings
         intent.putExtra("roomID", device.getRoom().getId());
-        intent.putExtra("roomName", device.getRoom().getParsedName() + device.getRoom().getHome().getName());
-        //intent.putExtra("homeName", );
-        return PendingIntent.getActivity(context, 0, intent, 0);
+        intent.putExtra("roomName", device.getRoom().getParsedName());
+        intent.putExtra("homeName", device.getRoom().getHome().getName());
+        return PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
     }
 
     private String getChannelID(Device device) {

@@ -22,12 +22,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.Button;
 
+import com.example.hci_3.fragments.FavoritesFragmentDirections;
 import com.example.hci_3.repositories.DeviceRepository;
 import com.example.hci_3.view_models.ActivityViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -95,11 +97,13 @@ public class MainActivity extends AppCompatActivity {
         Log.v("notif1", "estoy aca");
         if(intent.getAction() != null && intent.getAction().equals("notifications")) {
             Log.v("notif2", "estoy aca2");
-            String roomName = intent.getStringExtra("roomName");
-            String roomId = intent.getStringExtra("roomID");
-            Log.v("homename", roomName);
-            //String homeName = intent.getStringExtra("homeName");
-            //navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName), Objects.requireNonNull(homeName)));
+            Bundle extras = intent.getExtras();
+            String roomName = extras.getString("roomName");
+            String roomId = extras.getString("roomID");
+            String homeName = extras.getString("homeName");
+            Log.v("homename", "male");
+            Log.v("homename", homeName);
+            navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName), Objects.requireNonNull(homeName)));
         }
 
         dataSyncBroadcastReceiver = new KillNotificationBroadcastReceiver();

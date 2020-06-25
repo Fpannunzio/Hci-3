@@ -75,12 +75,11 @@ public class RoomDetailsFragment extends Fragment {
         String roomName = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getRoomName();
         String homeName = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getHomeName();
 
-        Objects.requireNonNull(actionBar).setTitle(getResources().getString(R.string.room_title, roomName, homeName));
+        Objects.requireNonNull(actionBar).setTitle(getResources().getString(R.string.room_title, homeName, roomName));
 
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         actionBar.setHomeButtonEnabled(true);
-
 
         return view;
     }
