@@ -75,8 +75,8 @@
     <string name="stopped_error">El parlante esta apagado, para reproducir musica debes prenderlo</string>
     <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
     <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
-    <string name="blinds_open_error">La persiana ya esta abierta</string>
-    <string name="blinds_close_error">La persiana ya esta cerrada</string>
+    <string name="blinds_open_error">La persiana no puede abrirse en este momento</string>
+    <string name="blinds_close_error">La persiana no puede cerrarse en este momento</string>
     <string name="dispense_error">El dispositivo ya esta dispensando</string>
     <string name="persiana">Persiana</string>
     <string name="extend_arrow">Flecha para ampliar tarjeta</string>
@@ -209,7 +209,7 @@
     <string name="playing">Reproduciendo</string>
     <string name="paused">Pausado</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
-    <string name="dispensando">Dispensando %1$g</string>
+    <string name="dispensando">Dispensado %1$d %2$s</string>
     <string name="faucet_double_amount" translatable="false">%1$g %2$s</string>
     <string name="batery_state">Bateria: %1$d</string>
     <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Sera asignada a su habitacion.</string>

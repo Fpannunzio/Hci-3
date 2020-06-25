@@ -25,8 +25,8 @@
     <string name="stopped_error">The speaker is off, to play music you must turn it on</string>
     <string name="block_error">" You can't lock the door if it's open"</string>
     <string name="open_error">You can\'t open the door if it\'s locked</string>
-    <string name="blinds_open_error">The blind is already open</string>
-    <string name="blinds_close_error">The blind is already closed</string>
+    <string name="blinds_open_error">Unable to open the blind</string>
+    <string name="blinds_close_error">Unable to close the blind</string>
     <string name="dispense_error">The device is already dispensing</string>
     <string name="persiana">Blind</string>
     <string name="extend_arrow">Arrow to extend card</string>
@@ -76,7 +76,7 @@
     <string name="buscar">Search</string>
     <string name="modoNocturno">Dark Mode</string>
     <string name="search">Searching: %1$s</string>
-    <string name="dispensando">Dispensing %1$g</string>
+    <string name="dispensando">Dispensed %1$d %2$s</string>
     <string name="ajustes">Settings</string>
     <string-array name="fuente_calor">
         <item>Conventional</item>

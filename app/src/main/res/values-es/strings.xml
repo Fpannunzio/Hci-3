@@ -26,8 +26,8 @@
     <string name="stopped_error">El parlante esta apagado, para reproducir música debes prenderlo</string>
     <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
     <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
-    <string name="blinds_open_error">La persiana ya esta abierta</string>
-    <string name="blinds_close_error">La persiana ya esta cerrada</string>
+    <string name="blinds_open_error">La persiana no puede abrirse en este momento</string>
+    <string name="blinds_close_error">La persiana no puede cerrarse en este momento</string>
     <string name="dispense_error">El dispositivo ya esta dispensando</string>
     <string name="persiana">Persiana</string>
     <string name="extend_arrow">Flecha para ampliar tarjeta</string>
@@ -77,7 +77,7 @@
     <string name="modoNocturno">Modo Nocturno</string>
     <string name="search">Busqueda: %1$s</string>
     <string name="ajustes">Ajustes</string>
-    <string name="dispensando">Dispensando %1$g</string>
+    <string name="dispensando">Dispensado %1$d %2$s</string>
     <string-array name="fuente_calor">
         <item>Convencional</item>
         <item>Abajo</item>
