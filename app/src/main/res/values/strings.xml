@@ -239,6 +239,7 @@
     <string name="notificactions_message_name">El dispositivo cambio de nombre, ahora se llama %1$s</string>
     <string name="notificactions_message_device.added">El dispositivo fue agregaEl dispositivo fue agregado y esta disponible para usardo a los dispositivos disponibles</string>
     <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
+    <string name="night_mode_boolean" translatable="false">NightModeBoolean</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>

@@ -61,31 +61,13 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.appBackgroundColor));
 
-        /* Esto va a ir en otro lado*/
-
-        Button darkMode = findViewById(R.id.dark_mode);
-        SharedPreferences sharedPreferences = getSharedPreferences("AppSettingsPrefs", 0);
-        boolean isNightModeOn = sharedPreferences.getBoolean("NightMode", false);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        boolean isNightModeOn = getSharedPreferences(getString(R.string.settingsFile), 0).getBoolean(getString(R.string.night_mode_boolean), false);
 
         if (isNightModeOn){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-
-        darkMode.setOnClickListener((v) -> {
-            if (isNightModeOn){
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                editor.putBoolean("NightMode", false);
-            }else{
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                editor.putBoolean("NightMode", true);
-            }
-            editor.apply();
-        });
-
-        //////////////
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
