@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
@@ -118,21 +119,26 @@ public class BlindsView extends DeviceView {
 
         if(state.getStatus().equals("opened")) {
             mOpen.setClickable(false);
-            mOpen.setBackgroundColor(Color.parseColor("#71A69A"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
             mClose.setClickable(true);
-            mClose.setBackgroundColor(Color.parseColor("#72E1C7"));
+            colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
         }
         else if(state.getStatus().equals("closing") || state.getStatus().equals("opening")) {
             mClose.setClickable(false);
-            mClose.setBackgroundColor(Color.parseColor("#71A69A"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
             mOpen.setClickable(false);
-            mOpen.setBackgroundColor(Color.parseColor("#71A69A"));
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
         }
         else{
             mClose.setClickable(false);
-            mClose.setBackgroundColor(Color.parseColor("#71A69A"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
             mOpen.setClickable(true);
-            mOpen.setBackgroundColor(Color.parseColor("#72E1C7"));
+            colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
         }
 
         mOpen.setOnClickListener(v -> {

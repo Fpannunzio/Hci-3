@@ -1,7 +1,9 @@
 package com.example.hci_3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -13,10 +15,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Button;
 
 import com.example.hci_3.fragments.FavoritesFragmentDirections;
 import com.example.hci_3.repositories.DeviceRepository;
@@ -54,6 +58,34 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.appBackgroundColor));
+
+        /* Esto va a ir en otro lado*/
+
+        Button darkMode = findViewById(R.id.dark_mode);
+        SharedPreferences sharedPreferences = getSharedPreferences("AppSettingsPrefs", 0);
+        boolean isNightModeOn = sharedPreferences.getBoolean("NightMode", false);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (isNightModeOn){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        darkMode.setOnClickListener((v) -> {
+            if (isNightModeOn){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                editor.putBoolean("NightMode", false);
+            }else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                editor.putBoolean("NightMode", true);
+            }
+            editor.apply();
+        });
+
+        //////////////
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 

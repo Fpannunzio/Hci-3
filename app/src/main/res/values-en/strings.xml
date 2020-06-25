@@ -180,4 +180,6 @@
     <string name="ac_fan">Fan</string>
     <string name="ac_cool">Cool</string>
     <string name="brillo">Brightness</string>
+    <string name="routine_description">Routine\'s card</string>
+    <string name="current_color">Current color</string>
 </resources>

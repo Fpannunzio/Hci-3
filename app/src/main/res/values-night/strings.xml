@@ -60,13 +60,11 @@
     <string name="temp" translatable="false"> %1$s°C </string>
     <string name="state" translatable="false">%1$s</string>
     <string name="door_state" translatable="false">%1$s - %2$s</string>
-    <string name="lamp_state" translatable="false">%1$s - </string>
-    <string name="temp_state" translatable="false">%1$s - %2$s - %3$d°C</string>
-    <string name="room_title" translatable="false">%1$s - %2$s</string>
-
+    <string name="lamp_state" translatable="false">%1s -</string>
+    <string name="temp_state" translatable="false">%1$s-%2$d°C</string>
     <string name="speaker_state" translatable="false">%1$s: %2$s</string>
-    <string name="blinds_state" translatable="false">%1$s - %2$d</string>
-
+    <string name="blinds_state" translatable="false">%1$s-%2$d</string>
+    <string name="batery_state">Bateria: %1$d</string>
     <string name="disp_location" translatable="false">%1$s | %2$s</string>
     <string name="faucet_amount" translatable="false">%1$d %2$s</string>
     <string name="blinds_level" translatable="false">%1$d</string>
@@ -100,7 +98,7 @@
     <string name="modo">Modo</string>
     <string name="desplazamiento_aspas">Desplazamiento de aspas</string>
     <string name="vertical">Vertical:</string>
-    <string name="auto">Auto</string>
+    <string name="auto">auto</string>
     <string name="veintidos" translatable="false">22</string>
     <string name="cuarentaycinco" translatable="false">45</string>
     <string name="sesentaysiete" translatable="false">67</string>
@@ -145,7 +143,7 @@
     <string name="search">Busqueda: %1$s</string>
     <string name="ajustes">Ajustes</string>
     <!-- TODO: Remove or change this placeholder text -->
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="stored_devices_SP_key" translatable="false">storedDevicesSPKey</string>
     <string name="notification_IDs_SP_key" translatable="false">notificationsIDsSPKey</string>
     <string name="last_notification_ID" translatable="false">lastNotificationID</string>
@@ -177,61 +175,8 @@
     <string name="name">Nombre</string>
     <string name="meta.fav">Favorito</string>
     <string name="room.name">Nombre de la habitacion</string>
-    <string name="classical">Clasica</string>
-    <string name="country" translatable="false">Country</string>
-    <string name="dance" translatable="false">Dance</string>
-    <string name="latina" translatable="false">Latina</string>
-    <string name="pop" translatable="false">Pop</string>
-    <string name="rock" translatable="false">Rock</string>
-    <string name="opened">Abierta</string>
-    <string name="opening">Abriendose</string>
-    <string name="closing">Cerrandose</string>
-    <string name="closed">Cerada</string>
-<!--    <string name="true">Verdadero</string>-->
-<!--    <string name="false">Falso</string>-->
-    <string name="on">Prendido</string>
-<!--    <string name="off">Apagado</string>-->
-    <string name="conventional">Convencional</string>
-    <string name="bottom">Abajo</string>
-    <string name="top">Arriba</string>
-    <string name="large">Completo</string>
-    <string name="eco">Economico</string>
-    <string name="off">Apagado</string>
-    <string name="normal">Normal</string>
-    <string name="cool">Frio</string>
-<!--    <string name="heat">Calor</string>-->
-    <string name="locked">Bloqueada</string>
-    <string name="unlocked">Desbloqueada</string>
-<!--    <string name="vacuum">Aspirar</string>-->
-    <string name="docked">Trapear</string>
-    <string name="inactive">Inactiva</string>
-    <string name="active">Activa</string>
-    <string name="playing">Reproduciendo</string>
-    <string name="paused">Pausado</string>
-    <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
-    <string name="dispensando">Dispensando %1$g</string>
-    <string name="faucet_double_amount" translatable="false">%1$g %2$s</string>
-    <string name="batery_state">Bateria: %1$d</string>
-    <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Sera asignada a su habitacion.</string>
     <string name="room.home.name">Nombre del hogar</string>
-    <string name="abajo">Abajo</string>
-    <string name="arriba">Arriba</string>
-    <string name="completo">Completo</string>
-
-    <string name="notificationsTitle">Notificaciones</string>
-    <string name="allNotificationsText">Todas las notificaciones</string>
-    <string name="favoriteNotificationsText">Dispositivos favoritos</string>
-    <string name="defaultNotificationsText">Dispositivos no favoritos</string>
-    <string name="extraSettingsText">Ajustes Extra</string>
-    <string name="themeText">Tema oscuro</string>
-    <string name="settingsFile">setings</string>
-    <string name="ac_heat">Calor</string>
-    <string name="ac_cool">Frio</string>
-    <string name="ac_fan">Ventilador</string>
-    <string name="brillo">Brillo</string>
-    <string name="routine_description">Tarjeta de rutina</string>
-    <string name="current_color">Color actual</string>
-    <string name="percentage" translatable="false">(%)</string>
+    <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>
