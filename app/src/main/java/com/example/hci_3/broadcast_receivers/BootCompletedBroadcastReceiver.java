@@ -21,6 +21,7 @@ public class BootCompletedBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         intent.getAction();//TODO send help
+        setAlarm(context);
         createNotificationChannel(context);
         Log.v("BCBR", "Llegue al broadcast reciever");
     }
