@@ -90,7 +90,7 @@ public class FaucetState implements DeviceState {
         FaucetState fState = (FaucetState) state;
 
         if((getQuantity() != null && fState.getStatus().equals("opened") && fState.getQuantity() == null) || (fState.getQuantity() != null && getStatus().equals("opened") && getQuantity() == null))
-            ans.put("status", "dispensing" + fState.getQuantity() + fState.getUnit());
+            ans.put("status", "dispensing" + fState.getQuantity() + fState.getUnit()); //TODO: Cambiar dispensing a strings
 
         else if(!getStatus().equals(fState.getStatus()))
             ans.put("status", fState.getStatus());
