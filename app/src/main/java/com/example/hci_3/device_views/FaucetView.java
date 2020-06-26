@@ -1,6 +1,7 @@
 package com.example.hci_3.device_views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -44,6 +45,7 @@ public class FaucetView extends DeviceView {
     private Spinner mUnitSpinner;
     private SeekBar mSeekBar;
     private ArrayAdapter<CharSequence> unitAdapter;
+    private SharedPreferences sp;
 
     public FaucetView(Context context) {
         super(context);
@@ -64,6 +66,7 @@ public class FaucetView extends DeviceView {
 
         flag = false;
 
+        sp = context.getSharedPreferences("misc", Context.MODE_PRIVATE);
         mDevName = findViewById(R.id.faucet_name);
         mLocation = findViewById(R.id.faucet_location);
         mState = findViewById(R.id.onStateFaucet);
@@ -78,7 +81,6 @@ public class FaucetView extends DeviceView {
 
         mUnitSpinner = findViewById(R.id.unitSpinner);
         unitAdapter = ArrayAdapter.createFromResource(context, R.array.faucet_units, android.R.layout.simple_spinner_item);
-
     }
 
     @Override
@@ -100,13 +102,19 @@ public class FaucetView extends DeviceView {
                 extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
+
         final String[] faucetUnits = getResources().getStringArray(R.array.faucet_units);
+
         mUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
-                mAmount.setText(getResources().getString(R.string.faucet_amount, mSeekBar.getProgress() == 0? 1: mSeekBar.getProgress(), faucetUnits[arg2]));
+                String unitSelected = faucetUnits[arg2];
+                mAmount.setText(getResources().getString(R.string.faucet_amount, mSeekBar.getProgress() == 0? 1: mSeekBar.getProgress(), unitSelected));
 
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("faucet_unit_value", unitSelected);
+                editor.apply();
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -129,10 +137,14 @@ public class FaucetView extends DeviceView {
 
             }
         });
+
         //Log.v("faus",state.getUnit() );
         //tenemos un problemita aca el spinner siempre vuelve a ml porque no puede updatearse las unidades
         if(state.getUnit() != null)
             mUnitSpinner.setSelection(unitAdapter.getPosition(state.getUnit()));
+
+        else
+            mUnitSpinner.setSelection(unitAdapter.getPosition(sp.getString("faucet_unit_value", faucetUnits[0])));
     }
 
     @Override

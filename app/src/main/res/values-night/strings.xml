@@ -26,6 +26,9 @@
         <item>cl</item>
         <item>dl</item>
         <item>l</item>
+        <item>dal</item>
+        <item>hl</item>
+        <item>kl</item>
     </string-array>
     <string-array name="genres">
         <item>pop</item>
