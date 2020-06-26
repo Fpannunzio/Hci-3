@@ -1,15 +1,14 @@
 package com.example.hci_3.repositories;
 
-
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.hci_3.R;
 import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.DeviceState;
@@ -21,6 +20,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DeviceRepository {
+
+    private static final int pollingDelay = 10000;
 
     private static DeviceRepository instance;
     private ApiClient apiClient;
@@ -37,7 +38,6 @@ public class DeviceRepository {
     }
 
     public void startPolling(){
-        int delay = 10000;
 
         if(devices.getValue() == null || devices.getValue().isEmpty())
             updateDevices();
@@ -46,9 +46,9 @@ public class DeviceRepository {
             @Override
             public void run(){
                 updateDevices();
-                handler.postDelayed(this, delay);
+                handler.postDelayed(this, pollingDelay);
             }
-        }, delay);
+        }, pollingDelay);
     }
 
     public void stopPolling(){
@@ -83,7 +83,7 @@ public class DeviceRepository {
                     device.setState(state);
                     ldDevice.postValue(device);
 
-                    SharedPreferences.Editor editor = application.getSharedPreferences("tobias", Application.MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = application.getSharedPreferences(application.getString(R.string.stored_devices_SP_key), Application.MODE_PRIVATE).edit();
                     Gson gson = new Gson();
                     updatePreference(editor, gson, device);
                     editor.apply();
@@ -106,7 +106,6 @@ public class DeviceRepository {
     }
 
     public void updateDevices(){
-        Log.v("pruebaBroadcast", "initUpdate");
         apiClient.getDevices(
                 devices -> new Thread(() -> updateDeviceList(devices)).start(),
                 (m, c) -> Log.w("uncriticalError", "Failed to get devices: " + m + " Code: " + c)
@@ -114,11 +113,10 @@ public class DeviceRepository {
     }
 
     private void updateDeviceList(List<Device> devs){
-        Log.v("pruebaBroadcast", "initDeviceUpdate");
         if(application == null)
             throw new RuntimeException("Device Roepository Application was not set");
 
-        SharedPreferences.Editor preferencesEditor = application.getSharedPreferences("tobias", Application.MODE_PRIVATE).edit();
+        SharedPreferences.Editor preferencesEditor = application.getSharedPreferences(application.getString(R.string.stored_devices_SP_key), Application.MODE_PRIVATE).edit();
         preferencesEditor.clear();
         Gson gson = new Gson();
         Map<String, MutableLiveData<Device>> auxMap = new HashMap<>();
@@ -146,11 +144,6 @@ public class DeviceRepository {
         devices.postValue(ans);
 
         preferencesEditor.apply();
-
-        Log.v("pruebaBroadcast", "updatedDevices!");
-
-        if(Looper.myLooper() == Looper.getMainLooper())
-            Log.v("pruebaBroadcast", "Main thread!!!");
     }
 
     private void updatePreference(SharedPreferences.Editor editor, Gson gson, Device device){

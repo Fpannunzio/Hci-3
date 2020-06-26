@@ -256,7 +256,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         notificationIDs.put(context.getString(R.string.last_notification_ID), lastNotificationID);
 
         SharedPreferences.Editor preferencesEditor = notificationIDsSP.edit();
-        notificationIDs.entrySet().forEach(e->preferencesEditor.putInt(e.getKey(),e.getValue()));
+        notificationIDs.entrySet().forEach(e -> preferencesEditor.putInt(e.getKey(), e.getValue()));
         preferencesEditor.apply();
     }
 
