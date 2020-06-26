@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,8 +62,10 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
 
         public RoutineViewHolder(@NonNull View itemView, RoutineViewModel model, Context context) {
             super(itemView);
+
             this.model = model;
             this.context = context;
+
             mRoutineName = itemView.findViewById(R.id.routine_name);
             mRoutineDesc = itemView.findViewById(R.id.routine_desc);
             mPlayButton = itemView.findViewById(R.id.execute_routine);
@@ -76,13 +77,9 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
             mRoutineName.setText(routine.getName());
             mRoutineDesc.setText(routine.getDesc());
             mPlayButton.setOnClickListener(v ->
-                model.executeRoutine(this.routine, () -> Toast.makeText(this.context, context.getResources().getString(R.string.rutina_exitosa), Toast.LENGTH_LONG).show(), this::handleError));
-        }
-
-        protected void handleError(String message, int code){
-            String text = context.getResources().getString(R.string.error_message, message, code);
-            Toast.makeText(this.context, text, Toast.LENGTH_LONG).show();
+                    model.executeRoutine(this.routine,
+                            () -> Toast.makeText(this.context, context.getResources().getString(R.string.rutina_exitosa), Toast.LENGTH_SHORT).show(),
+                            (m,c) -> Toast.makeText(this.context, context.getResources().getString(R.string.error_rutina), Toast.LENGTH_SHORT).show()));
         }
     }
-
 }

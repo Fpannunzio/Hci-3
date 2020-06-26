@@ -203,4 +203,5 @@
     <string name="rock">Rock</string>
     <string name="pop">Pop2</string>
     <string name="turn_on_vacuum_error">The vacuum cannot be turned on with less than 5% battery.</string>
+    <string name="error_rutina">There was a problem executing the routine. It is possible one of the devices involved was eliminated.</string>
 </resources>

@@ -203,4 +203,5 @@
     <string name="rock">Rock</string>
     <string name="pop">Pop</string>
     <string name="turn_on_vacuum_error">La aspiradora no puede ser prendida con menos de 5% de bateria.</string>
+    <string name="error_rutina">Hubo un problema ejecutando la rutina. Es posible que alguno de los dispositivos involucrados haya sido eliminado</string>
 </resources>

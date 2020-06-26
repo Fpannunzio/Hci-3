@@ -1,5 +1,6 @@
 package com.example.hci_3;
 
+import androidx.annotation.NonNull;
 import android.graphics.Rect;
 import android.view.View;
 
@@ -12,9 +13,8 @@ public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
         this.space = space;
     }
 
-
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(Rect outRect, @NonNull View view, RecyclerView parent, @NonNull RecyclerView.State state) {
         outRect.bottom = space;
 
         // Add top margin only for the first item to avoid double space between items
