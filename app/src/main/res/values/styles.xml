@@ -23,4 +23,25 @@
         <item name="strokeWidth">1dp</item>
         <item name="android:textColor">@drawable/outlined_button_text</item>
     </style>
+
+    <style name="Theme.ToolbarTheme" parent="Theme.AppCompat.Light">
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/colorSecondary</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated,
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+
+        <item name="titleTextColor">@color/colorCardTitle</item>
+
+        <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
+
+        <item name="color">@color/colorCardTitle</item>
+        <!-- You can also set colorControlNormal, colorControlActivated
+             colorControlHighlight, and colorSwitchThumbNormal. -->
+
+    </style>
 </resources>

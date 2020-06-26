@@ -86,6 +86,12 @@ public class VacuumView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
+        if(isDeviceSetted > 1)
+            return;
+        isDeviceSetted++;
+
+        Log.v("vacuum", System.currentTimeMillis() + " set- " + this.device.toString());
+
         mSpinner.setAdapter(locationAdapter);
 
         model.addPollingState(device.getValue(), 2000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
@@ -204,8 +210,9 @@ public class VacuumView extends DeviceView {
             locationAdapter.notifyDataSetChanged();
 
             updateLocationSpinner();
-            Log.v("vacuum", String.valueOf(System.currentTimeMillis()));
         }, this::handleError);
+
+        Log.v("vacuum", System.currentTimeMillis() + " - " + this.device.toString());
     }
 
     private void updateFrequentlyUpdatingState(DeviceState uncastedState) {
