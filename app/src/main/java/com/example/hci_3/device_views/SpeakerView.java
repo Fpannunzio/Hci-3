@@ -90,7 +90,7 @@ public class SpeakerView extends DeviceView {
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
 
-        genreAdapter = ArrayAdapter.createFromResource(context, R.array.genres, android.R.layout.simple_spinner_item);
+        genreAdapter = ArrayAdapter.createFromResource(context, R.array.genres, R.layout.spinner_item);
         mGenre.setAdapter(genreAdapter);
     }
 
