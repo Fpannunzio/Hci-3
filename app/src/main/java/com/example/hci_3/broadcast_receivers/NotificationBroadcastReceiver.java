@@ -63,7 +63,13 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
         init(context);
 
-        ApiClient.getInstance().getDevices(list -> executorService.execute(() -> handleApiRequest(list)), (m, c) -> Log.w("uncriticalError", "NBR - Failed to get devices: " + m + " Code: " + c));
+        if(storedDevices.isEmpty())
+            return;
+
+        ApiClient.getInstance().getDevices(
+                list -> executorService.execute(() -> handleApiRequest(list)),
+                (m, c) -> Log.w("uncriticalError", "NBR - Failed to get devices: " + m + " Code: " + c)
+        );
     }
 
     @SuppressWarnings("unchecked")  //Solo se guardan integer. (Notification IDs)
@@ -96,13 +102,13 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 Device olderDev = storedDevices.get(device.getId());
 
                 if( olderDev == null ) {
-                    emitNotification( device, getMessage(device,"device.added",null),"device.added");
+                    emitNotification( device, getMessage("device.added",null),"device.added");
                     newDevices.put(device.getId(),device);
                 } else {
                     final Map<String, String> comparision = olderDev.compareToNewerVersion(device);
 
                     for(Map.Entry<String,String> change : comparision.entrySet()) {
-                        emitNotification(device, getMessage(device,change.getKey(),change.getValue()), change.getKey());
+                        emitNotification(device, getMessage(change.getKey(),change.getValue()), change.getKey());
                     }
 
                     if(!comparision.isEmpty()){
@@ -118,7 +124,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         for(Device storedDevice : storedDevices.values()){
             if(validateSendNotification(storedDevice)){
                 if(!newDevIDs.contains(storedDevice.getId())){
-                    emitNotification(storedDevice,getMessage(storedDevice,"device.deleted",null), "device.deleted");
+                    emitNotification(storedDevice,getMessage("device.deleted",null), "device.deleted");
                     newDevices.put(storedDevice.getId(),null);
                 }
             }
@@ -166,35 +172,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         return defaultDevicesNotifications;
     }
 
-    private String getEvent(Map.Entry<String,String> change){
-        String event;
-        int eventID;
-        if(change.getKey().startsWith("state")){
-            String[] aux = change.getKey().split("\\.");
-            eventID = context.getResources().getIdentifier(aux[aux.length - 1],"string", context.getPackageName());
-        } else{
-            eventID = context.getResources().getIdentifier(change.getKey(),"string", context.getPackageName());
-        }
-
-        if(eventID == 0)
-            event = change.getKey();
-        else
-            event = context.getString(eventID);
-        return event;
-    }
-
-    private String getValue(Map.Entry<String,String> change){
-        String value;
-        int valueID = context.getResources().getIdentifier(change.getValue(),"string", context.getPackageName());
-
-        if(!change.getValue().matches("-?[0-9]+") && valueID != 0)
-            value = context.getString(valueID);
-        else
-            value = change.getValue();
-        return value;
-    }
-
-    private String getMessage(Device device, String event, String value){
+    private String getMessage(String event, String value){
         if(event.matches("meta.fav")){
             if(Boolean.parseBoolean(value))
                 return context.getString(R.string.notificactions_message_fav_true);
@@ -234,7 +212,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     private PendingIntent getIntent(Device device){
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.setAction("notifications"); //TODO: pasar a R.Strings
+        intent.setAction("notifications");
         intent.putExtra("roomID", device.getRoom().getId());
         intent.putExtra("roomName", device.getRoom().getParsedName());
         intent.putExtra("homeName", device.getRoom().getHome().getName());
@@ -270,7 +248,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 preferencesEditor.putString(entry.getKey(), gson.toJson(entry.getValue()));
             }
         }
-
         preferencesEditor.apply();
     }
 }

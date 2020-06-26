@@ -3,6 +3,7 @@ package com.example.hci_3.device_views;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -61,11 +62,6 @@ public abstract class DeviceView extends ConstraintLayout {
 
     public abstract void onDeviceRefresh(Device device);
 
-    protected String getParsedName(String fullName){
-        String[] aux = fullName.split("_");
-        return aux[aux.length - 1];
-    }
-
     @SuppressWarnings("ConstantConditions")
     public void executeAction(String actionName, List<Object> params, ApiClient.ActionResponseHandler responseHandler, ApiClient.ErrorHandler errorHandler){
         model.executeAction(device.getValue().getId(), actionName, params, responseHandler, errorHandler);
@@ -85,8 +81,9 @@ public abstract class DeviceView extends ConstraintLayout {
     }
 
     protected void handleError(String message, int code){
-        String text = getResources().getString(R.string.error_message, message, code);
-        Toast.makeText(this.context, text, Toast.LENGTH_LONG).show();
+        Log.v("uncriticalError", "Api call went wrong: " + message + ". Error code: " + code);
+        String text = getResources().getString(R.string.error_message);
+        Toast.makeText(this.context, text, Toast.LENGTH_SHORT).show();
     }
 
     protected LifecycleOwner getLifecycleOwner() {

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RoomRepository {
 
-    private static final int pollingDelay = 60000;
+    private static final int POLLING_DELAY = 60000;
 
     private static RoomRepository instance;
     private ApiClient apiClient;
@@ -58,9 +58,9 @@ public class RoomRepository {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                handler.postDelayed(this, pollingDelay);
+                handler.postDelayed(this, POLLING_DELAY);
                 updateRooms(lastHomeQueried);
-            }}, pollingDelay);
+            }}, POLLING_DELAY);
     }
 
     private void updateRooms(Home home){

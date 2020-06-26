@@ -16,7 +16,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,7 +55,6 @@ public class HomesFragment extends Fragment {
     public HomesFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -137,10 +135,15 @@ public class HomesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
         super.onCreateOptionsMenu(menu, inflater);
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
         MenuItem settingsItem = menu.findItem(R.id.settings);
+
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -192,7 +195,7 @@ public class HomesFragment extends Fragment {
         if(newPosition == -1) {
             newPosition = 0;
             if(spinnerValue != null)
-                Toast.makeText(requireContext(), getResources().getString(R.string.spinner_invalid_home_name), Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), getResources().getString(R.string.spinner_invalid_home_name), Toast.LENGTH_SHORT).show();
         }
 
         //noinspection ConstantConditions

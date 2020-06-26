@@ -41,8 +41,4 @@ public class RoutineViewModel extends ViewModel {
         }
         , errorHandler);
     }
-
-    public void executeRoutine(Routine routine, ApiClient.ErrorHandler errorHandler){
-        executeRoutine(routine, () -> {}, errorHandler);
-    }
 }

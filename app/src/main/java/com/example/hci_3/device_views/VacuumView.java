@@ -25,7 +25,6 @@ import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.DeviceState;
 import com.example.hci_3.api.DeviceStates.VacuumState;
 import com.example.hci_3.api.Room;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class VacuumView extends DeviceView {
     private ImageButton extendBtn;
     private Spinner mSpinner;
     private MaterialButtonToggleGroup mStateGroup, mModeGroup;
-    private MaterialButton mOnButton;
     private Map<String, Integer> actionToButtonMap;
     private ArrayAdapter<InfoRoom> locationAdapter;
     private InfoRoom currentRoom;
@@ -75,9 +73,8 @@ public class VacuumView extends DeviceView {
         extendBtn = findViewById(R.id.expandBtn);
         mSpinner = findViewById(R.id.locationSpinner);
         mStateGroup = findViewById(R.id.vacuum_onstate_group);
-        mOnButton = findViewById(R.id.on_button);
         mModeGroup = findViewById(R.id.vacuum_mode_group);
-        locationAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item);
+        locationAdapter = new ArrayAdapter<>(context, R.layout.spinner_item);
 
         initActionToButtonMap();
     }
@@ -89,8 +86,6 @@ public class VacuumView extends DeviceView {
         if(isDeviceSetted > 1)
             return;
         isDeviceSetted++;
-
-        Log.v("vacuum", System.currentTimeMillis() + " set- " + this.device.toString());
 
         mSpinner.setAdapter(locationAdapter);
 
@@ -130,13 +125,10 @@ public class VacuumView extends DeviceView {
                     if(state.getBatteryLevel() < 5){
                         mStateGroup.uncheck(R.id.on_button);
                         Toast.makeText(context, getResources().getString(R.string.turn_on_vacuum_error), Toast.LENGTH_SHORT).show();
-                        if(state.getStatus().equals("inactive")) {
+                        if(state.getStatus().equals("inactive"))
                             inactive = true;
-                           // mStateGroup.check(R.id.off_button);
-                        }
                         else
                             charge = true;
-                            //mStateGroup.check(R.id.charge_button);
                     } else
                         start();
                 } else if (checkedId == R.id.charge_button)
@@ -161,11 +153,9 @@ public class VacuumView extends DeviceView {
 
         VacuumState state = (VacuumState) device.getState();
 
-
-
         String status = state.getStatus();
 
-        mDevName.setText(getParsedName(device.getName()));
+        mDevName.setText(device.getParsedName());
 
         mState.setText(getResources().getString(R.string.state,
                 status.equals("active")? getResources().getString(R.string.activa) + " - " + getResources().getString(R.string.batery_state, state.getBatteryLevel()) + "%" : status.equals("docked")?
@@ -173,8 +163,9 @@ public class VacuumView extends DeviceView {
                         getResources().getString(R.string.apagada)));
 
         mLocation.setText(getResources().getString(R.string.disp_location,
-                getParsedName(device.getRoom().getName()),
+                device.getRoom().getParsedName(),
                 device.getRoom().getHome().getName()));
+
         //noinspection ConstantConditions
         mStateGroup.check(actionToButtonMap.get(status));
 
@@ -189,12 +180,9 @@ public class VacuumView extends DeviceView {
             mSpinner.setClickable(false);
         }
 
-        if(state.getBatteryLevel() < 5) {
-            // Cambiarle el color al boton
-            if(state.getStatus().equals("active")) {
-                Toast.makeText(context, getResources().getString(R.string.open_error), Toast.LENGTH_SHORT).show();
-                dock();
-            }
+        if(state.getBatteryLevel() < 5 && state.getStatus().equals("active")) {
+            Toast.makeText(context, getResources().getString(R.string.open_error), Toast.LENGTH_SHORT).show();
+            dock();
         }
 
         currentRoom = (state.getLocation() != null)?
@@ -211,8 +199,6 @@ public class VacuumView extends DeviceView {
 
             updateLocationSpinner();
         }, this::handleError);
-
-        Log.v("vacuum", System.currentTimeMillis() + " - " + this.device.toString());
     }
 
     private void updateFrequentlyUpdatingState(DeviceState uncastedState) {
@@ -224,7 +210,6 @@ public class VacuumView extends DeviceView {
             mStateGroup.check(R.id.charge_button);
             charge = false;
         }
-
     }
 
     private void setLocation(String roomid){ executeAction("setLocation", new ArrayList<>(Collections.singletonList(roomid)), this::handleError);}
@@ -254,7 +239,7 @@ public class VacuumView extends DeviceView {
 
             currentRoom = new InfoRoom(room.getParsedName(), room.getId());
             newPosition = locationAdapter.getPosition(currentRoom);
-            Toast.makeText(context, getResources().getString(R.string.invalid_vacuum_location), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, getResources().getString(R.string.invalid_vacuum_location), Toast.LENGTH_SHORT).show();
         }
         mSpinner.setSelection(newPosition);
     }

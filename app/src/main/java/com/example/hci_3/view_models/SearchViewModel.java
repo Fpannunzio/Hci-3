@@ -25,9 +25,9 @@ public class SearchViewModel extends DeviceViewModel {
                 devs -> devs.stream()
                         .filter(ldDev -> {
                             Device device = ldDev.getValue();
-                            return device.getName().contains(searchParam) ||
-                                    device.getRoom().getName().contains(searchParam) ||
-                                    device.getRoom().getHome().getName().contains(searchParam);
+                            return device.getParsedName().toLowerCase().contains(searchParam.toLowerCase()) ||
+                                    device.getRoom().getParsedName().toLowerCase().contains(searchParam.toLowerCase()) ||
+                                    device.getRoom().getHome().getName().toLowerCase().contains(searchParam.toLowerCase());
                         })
                         .collect(Collectors.toList()));
     }
