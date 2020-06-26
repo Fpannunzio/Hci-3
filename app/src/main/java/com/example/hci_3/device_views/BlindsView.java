@@ -26,6 +26,7 @@ import com.example.hci_3.api.DeviceStates.DeviceState;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class BlindsView extends DeviceView {
 
@@ -70,6 +71,8 @@ public class BlindsView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
+        BlindsState state = (BlindsState) Objects.requireNonNull(device.getValue()).getState();
+
         if(isDeviceSetted > 1)
             return;
         isDeviceSetted++;
@@ -86,14 +89,16 @@ public class BlindsView extends DeviceView {
             }
         });
 
-
+        if(!state.getStatus().equals("opened")){
+            mSeekBar.setEnabled(false);
+        }
 
         model.addPollingState(device.getValue(), 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
     }
 
     @Override
     public void onDeviceRefresh(Device device) {
-        BlindsState state = (BlindsState) device.getState();
+
 
         mDevName.setText(getParsedName(device.getName()));
 
