@@ -177,12 +177,12 @@
     <string name="name">Nombre</string>
     <string name="meta.fav">Favorito</string>
     <string name="room.name">Nombre de la habitacion</string>
-    <string name="classical">Clasica</string>
-    <string name="country" translatable="false">Country</string>
-    <string name="dance" translatable="false">Dance</string>
-    <string name="latina" translatable="false">Latina</string>
-    <string name="pop" translatable="false">Pop</string>
-    <string name="rock" translatable="false">Rock</string>
+    <string name="classical">Clásica</string>
+    <string name="country">Country</string>
+    <string name="dance">Dance</string>
+    <string name="latina">Latina</string>
+    <string name="pop">Pop</string>
+    <string name="rock">Rock</string>
     <string name="opened">Abierta</string>
     <string name="opening">Abriendose</string>
     <string name="closing">Cerrandose</string>
@@ -243,6 +243,9 @@
     <string name="mop">Trapear</string>
     <string name="playlist">Lista de reproducción:</string>
     <string name="off_status_speaker" translatable="false">stopped</string>
+    <string name="oven_conventional">Convencional</string>
+    <string name="oven_top">Arriba</string>
+    <string name="oven_bottom">Abajo</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>

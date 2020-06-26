@@ -4,6 +4,7 @@ import android.content.Context;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -175,6 +176,7 @@ public class VacuumView extends DeviceView {
             locationAdapter.notifyDataSetChanged();
 
             updateLocationSpinner();
+            Log.v("vacuum", String.valueOf(System.currentTimeMillis()));
         }, this::handleError);
     }
 

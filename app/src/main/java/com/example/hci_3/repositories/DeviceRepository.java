@@ -74,6 +74,12 @@ public class DeviceRepository {
     public void executeAction(String deviceId, String actionName, List<Object> params, ApiClient.ActionResponseHandler responseHandler, ApiClient.ErrorHandler errorHandler){
         apiClient.executeAction(deviceId, actionName, params, (success, result) -> {
 
+            // Caso especial ya que es un getter, no una accion
+            if(actionName.equals("getPlaylist")) {
+                responseHandler.handle(success, result);
+                return;
+            }
+
             if(success) {
                 MutableLiveData<Device> ldDevice = idToDeviceMap.get(deviceId);
                 assert ldDevice != null;

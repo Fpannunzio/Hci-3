@@ -108,8 +108,8 @@
         <item>Pop</item>
         <item>Country</item>
         <item>Rock</item>
-        <item>Clasica</item>
-        <item>Dance</item>
+        <item>Clásica</item>
+        <item>Electrónica</item>
         <item>Latina</item>
     </string-array>
     <string name="notifications_channel_name">Generales</string>
@@ -145,7 +145,7 @@
     <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
     <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Será asignada a su habitacion.</string>
-    <string name="classical">Clasica</string>
+    <string name="classical">Clásica</string>
     <string name="opened">Abierta</string>
     <string name="opening">Abriendose</string>
     <string name="closing">Cerrandose</string>
@@ -190,4 +190,13 @@
     <string name="notificactions_message_device.added">El dispositivo fue agregado y esta disponible para usar</string>
     <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
     <string name="mop">Trapear</string>
+    <string name="playlist">Lista de reproducción:</string>
+    <string name="oven_conventional">Convencional</string>
+    <string name="oven_top">Arriba</string>
+    <string name="oven_bottom">Abajo</string>
+    <string name="country" translatable="false">Country</string>
+    <string name="dance">Electrónica</string>
+    <string name="latina">Latina</string>
+    <string name="rock">Rock</string>
+    <string name="pop">Pop</string>
 </resources>

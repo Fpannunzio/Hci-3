@@ -36,6 +36,7 @@ public class OvenView extends DeviceView {
     private Map<String, Integer> modeToIdMap;
     private Map<String, Integer> grillToIdMap;
     private Map<String, Integer> conventionalToIdMap;
+    private Map<String, Integer> conventionalToStringMap;
     private Map<Integer, String> idToActionMap;
 
     public OvenView(Context context) {
@@ -149,7 +150,7 @@ public class OvenView extends DeviceView {
                 device.getRoom().getHome().getName()));
 
         mState.setText(getResources().getString(R.string.temp_state,
-                state.getStatus().equals("on") ? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado), state.getHeat(),
+                state.getStatus().equals("on") ? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado), getResources().getString(conventionalToStringMap.get(state.getHeat())),
                 ((OvenState) device.getState()).getTemperature()));
 
         mTemperature.setText(getResources().getString(R.string.temp,
@@ -192,16 +193,20 @@ public class OvenView extends DeviceView {
         modeToIdMap = new HashMap<>();
         grillToIdMap = new HashMap<>();
         conventionalToIdMap = new HashMap<>();
+        conventionalToStringMap = new HashMap<>();
         idToActionMap = new HashMap<>();
 
-        // Mode
+        // Heat
         modeToIdMap.put("conventional", R.id.conventional_button);
+        conventionalToStringMap.put("conventional", R.string.oven_conventional);
         idToActionMap.put(R.id.conventional_button, "conventional");
 
         modeToIdMap.put("bottom", R.id.bottom_button);
+        conventionalToStringMap.put("bottom", R.string.oven_bottom);
         idToActionMap.put(R.id.bottom_button, "bottom");
 
         modeToIdMap.put("top", R.id.top_button);
+        conventionalToStringMap.put("top", R.string.oven_top);
         idToActionMap.put(R.id.top_button, "top");
 
         //grill mode
