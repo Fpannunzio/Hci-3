@@ -96,13 +96,13 @@
                         android:id="@+id/door_open"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="80dp"
                         android:text="@string/abrir"
                         android:backgroundTint="@color/colorButtons"
                         android:textColor="@color/colorCardTitle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/door_block"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/door_block"
