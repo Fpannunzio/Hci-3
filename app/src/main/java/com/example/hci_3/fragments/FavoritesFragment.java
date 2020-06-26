@@ -40,7 +40,6 @@ public class FavoritesFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +48,14 @@ public class FavoritesFragment extends Fragment {
 
         adapter = new DeviceAdapter(model);
 
-        model.getDevices().observe(requireActivity(), adapter::setDevices);
+        model.getDevices().observe(this, adapter::setDevices);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_favoritos, container, false);
+
         setHasOptionsMenu(true);
 
         rv = view.findViewById(R.id.recyclerView);
@@ -79,17 +79,17 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
         MenuItem settingsItem = menu.findItem(R.id.settings);
+
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(FavoritesFragmentDirections.actionFavoritosToSearchFragment(query));
                 return true;
-
             }
 
             @Override
@@ -97,6 +97,7 @@ public class FavoritesFragment extends Fragment {
                 return false;
             }
         });
+
         settingsItem.setOnMenuItemClickListener(item -> {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(FavoritesFragmentDirections.actionFavoritosToSettingsFragment());
             return false;
