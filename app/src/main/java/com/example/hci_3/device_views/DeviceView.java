@@ -20,7 +20,9 @@ import java.util.List;
 public abstract class DeviceView extends ConstraintLayout {
     protected LiveData<Device> device;
     protected Context context;
-    DeviceViewModel model;
+    protected DeviceViewModel model;
+    protected int isDeviceSetted;
+
 
     public DeviceView(Context context) {
         super(context);
@@ -39,6 +41,7 @@ public abstract class DeviceView extends ConstraintLayout {
 
     protected void init(Context context){
         this.context = context;
+        isDeviceSetted = 0;
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         setLayoutParams(layoutParams);
     }
@@ -48,6 +51,10 @@ public abstract class DeviceView extends ConstraintLayout {
     }
 
     public void setDevice(LiveData<Device> device) {
+        if(isDeviceSetted > 0)
+            return;
+
+        isDeviceSetted++;
         this.device = device;
         this.device.observe(getLifecycleOwner(), this::onDeviceRefresh);
     }

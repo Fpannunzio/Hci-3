@@ -79,6 +79,9 @@ public class OvenView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
+        if(isDeviceSetted > 1)
+            return;
+        isDeviceSetted++;
 
         mFont.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked)

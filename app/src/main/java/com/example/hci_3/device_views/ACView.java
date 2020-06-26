@@ -83,6 +83,10 @@ public class ACView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
+        if(isDeviceSetted > 1)
+            return;
+        isDeviceSetted++;
+
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
                 android.transition.TransitionManager.beginDelayedTransition(cardView, new android.transition.AutoTransition());

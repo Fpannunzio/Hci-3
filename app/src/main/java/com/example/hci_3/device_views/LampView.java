@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -87,11 +88,17 @@ public class LampView extends DeviceView {
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
+
+        Log.v("lamp", System.currentTimeMillis() + " - " + this.device.toString());
     }
 
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
+
+        if(isDeviceSetted > 1)
+            return;
+        isDeviceSetted++;
 
         @SuppressWarnings("ConstantConditions")
         LampState state = (LampState) device.getValue().getState();

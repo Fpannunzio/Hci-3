@@ -86,7 +86,13 @@ public class FaucetView extends DeviceView {
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
+
+        if(isDeviceSetted > 1)
+            return;
+        isDeviceSetted++;
+
         FaucetState state = (FaucetState) Objects.requireNonNull(device.getValue()).getState();
+
         mUnitSpinner.setAdapter(unitAdapter);
 
         model.addPollingState(device.getValue(), 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
@@ -161,7 +167,7 @@ public class FaucetView extends DeviceView {
         mOpen.setText(getResources().getString(R.string.state,
                 state.getStatus().equals("opened")? getResources().getString(R.string.cerrar) : getResources().getString(R.string.abrir)));
 
-        Log.v("faucet", String.valueOf(System.currentTimeMillis()));
+        Log.v("faucet", System.currentTimeMillis() + " - " + this.device.toString());
     }
 
     private void open(){
