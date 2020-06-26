@@ -77,7 +77,7 @@ public class VacuumView extends DeviceView {
         mStateGroup = findViewById(R.id.vacuum_onstate_group);
         mOnButton = findViewById(R.id.on_button);
         mModeGroup = findViewById(R.id.vacuum_mode_group);
-        locationAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item);
+        locationAdapter = new ArrayAdapter<>(context, R.layout.spinner_item);
 
         initActionToButtonMap();
     }
