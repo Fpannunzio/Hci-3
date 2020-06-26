@@ -64,7 +64,6 @@ public class FaucetView extends DeviceView {
 
         flag = false;
 
-
         mDevName = findViewById(R.id.faucet_name);
         mLocation = findViewById(R.id.faucet_location);
         mState = findViewById(R.id.onStateFaucet);
@@ -147,8 +146,7 @@ public class FaucetView extends DeviceView {
         mOpen.setText(getResources().getString(R.string.state,
                 state.getStatus().equals("opened")? getResources().getString(R.string.cerrar) : getResources().getString(R.string.abrir)));
 
-
-
+        Log.v("faucet", String.valueOf(System.currentTimeMillis()));
     }
 
     private void open(){

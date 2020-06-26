@@ -24,6 +24,7 @@ import com.example.hci_3.api.Device;
 
 import com.example.hci_3.api.DeviceStates.VacuumState;
 import com.example.hci_3.api.Room;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class VacuumView extends DeviceView {
     private ImageButton extendBtn;
     private Spinner mSpinner;
     private MaterialButtonToggleGroup mStateGroup, mModeGroup;
+    private MaterialButton mOnButton;
     private Map<String, Integer> actionToButtonMap;
     private ArrayAdapter<InfoRoom> locationAdapter;
     private InfoRoom currentRoom;
@@ -71,6 +73,7 @@ public class VacuumView extends DeviceView {
         extendBtn = findViewById(R.id.expandBtn);
         mSpinner = findViewById(R.id.locationSpinner);
         mStateGroup = findViewById(R.id.vacuum_onstate_group);
+        mOnButton = findViewById(R.id.on_button);
         mModeGroup = findViewById(R.id.vacuum_mode_group);
         locationAdapter = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item);
 
@@ -112,9 +115,20 @@ public class VacuumView extends DeviceView {
 
         mStateGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
-                if (checkedId == R.id.on_button)
-                    start();
-                else if (checkedId == R.id.charge_button)
+                if (checkedId == R.id.on_button) {
+                    VacuumState state = (VacuumState) device.getValue().getState();
+                    if(state.getBatteryLevel() < 5){
+                        mStateGroup.uncheck(R.id.on_button);
+                        Toast.makeText(context, getResources().getString(R.string.open_error), Toast.LENGTH_SHORT).show();
+                        if(state.getStatus().equals("inactive"))
+                            mStateGroup.check(R.id.off_button);
+
+                        else
+                            mStateGroup.check(R.id.charge_button);
+
+                    } else
+                        start();
+                } else if (checkedId == R.id.charge_button)
                     dock();
                 else
                     pause();
@@ -161,6 +175,14 @@ public class VacuumView extends DeviceView {
         } else {
             mSpinner.setEnabled(false);
             mSpinner.setClickable(false);
+        }
+
+        if(state.getBatteryLevel() < 5) {
+            // Cambiarle el color al boton
+            if(state.getStatus().equals("active")) {
+                Toast.makeText(context, getResources().getString(R.string.open_error), Toast.LENGTH_SHORT).show();
+                dock();
+            }
         }
 
         currentRoom = (state.getLocation() != null)?

@@ -17,7 +17,6 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
@@ -113,7 +112,6 @@ public class BlindsView extends DeviceView {
     private void updateFrequentlyUpdatingState(DeviceState uncastedState){
         BlindsState state = (BlindsState) uncastedState;
 
-
         mState.setText(getResources().getString(R.string.blinds_state,
                 state.getStatus().equals("opened")? getResources().getString(R.string.abierta) :state.getStatus().equals("opening")?
                         getResources().getString(R.string.abriendose): state.getStatus().equals("closing")?
@@ -143,12 +141,14 @@ public class BlindsView extends DeviceView {
             colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
             mOpen.setBackgroundColor(Color.parseColor(colorHex));
         }
+
         mOpen.setOnClickListener(v -> {
             if (state.getStatus().equals("closed")) {
                 open();
             } else
                 Toast.makeText(context, getResources().getString(R.string.blinds_open_error), Toast.LENGTH_LONG).show();
         });
+
         mClose.setOnClickListener(v -> {
             if (state.getStatus().equals("opened")) {
                 setLevel(level);
@@ -156,6 +156,7 @@ public class BlindsView extends DeviceView {
             } else
                 Toast.makeText(context, getResources().getString(R.string.blinds_close_error), Toast.LENGTH_LONG).show();
         });
+
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
