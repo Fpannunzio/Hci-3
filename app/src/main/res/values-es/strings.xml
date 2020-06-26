@@ -202,4 +202,5 @@
     <string name="latina">Latina</string>
     <string name="rock">Rock</string>
     <string name="pop">Pop</string>
+    <string name="turn_on_vacuum_error">La aspiradora no puede ser prendida con el nivel actual de bateria</string>
 </resources>

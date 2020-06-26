@@ -98,6 +98,10 @@ public class SpeakerView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
+        if(isDeviceSetted > 1)
+            return;
+        isDeviceSetted++;
+
         Device dev = device.getValue();
 
         //noinspection ConstantConditions

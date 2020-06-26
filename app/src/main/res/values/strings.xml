@@ -249,6 +249,7 @@
     <string name="oven_conventional">Convencional</string>
     <string name="oven_top">Arriba</string>
     <string name="oven_bottom">Abajo</string>
+    <string name="turn_on_vacuum_error">La aspiradora no puede ser prendida con el nivel actual de bateria</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>

@@ -60,6 +60,10 @@ public class DoorView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
+        if(isDeviceSetted > 1)
+            return;
+        isDeviceSetted++;
+
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
