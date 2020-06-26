@@ -1,5 +1,6 @@
 package com.example.hci_3.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hci_3.adapters.DeviceAdapter;
 import com.example.hci_3.R;
@@ -60,7 +63,18 @@ public class FavoritesFragment extends Fragment {
 
         rv = view.findViewById(R.id.recyclerView);
 
-        rv.setLayoutManager(new LinearLayoutManager(requireContext()));
+        int screenSize = getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK;
+
+        int orientation = getResources().getConfiguration().orientation;
+
+        int columnCount = 1;
+
+        if(screenSize >= Configuration.SCREENLAYOUT_SIZE_LARGE && orientation == Configuration.ORIENTATION_LANDSCAPE)
+            columnCount = 2;
+
+
+        rv.setLayoutManager(new GridLayoutManager(getContext(),columnCount));
 
         rv.setAdapter(adapter);
 

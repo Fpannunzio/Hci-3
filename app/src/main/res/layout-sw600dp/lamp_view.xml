@@ -82,6 +82,8 @@
                         android:id="@+id/expandBtn"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:scaleX="2"
+                        android:scaleY="2"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/ripple_effect"
                         android:contentDescription="@string/extend_arrow"
