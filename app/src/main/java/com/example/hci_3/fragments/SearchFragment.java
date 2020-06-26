@@ -47,11 +47,9 @@ public class SearchFragment extends Fragment {
 
         query = SearchFragmentArgs.fromBundle(requireArguments()).getSearchInput();
 
-        model.setNewSearchParam(query);
+        model.setNewSearchParam(query).observe(this, adapter::setDevices);
 
         adapter = new DeviceAdapter(model);
-
-        model.getDevices().observe(this, adapter::setDevices);
     }
 
     @Override

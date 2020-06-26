@@ -2,19 +2,14 @@ package com.example.hci_3.view_models;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
-import com.example.hci_3.api.Device;
-import com.example.hci_3.api.DeviceType;
 import com.example.hci_3.api.Home;
 import com.example.hci_3.api.Room;
-import com.example.hci_3.repositories.DeviceRepository;
 import com.example.hci_3.repositories.HomeRepository;
 import com.example.hci_3.repositories.RoomRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class HomesViewModel extends ViewModel {
 
