@@ -20,21 +20,16 @@ public class HomesViewModel extends ViewModel {
 
     private HomeRepository homeRepository;
     private RoomRepository roomRepository;
-    private DeviceRepository deviceRepository;
     private MutableLiveData<List<Home>> homes;
     private MutableLiveData<List<Room>> rooms;
-    private LiveData<List<DeviceType>> deviceTypes;
-    private Home currentHome;
     private Boolean isPollingHomes;
     private Boolean isPollingRooms;
 
     public HomesViewModel(){
         homeRepository = HomeRepository.getInstance();
         roomRepository = RoomRepository.getInstance();
-        deviceRepository = DeviceRepository.getInstance();
         homes = homeRepository.getHomes();
         rooms = roomRepository.getRooms();
-        deviceTypes = Transformations.map(deviceRepository.getDevices(), this::getHomesDeviceTypes);
         isPollingHomes = false;
         isPollingRooms = false;
     }
@@ -65,7 +60,6 @@ public class HomesViewModel extends ViewModel {
     }
 
     public void updateCurrentHome(Home home){
-        currentHome = home;
         roomRepository.setHomeToQuery(home);
     }
 
@@ -75,15 +69,5 @@ public class HomesViewModel extends ViewModel {
 
     public LiveData<List<Room>> getRooms(){
         return rooms;
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    private List<DeviceType> getHomesDeviceTypes(List<MutableLiveData<Device>> devices){
-        return devices.stream()
-                .map(LiveData::getValue)
-                .filter(d -> currentHome.equals(d.getRoom().getHome()))
-                .map(Device::getDeviceType)
-                .distinct()
-                .collect(Collectors.toList());
     }
 }

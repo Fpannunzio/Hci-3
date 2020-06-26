@@ -116,7 +116,7 @@ public class OvenView extends DeviceView {
             if (temp >= 90)
                 setTemperature(temp);
             else
-                Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_SHORT).show();
         });
 
         mPlus.setOnClickListener(v -> {
@@ -125,7 +125,7 @@ public class OvenView extends DeviceView {
             if (temp <= 230)
                 setTemperature(temp);
             else
-                Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.invalid_temp), Toast.LENGTH_SHORT).show();
 
         });
 
@@ -146,10 +146,10 @@ public class OvenView extends DeviceView {
     public void onDeviceRefresh(Device device) {
         OvenState state = (OvenState) device.getState();
 
-        mDevName.setText(getParsedName(device.getName()));
+        mDevName.setText(device.getParsedName());
 
         mLocation.setText(getResources().getString(R.string.disp_location,
-                getParsedName(device.getRoom().getName()),
+                device.getRoom().getParsedName(),
                 device.getRoom().getHome().getName()));
 
         mState.setText(getResources().getString(R.string.temp_state,
@@ -231,6 +231,5 @@ public class OvenView extends DeviceView {
 
         conventionalToIdMap.put("off", R.id.convection_off_button);
         idToActionMap.put(R.id.convection_off_button, "off");
-
     }
 }

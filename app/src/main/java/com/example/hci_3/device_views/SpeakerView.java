@@ -48,10 +48,6 @@ public class SpeakerView extends DeviceView {
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
     private SpeakerState state;
-    private List<Map<String, Object>> playlist;
-    private int currentSong = -1;
-
-    private ArrayAdapter<CharSequence> genreAdapter;
 
     public SpeakerView(Context context) {
         super(context);
@@ -80,6 +76,7 @@ public class SpeakerView extends DeviceView {
         mGenre = findViewById(R.id.speaker_spinner);
         mSeekBar = findViewById(R.id.speaker_seekbar);
         mSongState = findViewById(R.id.song_state);
+
         mPlaylistItems = new TextView[3];
         mPlaylistItems[0] = findViewById(R.id.playlist_item_1);
         mPlaylistItems[1] = findViewById(R.id.playlist_item_2);
@@ -90,7 +87,7 @@ public class SpeakerView extends DeviceView {
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
 
-        genreAdapter = ArrayAdapter.createFromResource(context, R.array.genres, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> genreAdapter = ArrayAdapter.createFromResource(context, R.array.genres, android.R.layout.simple_spinner_item);
         mGenre.setAdapter(genreAdapter);
     }
 
@@ -111,8 +108,7 @@ public class SpeakerView extends DeviceView {
 
         mGenre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 setGenre(genres[arg2]);
             }
 
@@ -139,7 +135,6 @@ public class SpeakerView extends DeviceView {
             else
                 stop();
         });
-
 
         mNext.setOnClickListener(v -> nextSong());
 
@@ -206,7 +201,6 @@ public class SpeakerView extends DeviceView {
         updateGenre(state.getGenre());
 
         refreshPlaylist();
-        Log.v("speaker", String.valueOf(System.currentTimeMillis()));
     }
 
     private void updateFrequentlyUpdatingState(DeviceState uncastedState){
@@ -242,9 +236,9 @@ public class SpeakerView extends DeviceView {
     }
 
     public static Drawable convertDrawableToGrayScale(Drawable drawable) {
-        if (drawable == null) {
+        if (drawable == null)
             return null;
-        }
+
         Drawable res = drawable.mutate();
         res.setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_IN);
         return res;
@@ -307,28 +301,25 @@ public class SpeakerView extends DeviceView {
     }
 
     private void updatePlaylist(Boolean success, Object response){
-
         if(!success)
             return;
 
-        playlist = parseGetPlaylistResult(response);
+        List<Map<String, Object>> playlist = parseGetPlaylistResult(response);
 
         SpeakerState.Song auxSong = ((SpeakerState) device.getValue().getState()).getSong();
-        if (auxSong == null) {
-            currentSong = -1;
+        if (auxSong == null)
             return;
-        }
 
         int playlistSize = playlist.size();
         String song = auxSong.getTitle();
 
-        int i;
+        int songIndex;
         //noinspection StatementWithEmptyBody
-        for (i = 0; i < playlistSize && !playlist.get(i).get("title").toString().equals(song); i++);
-        currentSong = (i < playlistSize)? i : 0;
+        for (songIndex = 0; songIndex < playlistSize && !playlist.get(songIndex).get("title").toString().equals(song); songIndex++);
+        songIndex = (songIndex < playlistSize)? songIndex : 0;
 
-        for (int j = 0; j < 3; j++)
-            mPlaylistItems[j].setText(songToString(playlist.get((currentSong + j) % playlistSize)));
+        for (int i = 0; i < 3; i++)
+            mPlaylistItems[i].setText(songToString(playlist.get((songIndex + i) % playlistSize)));
     }
 
     private String songToString(Map<String, Object> song){

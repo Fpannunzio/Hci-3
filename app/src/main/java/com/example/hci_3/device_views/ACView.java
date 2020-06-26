@@ -156,7 +156,7 @@ public class ACView extends DeviceView {
 
         String status = state.getStatus();
 
-        mDevName.setText(getParsedName(device.getName()));
+        mDevName.setText(device.getParsedName());
 
         mState.setText(getResources().getString(R.string.temp_state,
                 status.equals("on")? getResources().getString(R.string.prendido) : getResources().getString(R.string.apagado),
@@ -167,12 +167,11 @@ public class ACView extends DeviceView {
                 String.valueOf(state.getTemperature())));
 
         mLocation.setText(getResources().getString(R.string.disp_location,
-                getParsedName(device.getRoom().getName()),
+                device.getRoom().getParsedName(),
                 device.getRoom().getHome().getName()));
 
         mSwitch.setChecked(status.equals("on"));
 
-        Log.v("damn", state.getVerticalSwing());
         //noinspection ConstantConditions
         mVertGroup.check(verticalToIdMap.get(state.getVerticalSwing()));
 

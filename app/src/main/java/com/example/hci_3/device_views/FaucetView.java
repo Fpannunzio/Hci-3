@@ -144,8 +144,6 @@ public class FaucetView extends DeviceView {
             }
         });
 
-        //Log.v("faus",state.getUnit() );
-        //tenemos un problemita aca el spinner siempre vuelve a ml porque no puede updatearse las unidades
         if(state.getUnit() != null)
             mUnitSpinner.setSelection(unitAdapter.getPosition(state.getUnit()));
 
@@ -158,16 +156,14 @@ public class FaucetView extends DeviceView {
 
         FaucetState state = (FaucetState) device.getState();
 
-        mDevName.setText(getParsedName(device.getName()));
+        mDevName.setText(device.getParsedName());
 
         mLocation.setText(getResources().getString(R.string.disp_location,
-                getParsedName(device.getRoom().getName()),
+                device.getRoom().getParsedName(),
                 device.getRoom().getHome().getName()));
 
         mOpen.setText(getResources().getString(R.string.state,
                 state.getStatus().equals("opened")? getResources().getString(R.string.cerrar) : getResources().getString(R.string.abrir)));
-
-        Log.v("faucet", System.currentTimeMillis() + " - " + this.device.toString());
     }
 
     private void open(){
@@ -231,7 +227,7 @@ public class FaucetView extends DeviceView {
             if (aux.getStatus().equals("closed")) {
                 dispense();
             } else
-                Toast.makeText(context, getResources().getString(R.string.dispense_error), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.dispense_error), Toast.LENGTH_SHORT).show();
         });
     }
 
