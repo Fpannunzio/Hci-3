@@ -72,8 +72,8 @@
     <string name="faucet_amount" translatable="false">%1$d %2$s</string>
     <string name="blinds_level" translatable="false">%1$d</string>
 
-    <string name="invalid_temp">Valor de temperatura invalido</string>
-    <string name="stopped_error">El parlante esta apagado, para reproducir musica debes prenderlo</string>
+    <string name="invalid_temp">Valor de temperatura inválido</string>
+    <string name="stopped_error">El parlante esta apagado, para reproducir música debes prenderlo</string>
     <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
     <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
     <string name="blinds_open_error">La persiana ya esta abierta</string>
@@ -91,13 +91,13 @@
     <string name="apagar">Apagar</string>
     <string name="aspirar">Aspirar</string>
     <string name="trapear">Trapear</string>
-    <string name="ubicacion">Ubicacion:</string>
+    <string name="ubicacion">Ubicación:</string>
     <string name="ac">Imagen de Aire Acondicionado</string>
     <string name="minus_button">Boton menos</string>
-    <string name="plus_button">Boton mas</string>
-    <string name="frio">Frio</string>
+    <string name="plus_button">Boton más</string>
+    <string name="frio">Frío</string>
     <string name="calor">Calor</string>
-    <string name="ventilacion">Ventilacion</string>
+    <string name="ventilacion">Ventilación</string>
     <string name="modo">Modo</string>
     <string name="desplazamiento_aspas">Desplazamiento de aspas</string>
     <string name="vertical">Vertical:</string>
@@ -116,9 +116,9 @@
     <string name="setentaycinco" translatable="false">75</string>
     <string name="cien" translatable="false">100</string>
     <string name="speaker">Imagen de parlante</string>
-    <string name="previous">Boton cancion anterior</string>
-    <string name="play">Boton de play y pausa</string>
-    <string name="next">Boton cancion siguiente</string>
+    <string name="previous">Botón cancion anterior</string>
+    <string name="play">Bóton de play y pausa</string>
+    <string name="next">Bóton cancion siguiente</string>
     <string name="genero">Genero:</string>
     <string name="volumen">Volumen</string>
     <string name="oven">Imagen Horno</string>
@@ -130,7 +130,7 @@
     <string name="dispensar">Dispensar</string>
     <string name="cantidad">Cantidad</string>
     <string name="seleccione_hogar">Seleccione Hogar:</string>
-    <string name="habitacion">Habitacion:</string>
+    <string name="habitacion">Habitación:</string>
     <string name="notifications_channel_name">Generales</string>
     <string name="notifications_channel_description">Mensajes generales de la aplicacion</string>
     <string name="notifications_standar_channel_ID" translatable="false">standarNotificationsChannelID</string>
@@ -161,7 +161,7 @@
     <string name="fanSpeed">Velocidad de ventilador</string>
     <string name="horizontalSwing">Desplazamiento horizontal</string>
     <string name="verticalSwing">Desplazamiento vertical</string>
-    <string name="level">Nivel maximo</string>
+    <string name="level">Nivel máximo</string>
     <string name="currentLevel">Nivel actual</string>
     <string name="lock">Traba</string>
     <string name="batteryLevel">Nivel de bateria</string>
@@ -170,13 +170,13 @@
     <string name="dispensedQuantity">Cantidad dispensada</string>
     <string name="color">Color</string>
     <string name="brightness">Brillo</string>
-    <string name="convection">Conveccion</string>
+    <string name="convection">Convección</string>
     <string name="genre">Genero</string>
     <string name="volume">Volumen</string>
-    <string name="song">Cancion</string>
+    <string name="song">Canción</string>
     <string name="name">Nombre</string>
     <string name="meta.fav">Favorito</string>
-    <string name="room.name">Nombre de la habitacion</string>
+    <string name="room.name">Nombre de la habitación</string>
     <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->

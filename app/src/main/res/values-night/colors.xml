@@ -20,4 +20,5 @@
     <color name="buttonGroupStrokeColorChecked">#3BBA9C</color>
     <color name="buttonGroupTextColorChecked">#3BBA9C</color>
     <color name="buttonGroupStrokeColorUnchecked">#A6A6A6</color>
+    <color name="colorLupa">#3BBA9C</color>
 </resources>

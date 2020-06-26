@@ -33,11 +33,11 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
+                        android:contentDescription="@string/door"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@mipmap/door_round"
-                        android:contentDescription="@string/door" />
+                        app:srcCompat="@mipmap/door_round" />
 
 
                     <TextView
