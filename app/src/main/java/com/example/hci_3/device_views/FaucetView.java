@@ -80,7 +80,7 @@ public class FaucetView extends DeviceView {
         extendBtn = findViewById(R.id.expandBtn);
 
         mUnitSpinner = findViewById(R.id.unitSpinner);
-        unitAdapter = ArrayAdapter.createFromResource(context, R.array.faucet_units, android.R.layout.simple_spinner_item);
+        unitAdapter = ArrayAdapter.createFromResource(context, R.array.faucet_units, R.layout.spinner_item);
     }
 
     @Override
