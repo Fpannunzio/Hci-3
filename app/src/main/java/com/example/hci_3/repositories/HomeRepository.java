@@ -12,6 +12,8 @@ import java.util.List;
 
 public class HomeRepository {
 
+    private static final int pollingDelay = 60000;
+
     private static HomeRepository instance;
     private ApiClient apiClient;
     private MutableLiveData<List<Home>> homes;
@@ -37,14 +39,12 @@ public class HomeRepository {
     public void startPolling(){
         updateHomes();
 
-        int delay = 60000;
-
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                handler.postDelayed(this, delay);
+                handler.postDelayed(this, pollingDelay);
                 updateHomes();
-            }}, delay);
+            }}, pollingDelay);
     }
 
     public void stopPolling(){

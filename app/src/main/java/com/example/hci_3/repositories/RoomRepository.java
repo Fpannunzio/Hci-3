@@ -13,6 +13,8 @@ import java.util.List;
 
 public class RoomRepository {
 
+    private static final int pollingDelay = 60000;
+
     private static RoomRepository instance;
     private ApiClient apiClient;
     private MutableLiveData<List<Room>> rooms;
@@ -52,15 +54,13 @@ public class RoomRepository {
     }
 
     public void startPolling(){
-        // Para mi tiene que suscribirse al alarmManager
-        int delay = 60000;
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                handler.postDelayed(this, delay);
+                handler.postDelayed(this, pollingDelay);
                 updateRooms(lastHomeQueried);
-            }}, delay);
+            }}, pollingDelay);
     }
 
     private void updateRooms(Home home){

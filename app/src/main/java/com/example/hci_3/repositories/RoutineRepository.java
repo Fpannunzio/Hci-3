@@ -12,6 +12,8 @@ import java.util.List;
 
 public class RoutineRepository {
 
+    private static final int pollingDelay = 60000;
+
     private static RoutineRepository instance;
     private ApiClient apiClient;
     private MutableLiveData<List<Routine>> routines;
@@ -37,14 +39,12 @@ public class RoutineRepository {
     public void startPolling(){
         updateRoutines();
 
-        int delay = 60000;
-
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                handler.postDelayed(this, delay);
+                handler.postDelayed(this, pollingDelay);
                 updateRoutines();
-            }}, delay);
+            }}, pollingDelay);
     }
 
     public void stopPolling(){
