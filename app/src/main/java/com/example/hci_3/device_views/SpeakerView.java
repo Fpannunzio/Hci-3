@@ -39,7 +39,7 @@ import java.util.Map;
 
 
 public class SpeakerView extends DeviceView {
-    private TextView mDevName, mState, mLocation, mSongState;
+    private TextView mDevName, mState, mLocation, mSongState,mPlaylistItem1,mPlaylistItem2,mPlaylistItem3,mPlaylist;
     private Switch mSwitch;
     private ImageButton mPrevious, mNext, mPause;
     private Spinner mGenre;
@@ -48,9 +48,7 @@ public class SpeakerView extends DeviceView {
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
     private SpeakerState state;
-    private ListView mPlaylist;
 
-    private ArrayAdapter<String> playlistAdapter;
     private ArrayAdapter<CharSequence> genreAdapter;
 
     public SpeakerView(Context context) {
@@ -80,13 +78,15 @@ public class SpeakerView extends DeviceView {
         mGenre = findViewById(R.id.speaker_spinner);
         mSeekBar = findViewById(R.id.speaker_seekbar);
         mSongState = findViewById(R.id.song_state);
-        mPlaylist = findViewById(R.id.playlist);
+        mPlaylistItem1 = findViewById(R.id.playlist_item_1);
+        mPlaylistItem2 = findViewById(R.id.playlist_item_2);
+        mPlaylistItem3 = findViewById(R.id.playlist_item_3);
+        mPlaylist = findViewById(R.id.playlist_title);
 
         cardView = findViewById(R.id.room_card);
         expandableLayout = findViewById(R.id.expandableLayout);
         extendBtn = findViewById(R.id.expandBtn);
 
-        playlistAdapter = new ArrayAdapter<>(context, android.R.layout.simple_expandable_list_item_1);
         genreAdapter = ArrayAdapter.createFromResource(context, R.array.genres, android.R.layout.simple_spinner_item);
     }
 
@@ -100,8 +100,6 @@ public class SpeakerView extends DeviceView {
         state = (SpeakerState) dev.getState();
 
         model.addPollingState(dev, 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
-
-        mPlaylist.setAdapter(playlistAdapter);
 
         mGenre.setAdapter(genreAdapter);
         final String[] generos = getResources().getStringArray(R.array.genres);
@@ -146,11 +144,6 @@ public class SpeakerView extends DeviceView {
 
         mPrevious.setOnClickListener(v -> previousSong());
 
-        if (state.getStatus().equals("playing"))
-            enableControlButtons();
-        else
-            disableControlButtons();
-
         mPause.setOnClickListener(v -> {
             if(state.getStatus().equals("playing")) {
                 pause();
@@ -187,45 +180,49 @@ public class SpeakerView extends DeviceView {
 
             }
         });
+    }
 
+    public void refreshPlaylist(){
+        if (state.getStatus().equals(getResources().getString(R.string.off_status_speaker))){
+            mPlaylistItem1.setVisibility(GONE);
+            mPlaylistItem2.setVisibility(GONE);
+            mPlaylistItem3.setVisibility(GONE);
+            mPlaylist.setVisibility(GONE);
+        }else {
+            mPlaylistItem1.setVisibility(VISIBLE);
+            mPlaylistItem2.setVisibility(VISIBLE);
+            mPlaylistItem3.setVisibility(VISIBLE);
+            mPlaylist.setVisibility(VISIBLE);
+            executeAction("getPlaylist", ((success, response) -> {
+                List<Map<String, Object>> map;
+                map = parseGetPlaylistResult(response);
 
-        executeAction("getPlaylist", ((success, response) -> {
-            List<Map<String, Object>> map;
-            map = parseGetPlaylistResult(response);
+                ArrayList<String> toPlaylist = new ArrayList<>();
+                SpeakerState.Song auxSong = ((SpeakerState) device.getValue().getState()).getSong();
+                if (auxSong == null)
+                    return;
+                String currentSong = auxSong.getTitle();
+                boolean flag = false;
 
-            ArrayList<String> toPlaylist = new ArrayList<>();
-            playlistAdapter.clear();
-            String currentSong = state.getSong().getTitle();
-            boolean flag = false;
+                while (toPlaylist.size() < 3) {
 
-            while (toPlaylist.size() < 3){
-
-                for (Map<String, Object> song : map){
-                    //noinspection ConstantConditions
-                    if (song.get("title").toString().equals(currentSong) && toPlaylist.size() < 3){
-                        flag = true;
-                    }
-                    if (flag){
-                        toPlaylist.add(song.get("artist").toString().concat(" - ").concat(song.get("title").toString()));
-                        if (toPlaylist.size() == 3)
-                            flag = false;
+                    for (Map<String, Object> song : map) {
+                        //noinspection ConstantConditions
+                        if (song.get("title").toString().equals(currentSong) && toPlaylist.size() < 3) {
+                            flag = true;
+                        }
+                        if (flag) {
+                            toPlaylist.add(song.get("artist").toString().concat(" - ").concat(song.get("title").toString()));
+                            if (toPlaylist.size() == 3)
+                                flag = false;
+                        }
                     }
                 }
-
-                for (String s : toPlaylist){
-                    Log.v("toplaylist", s);
-                }
-            }
-
-            playlistAdapter.addAll(toPlaylist);
-            playlistAdapter.notifyDataSetChanged();
-        }),this::handleError);
-
-        mPlaylist.setOnItemClickListener((parent,v,pos,id) ->{
-            for (int i = 0; i < pos; i++)
-                nextSong();
-
-        });
+                mPlaylistItem1.setText(toPlaylist.get(0));
+                mPlaylistItem2.setText(toPlaylist.get(1));
+                mPlaylistItem3.setText(toPlaylist.get(2));
+            }), this::handleError);
+        }
     }
 
     @Override
@@ -235,8 +232,7 @@ public class SpeakerView extends DeviceView {
 
         mDevName.setText(getParsedName(device.getName()));
 
-        if(!state.getStatus().equals("stopped"))
-            mSwitch.setChecked(true);
+        mSwitch.setChecked(!state.getStatus().equals("stopped"));
 
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
@@ -244,40 +240,18 @@ public class SpeakerView extends DeviceView {
 
         mSeekBar.setProgress(state.getVolume());
 
+        if (state.getStatus().equals("playing")){
+            enableControlButtons();
+            mPause.setImageResource(R.drawable.ic_pause);
+        }
+        else{
+            disableControlButtons();
+            mPause.setImageResource(R.drawable.ic_play);
+        }
+
         // TODO: 6/23/2020 Falta la lista de reproduccion y traer el genero desde la api cuando arranca
 
-        executeAction("getPlaylist", ((success, response) -> {
-            List<Map<String, Object>> map;
-            map = parseGetPlaylistResult(response);
-
-            ArrayList<String> toPlaylist = new ArrayList<>();
-            playlistAdapter.clear();
-            String currentSong = state.getSong().getTitle();
-            boolean flag = false;
-
-            while (toPlaylist.size() < 3){
-
-                for (Map<String, Object> song : map){
-                    //noinspection ConstantConditions
-                    if (song.get("title").toString().equals(currentSong) && toPlaylist.size() < 3){
-                        flag = true;
-                    }
-                    if (flag){
-                        toPlaylist.add(song.get("artist").toString().concat(" - ").concat(song.get("title").toString()));
-                        if (toPlaylist.size() == 3)
-                            flag = false;
-                    }
-                }
-
-                for (String s : toPlaylist){
-                    Log.v("toplaylist", s);
-                }
-            }
-
-            playlistAdapter.addAll(toPlaylist);
-            playlistAdapter.notifyDataSetChanged();
-        }),this::handleError);
-
+        refreshPlaylist();
     }
 
     private void disableControlButtons() {

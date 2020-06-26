@@ -182,4 +182,5 @@
     <string name="brillo">Brightness</string>
     <string name="routine_description">Routine\'s card</string>
     <string name="current_color">Current color</string>
+    <string name="playlist">Playlist:</string>
 </resources>

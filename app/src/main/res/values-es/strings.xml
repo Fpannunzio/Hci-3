@@ -182,4 +182,5 @@
     <string name="brillo">Brillo</string>
     <string name="routine_description">Tarjeta de rutina</string>
     <string name="current_color">Color actual</string>
+    <string name="playlist">Lista de reproducción:</string>
 </resources>

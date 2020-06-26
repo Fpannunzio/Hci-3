@@ -122,12 +122,13 @@
                             android:id="@+id/lamp_switch"
                             android:layout_width="50dp"
                             android:layout_height="30dp"
+                            android:layout_marginStart="10dp"
+
                             android:shadowColor="@color/colorPrimary"
+                            android:theme="@style/SwitchTheme"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/imageView5"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:theme="@style/SwitchTheme" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/imageView5"
@@ -147,6 +148,8 @@
                             android:layout_height="match_parent"
                             android:progressTint="@color/colorButtons"
                             android:thumbTint="@color/colorButtons"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/imageView5"
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
