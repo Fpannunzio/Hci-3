@@ -79,18 +79,6 @@ public class FaucetView extends DeviceView {
         mUnitSpinner = findViewById(R.id.unitSpinner);
         unitAdapter = ArrayAdapter.createFromResource(context, R.array.faucet_units, android.R.layout.simple_spinner_item);
 
-        final String[] faucetUnits = getResources().getStringArray(R.array.faucet_units);
-
-        mUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                mAmount.setText(getResources().getString(R.string.faucet_amount, mSeekBar.getProgress() == 0? 1: mSeekBar.getProgress(), faucetUnits[arg2]));
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
     }
 
     @Override
@@ -112,6 +100,18 @@ public class FaucetView extends DeviceView {
                 extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
             }
         });
+        final String[] faucetUnits = getResources().getStringArray(R.array.faucet_units);
+        mUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                mAmount.setText(getResources().getString(R.string.faucet_amount, mSeekBar.getProgress() == 0? 1: mSeekBar.getProgress(), faucetUnits[arg2]));
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
 
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -129,7 +129,10 @@ public class FaucetView extends DeviceView {
 
             }
         });
-        mUnitSpinner.setSelection(unitAdapter.getPosition(state.getUnit()));
+        //Log.v("faus",state.getUnit() );
+        //tenemos un problemita aca el spinner siempre vuelve a ml porque no puede updatearse las unidades
+        if(state.getUnit() != null)
+            mUnitSpinner.setSelection(unitAdapter.getPosition(state.getUnit()));
     }
 
     @Override
@@ -166,19 +169,20 @@ public class FaucetView extends DeviceView {
 
     private void updateFrequentlyUpdatingState(DeviceState uncastedState) {
         FaucetState state = (FaucetState) uncastedState;
+        state.setUnit((String) mUnitSpinner.getSelectedItem());
 
 
         mState.setText(getResources().getString(R.string.state,
                 state.getStatus().equals("opened")? state.getDispensedQuantity() != null? getResources().getString(R.string.dispensando, state.getDispensedQuantity().intValue(), state.getUnit()) : getResources().getString(R.string.abierto) : getResources().getString(R.string.cerrado)));
 
         if (state.getStatus().equals("opened")) {
-            flag = true;
             mDispense.setClickable(false);
             String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
             mDispense.setBackgroundColor(Color.parseColor(colorHex));
             if(state.getDispensedQuantity() == null)
                 mState.setText(getResources().getString(R.string.abierto));
             else {
+                flag = true;
                 mState.setText(getResources().getString(R.string.dispensando, state.getDispensedQuantity().intValue(), state.getUnit()));
                 mSeekBar.setProgress(state.getQuantity() - state.getDispensedQuantity().intValue());
                 aux = state.getQuantity() - state.getDispensedQuantity().intValue();
