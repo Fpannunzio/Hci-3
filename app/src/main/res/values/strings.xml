@@ -75,8 +75,8 @@
     <string name="stopped_error">El parlante esta apagado, para reproducir musica debes prenderlo</string>
     <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
     <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
-    <string name="blinds_open_error">La persiana ya esta abierta</string>
-    <string name="blinds_close_error">La persiana ya esta cerrada</string>
+    <string name="blinds_open_error">La persiana no puede abrirse en este momento</string>
+    <string name="blinds_close_error">La persiana no puede cerrarse en este momento</string>
     <string name="dispense_error">El dispositivo ya esta dispensando</string>
     <string name="persiana">Persiana</string>
     <string name="extend_arrow">Flecha para ampliar tarjeta</string>
@@ -149,7 +149,7 @@
     <string name="stored_devices_SP_key" translatable="false">storedDevicesSPKey</string>
     <string name="notification_IDs_SP_key" translatable="false">notificationsIDsSPKey</string>
     <string name="last_notification_ID" translatable="false">lastNotificationID</string>
-    <string name="notifications_device_stated_changed">Se modifico %1$s, el valor actual es %2$s</string>
+    <string name="notificactions_message_device_stated_changed">Se modifico %1$s, el valor actual es %2$s</string>
     <string name="notifications_device_added">%1$s fue agregado.</string>
     <string name="notifications_device_deleted">El dispositivo %1$s fue borrado</string>
     <string name="notifications_favorite_channel_ID" translatable="false">favoriteNorificationChannelID</string>
@@ -209,7 +209,7 @@
     <string name="playing">Reproduciendo</string>
     <string name="paused">Pausado</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
-    <string name="dispensando">Dispensando %1$g</string>
+    <string name="dispensando">Dispensado %1$d %2$s</string>
     <string name="faucet_double_amount" translatable="false">%1$g %2$s</string>
     <string name="batery_state">Bateria: %1$d</string>
     <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Sera asignada a su habitacion.</string>
@@ -232,7 +232,15 @@
     <string name="routine_description">Tarjeta de rutina</string>
     <string name="current_color">Color actual</string>
     <string name="percentage" translatable="false">(%)</string>
+    <string name="notificactions_message_fav_true">El dispositivo fue agregado a favoritos</string>
+    <string name="notificactions_message_fav_false">El dispositivo fue removido de  favoritos</string>
+    <string name="notificactions_message_room.name">El dispositivo ahora se encuentra registrado en la habitacion %1$s</string>
+    <string name="notificactions_message_room.home.name">El dispositivo ahora se encuentra registrado en el hogar %1$s</string>
+    <string name="notificactions_message_name">El dispositivo cambio de nombre, ahora se llama %1$s</string>
+    <string name="notificactions_message_device.added">El dispositivo fue agregaEl dispositivo fue agregado y esta disponible para usardo a los dispositivos disponibles</string>
+    <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
     <string name="night_mode_boolean" translatable="false">NightModeBoolean</string>
+    <string name="mop">Trapear</string>
     <string name="playlist">Lista de reproducción:</string>
     <string name="off_status_speaker" translatable="false">stopped</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->

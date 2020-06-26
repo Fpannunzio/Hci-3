@@ -17,11 +17,13 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
 import com.example.hci_3.api.Device;
 import com.example.hci_3.api.DeviceStates.BlindsState;
+import com.example.hci_3.api.DeviceStates.DeviceState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,8 +36,7 @@ public class BlindsView extends DeviceView {
     private TextView mDevName, mState,  mLocation, mLevel;
     private Button mOpen, mClose;
     private SeekBar mSeekBar;
-    private int level = 0;
-    private BlindsState state;
+    private int level;
 
     public BlindsView(Context context) {
         super(context);
@@ -82,13 +83,87 @@ public class BlindsView extends DeviceView {
             }
         });
 
+
+
+        model.addPollingState(device.getValue(), 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
+    }
+
+    @Override
+    public void onDeviceRefresh(Device device) {
+        BlindsState state = (BlindsState) device.getState();
+
+        mDevName.setText(getParsedName(device.getName()));
+
+        mLocation.setText(getResources().getString(R.string.disp_location,
+                getParsedName(device.getRoom().getName()),
+                device.getRoom().getHome().getName()));
+
+    }
+    private void open(){
+        executeAction("open", this::handleError);
+    }
+
+    private void close(){
+        executeAction("close", this::handleError);
+    }
+
+    private void setLevel(int level){ executeAction("setLevel", new ArrayList<>(Collections.singletonList(level)),this::handleError);
+    }
+
+    private void updateFrequentlyUpdatingState(DeviceState uncastedState){
+        BlindsState state = (BlindsState) uncastedState;
+
+
+        mState.setText(getResources().getString(R.string.blinds_state,
+                state.getStatus().equals("opened")? getResources().getString(R.string.abierta) :state.getStatus().equals("opening")?
+                        getResources().getString(R.string.abriendose): state.getStatus().equals("closing")?
+                        getResources().getString(R.string.cerrandose) : getResources().getString(R.string.cerrada), state.getCurrentLevel()) + "%");
+
+        if (state.getStatus().equals("opened")) {
+            mState.setText(getResources().getString(R.string.state, getResources().getString(R.string.abierta)));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
+            colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
+            mSeekBar.setEnabled(true);
+        }
+        else if (state.getStatus().equals("closing") || state.getStatus().equals("opening")) {
+            mState.setText(getResources().getString(R.string.blinds_state, state.getStatus().equals("opening")?
+                            getResources().getString(R.string.abriendose): getResources().getString(R.string.cerrandose), state.getCurrentLevel()) + "%");
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
+            mSeekBar.setEnabled(false);
+            mSeekBar.setProgress(state.getCurrentLevel());
+            mLevel.setText(getResources().getString(R.string.blinds_level, state.getCurrentLevel()) + "%");
+        }
+        else {
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
+            colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
+        }
+        mOpen.setOnClickListener(v -> {
+            if (state.getStatus().equals("closed")) {
+                open();
+            } else
+                Toast.makeText(context, getResources().getString(R.string.blinds_open_error), Toast.LENGTH_LONG).show();
+        });
+        mClose.setOnClickListener(v -> {
+            if (state.getStatus().equals("opened")) {
+                setLevel(level);
+                close();
+            } else
+                Toast.makeText(context, getResources().getString(R.string.blinds_close_error), Toast.LENGTH_LONG).show();
+        });
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if(state.getStatus().equals("opened")) {
+                    Log.v("progress", String.valueOf(progress));
+                    mLevel.setText(getResources().getString(R.string.blinds_level, progress) + "%");
+                    setLevel(level);
                     level = progress;
-                    mLevel.setText(getResources().getString(R.string.blinds_level, level) + "%");
-                    setLevel();
                 }
             }
 
@@ -100,72 +175,7 @@ public class BlindsView extends DeviceView {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-    }
 
-    @Override
-    public void onDeviceRefresh(Device device) {
-        state = (BlindsState) device.getState();
-
-        mDevName.setText(getParsedName(device.getName()));
-
-        mState.setText(getResources().getString(R.string.blinds_state,
-                state.getStatus().equals("opened")? getResources().getString(R.string.abierta) :state.getStatus().equals("opening")?
-                        getResources().getString(R.string.abriendose): state.getStatus().equals("closing")?
-                        getResources().getString(R.string.cerrandose) : getResources().getString(R.string.cerrada), state.getCurrentLevel()) + "%");
-
-        mLocation.setText(getResources().getString(R.string.disp_location,
-                getParsedName(device.getRoom().getName()),
-                device.getRoom().getHome().getName()));
-
-        if(state.getStatus().equals("opened")) {
-            mOpen.setClickable(false);
-            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
-            mOpen.setBackgroundColor(Color.parseColor(colorHex));
-            mClose.setClickable(true);
-            colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
-            mClose.setBackgroundColor(Color.parseColor(colorHex));
-        }
-        else if(state.getStatus().equals("closing") || state.getStatus().equals("opening")) {
-            mClose.setClickable(false);
-            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
-            mClose.setBackgroundColor(Color.parseColor(colorHex));
-            mOpen.setClickable(false);
-            mOpen.setBackgroundColor(Color.parseColor(colorHex));
-        }
-        else{
-            mClose.setClickable(false);
-            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
-            mClose.setBackgroundColor(Color.parseColor(colorHex));
-            mOpen.setClickable(true);
-            colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
-            mOpen.setBackgroundColor(Color.parseColor(colorHex));
-        }
-
-        mOpen.setOnClickListener(v -> {
-              if (state.getStatus().equals("closed")) {
-                  open();
-              } else
-                  Toast.makeText(context, getResources().getString(R.string.blinds_open_error), Toast.LENGTH_LONG).show();
-        });
-        mClose.setOnClickListener(v -> {
-            if (state.getStatus().equals("opened")) {
-                close();
-            } else
-                Toast.makeText(context, getResources().getString(R.string.blinds_close_error), Toast.LENGTH_LONG).show();
-        });
-
-        mSeekBar.setProgress(state.getLevel());
-        mLevel.setText(state.getLevel() + "%");
-    }
-    private void open(){
-        executeAction("open", this::handleError);
-    }
-
-    private void close(){
-        executeAction("close", this::handleError);
-    }
-
-    private void setLevel(){ executeAction("setLevel", new ArrayList<>(Collections.singletonList(level)),this::handleError);
     }
 
 }

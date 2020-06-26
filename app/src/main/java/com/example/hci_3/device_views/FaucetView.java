@@ -37,11 +37,9 @@ public class FaucetView extends DeviceView {
     private CardView cardView;
     private ConstraintLayout expandableLayout;
     private ImageButton extendBtn;
-    private Integer quantity = 1, auxiliar;
-    private String unit;
-    private boolean flag = false;
-
-    private TextView mDevName, mState, mLocation, mAmount;
+    private boolean flag;
+    private Integer aux;
+    private TextView mDevName, mState,  mLocation, mAmount;
     private Button mOpen, mDispense;
     private Spinner mUnitSpinner;
     private SeekBar mSeekBar;
@@ -64,6 +62,9 @@ public class FaucetView extends DeviceView {
         super.init(context);
         LayoutInflater.from(context).inflate(R.layout.faucet_view, this, true);
 
+        flag = false;
+
+
         mDevName = findViewById(R.id.faucet_name);
         mLocation = findViewById(R.id.faucet_location);
         mState = findViewById(R.id.onStateFaucet);
@@ -77,15 +78,25 @@ public class FaucetView extends DeviceView {
         extendBtn = findViewById(R.id.expandBtn);
 
         mUnitSpinner = findViewById(R.id.unitSpinner);
-
         unitAdapter = ArrayAdapter.createFromResource(context, R.array.faucet_units, android.R.layout.simple_spinner_item);
+
+        final String[] faucetUnits = getResources().getStringArray(R.array.faucet_units);
+
+        mUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                       int arg2, long arg3) {
+                mAmount.setText(getResources().getString(R.string.faucet_amount, mSeekBar.getProgress() == 0? 1: mSeekBar.getProgress(), faucetUnits[arg2]));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
     }
 
     @Override
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
-
-        mAmount.setText(getResources().getString(R.string.faucet_amount, quantity, unit));
         FaucetState state = (FaucetState) Objects.requireNonNull(device.getValue()).getState();
         mUnitSpinner.setAdapter(unitAdapter);
 
@@ -103,31 +114,10 @@ public class FaucetView extends DeviceView {
             }
         });
 
-        final String[] faucetUnits = getResources().getStringArray(R.array.faucet_units);
-
-        mUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                unit = (faucetUnits[arg2]);
-                state.setUnit(unit);
-                mAmount.setText(getResources().getString(R.string.faucet_amount, quantity, unit));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (state.getStatus().equals("closed")) {
-                    quantity = progress;
-                    if (quantity == 0)
-                        quantity = 1;
-                    state.setQuantity(quantity);
-                    mAmount.setText(getResources().getString(R.string.faucet_amount, quantity, unit));
-                }
+                mAmount.setText(getResources().getString(R.string.faucet_amount, progress== 0? 1: progress, mUnitSpinner.getSelectedItem()));
             }
 
             @Override
@@ -140,7 +130,7 @@ public class FaucetView extends DeviceView {
 
             }
         });
-
+        mUnitSpinner.setSelection(unitAdapter.getPosition(state.getUnit()));
     }
 
     @Override
@@ -154,41 +144,26 @@ public class FaucetView extends DeviceView {
                 getParsedName(device.getRoom().getName()),
                 device.getRoom().getHome().getName()));
 
-        mOpen.setOnClickListener(v -> {
-            FaucetState aux = (FaucetState) device.getState();
-            if (aux.getStatus().equals("closed")) {
-                open();
-            } else
-                close();
-        });
-        mDispense.setOnClickListener(v -> {
-            FaucetState aux = (FaucetState) device.getState();
-            if (aux.getStatus().equals("closed")) {
-                dispense();
-            } else
-                Toast.makeText(context, getResources().getString(R.string.dispense_error), Toast.LENGTH_LONG).show();
-        });
-
         mOpen.setText(getResources().getString(R.string.state,
-                state.getStatus().equals("opened") ? getResources().getString(R.string.cerrar) : getResources().getString(R.string.abrir)));
+                state.getStatus().equals("opened")? getResources().getString(R.string.cerrar) : getResources().getString(R.string.abrir)));
 
-        mAmount.setText(getResources().getString(R.string.faucet_amount, quantity, unit));
+
 
     }
 
-    private void open() {
+    private void open(){
         executeAction("open", this::handleError);
     }
 
-    private void close() {
+    private void close(){
         executeAction("close", this::handleError);
     }
 
-    private void dispense() {
-        ArrayList<Object> aux = new ArrayList<>();
-        aux.add(quantity);
-        aux.add(unit);
-        executeAction("dispense", aux, this::handleError);
+    private void dispense(){
+        ArrayList<Object> aux= new ArrayList<>();
+        aux.add(mSeekBar.getProgress());
+        aux.add(mUnitSpinner.getSelectedItem());
+        executeAction("dispense",aux,this::handleError);
     }
 
     private void updateFrequentlyUpdatingState(DeviceState uncastedState) {
@@ -196,31 +171,48 @@ public class FaucetView extends DeviceView {
 
 
         mState.setText(getResources().getString(R.string.state,
-                state.getStatus().equals("opened") ? state.getDispensedQuantity() != null ? getResources().getString(R.string.dispensando, state.getDispensedQuantity()) : getResources().getString(R.string.abierto) : getResources().getString(R.string.cerrado)));
-
+                state.getStatus().equals("opened")? state.getDispensedQuantity() != null? getResources().getString(R.string.dispensando, state.getDispensedQuantity().intValue(), state.getUnit()) : getResources().getString(R.string.abierto) : getResources().getString(R.string.cerrado)));
 
         if (state.getStatus().equals("opened")) {
             flag = true;
             mDispense.setClickable(false);
             String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
             mDispense.setBackgroundColor(Color.parseColor(colorHex));
-            if (state.getDispensedQuantity() == null)
+            if(state.getDispensedQuantity() == null)
                 mState.setText(getResources().getString(R.string.abierto));
             else {
-                Log.v("quantity", state.getQuantity().toString());
-                mState.setText(getResources().getString(R.string.dispensando, state.getDispensedQuantity()));
+                mState.setText(getResources().getString(R.string.dispensando, state.getDispensedQuantity().intValue(), state.getUnit()));
                 mSeekBar.setProgress(state.getQuantity() - state.getDispensedQuantity().intValue());
-                mAmount.setText(getResources().getString(R.string.faucet_double_amount, state.getQuantity() - state.getDispensedQuantity(), unit));
+                aux = state.getQuantity() - state.getDispensedQuantity().intValue();
+                mAmount.setText(getResources().getString(R.string.faucet_amount, aux, mUnitSpinner.getSelectedItem()));
+                mUnitSpinner.setEnabled(false);
             }
         } else {
             mState.setText(getResources().getString(R.string.cerrado));
-            mDispense.setClickable(true);
             String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
             mDispense.setBackgroundColor(Color.parseColor(colorHex));
-            if (flag) {
-                mAmount.setText(getResources().getString(R.string.faucet_amount, 1, unit));
-                flag = false;
+            if(flag) {
+                mAmount.setText(getResources().getString(R.string.faucet_amount, aux == 0 ? 1 : aux, mUnitSpinner.getSelectedItem()));
+                flag=false;
             }
+            mUnitSpinner.setEnabled(true);
+            mUnitSpinner.setSelection(unitAdapter.getPosition(state.getUnit()));
         }
+        mOpen.setOnClickListener(v -> {
+            //FaucetState aux = (FaucetState) device.getState();
+            if (state.getStatus().equals("closed")) {
+                open();
+            } else {
+                close();
+            }
+        });
+        mDispense.setOnClickListener(v -> {
+            FaucetState aux = (FaucetState) uncastedState;
+            if (aux.getStatus().equals("closed")) {
+                dispense();
+            } else
+                Toast.makeText(context, getResources().getString(R.string.dispense_error), Toast.LENGTH_LONG).show();
+        });
     }
+
 }

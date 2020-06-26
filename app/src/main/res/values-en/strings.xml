@@ -25,8 +25,8 @@
     <string name="stopped_error">The speaker is off, to play music you must turn it on</string>
     <string name="block_error">" You can't lock the door if it's open"</string>
     <string name="open_error">You can\'t open the door if it\'s locked</string>
-    <string name="blinds_open_error">The blind is already open</string>
-    <string name="blinds_close_error">The blind is already closed</string>
+    <string name="blinds_open_error">Unable to open the blind</string>
+    <string name="blinds_close_error">Unable to close the blind</string>
     <string name="dispense_error">The device is already dispensing</string>
     <string name="persiana">Blind</string>
     <string name="extend_arrow">Arrow to extend card</string>
@@ -76,7 +76,7 @@
     <string name="buscar">Search</string>
     <string name="modoNocturno">Dark Mode</string>
     <string name="search">Searching: %1$s</string>
-    <string name="dispensando">Dispensing %1$g</string>
+    <string name="dispensando">Dispensed %1$d %2$s</string>
     <string name="ajustes">Settings</string>
     <string-array name="fuente_calor">
         <item>Conventional</item>
@@ -115,7 +115,7 @@
     <string name="rutina_exitosa">The routine was executed correctly</string>
     <string name="notifications_channel_name">General</string>
     <string name="notifications_channel_description">General notifications for the app</string>
-    <string name="notifications_device_stated_changed">%1$s was modified, the actual value is %2$s</string>
+    <string name="notificactions_message_device_stated_changed">%1$s was modified, the actual value is %2$s</string>
     <string name="notifications_device_added">%1$s was added.</string>
     <string name="notifications_device_deleted">%1$s was deleted from the system.</string>
     <string name="grill">Grill</string>
@@ -182,5 +182,12 @@
     <string name="brillo">Brightness</string>
     <string name="routine_description">Routine\'s card</string>
     <string name="current_color">Current color</string>
-    <string name="playlist">Playlist:</string>
+    <string name="notificactions_message_fav_true">The device was moved onto favorites list.</string>
+    <string name="notificactions_message_fav_false">The device is no loger on favorites list.</string>
+    <string name="notificactions_message_room.name">The device was moved to</string>
+    <string name="notificactions_message_room.home.name">The device was moved to</string>
+    <string name="notificactions_message_name">"The device name was changed to "</string>
+    <string name="notificactions_message_device.added">The device was added and is ready to use</string>
+    <string name="notificactions_message_device.deleted">The device was removed from the system</string>
+    <string name="mop">Mop</string>
 </resources>

@@ -26,8 +26,8 @@
     <string name="stopped_error">El parlante esta apagado, para reproducir música debes prenderlo</string>
     <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
     <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
-    <string name="blinds_open_error">La persiana ya esta abierta</string>
-    <string name="blinds_close_error">La persiana ya esta cerrada</string>
+    <string name="blinds_open_error">La persiana no puede abrirse en este momento</string>
+    <string name="blinds_close_error">La persiana no puede cerrarse en este momento</string>
     <string name="dispense_error">El dispositivo ya esta dispensando</string>
     <string name="persiana">Persiana</string>
     <string name="extend_arrow">Flecha para ampliar tarjeta</string>
@@ -77,7 +77,7 @@
     <string name="modoNocturno">Modo Nocturno</string>
     <string name="search">Busqueda: %1$s</string>
     <string name="ajustes">Ajustes</string>
-    <string name="dispensando">Dispensando %1$g</string>
+    <string name="dispensando">Dispensado %1$d %2$s</string>
     <string-array name="fuente_calor">
         <item>Convencional</item>
         <item>Abajo</item>
@@ -115,7 +115,7 @@
     <string name="notifications_channel_name">Generales</string>
     <string name="notifications_channel_description">Mensajes generales de la aplicacion</string>
     <string name="rutina_exitosa">La rutina fue ejecutada correctamente</string>
-    <string name="notifications_device_stated_changed">Se modifico %1$s, el valor actual es %2$s</string>
+    <string name="notificactions_message_device_stated_changed">Se modifico %1$s, el valor actual es %2$s</string>
     <string name="notifications_device_added">%1$s fue agregado.</string>
     <string name="notifications_device_deleted">El dispositivo %1$s fue borrado</string>
     <string name="grill">Modo de grill</string>
@@ -182,5 +182,12 @@
     <string name="brillo">Brillo</string>
     <string name="routine_description">Tarjeta de rutina</string>
     <string name="current_color">Color actual</string>
-    <string name="playlist">Lista de reproducción:</string>
+    <string name="notificactions_message_fav_true">El dispositivo fue agregado a favoritos</string>
+    <string name="notificactions_message_fav_false">El dispositivo fue removido de  favoritos</string>
+    <string name="notificactions_message_room.name">El dispositivo ahora se encuentra registrado en la habitacion %1$s</string>
+    <string name="notificactions_message_room.home.name">El dispositivo ahora se encuentra registrado en el hogar %1$s</string>
+    <string name="notificactions_message_name">El dispositivo cambio de nombre, ahora se llama %1$s</string>
+    <string name="notificactions_message_device.added">El dispositivo fue agregado y esta disponible para usar</string>
+    <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
+    <string name="mop">Trapear</string>
 </resources>
