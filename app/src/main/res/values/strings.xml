@@ -253,6 +253,7 @@
     <string name="error_rutina">Hubo un problema ejecutando la rutina. Es posible que alguno de los dispositivos involucrados haya sido eliminado</string>
     <string name="notifications_favorite_channel_name">Favoritos</string>
     <string name="notifications_favorite_channel_description">Mensajes para los dispositivios favoritos</string>
+    <string name="noDevicesFavoritesMessage">No hay dispositivos marcados como favoritos</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>
