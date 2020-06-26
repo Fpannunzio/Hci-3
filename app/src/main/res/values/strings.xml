@@ -60,12 +60,12 @@
     <string name="temp" translatable="false"> %1$s°C </string>
     <string name="state" translatable="false">%1$s</string>
     <string name="door_state" translatable="false">%1$s - %2$s</string>
-    <string name="lamp_state" translatable="false">%1s -</string>
+    <string name="lamp_state" translatable="false">%1$s - </string>
     <string name="temp_state" translatable="false">%1$s - %2$s - %3$d°C</string>
-    <string name="room_title" translatable="false">%1$s - %2$s</string>
+    <string name="room_title" translatable="false">%1$s | %2$s</string>
 
     <string name="speaker_state" translatable="false">%1$s: %2$s</string>
-    <string name="blinds_state" translatable="false">%1$s-%2$d</string>
+    <string name="blinds_state" translatable="false">%1$s - %2$d</string>
 
     <string name="disp_location" translatable="false">%1$s | %2$s</string>
     <string name="faucet_amount" translatable="false">%1$d %2$s</string>
@@ -149,7 +149,7 @@
     <string name="stored_devices_SP_key" translatable="false">storedDevicesSPKey</string>
     <string name="notification_IDs_SP_key" translatable="false">notificationsIDsSPKey</string>
     <string name="last_notification_ID" translatable="false">lastNotificationID</string>
-    <string name="notifications_device_stated_changed">Se modifico %1$s, el valor actual es %2$s</string>
+    <string name="notificactions_message_device_stated_changed">Se modifico %1$s, el valor actual es %2$s</string>
     <string name="notifications_device_added">%1$s fue agregado.</string>
     <string name="notifications_device_deleted">El dispositivo %1$s fue borrado</string>
     <string name="notifications_favorite_channel_ID" translatable="false">favoriteNorificationChannelID</string>
@@ -225,6 +225,22 @@
     <string name="extraSettingsText">Ajustes Extra</string>
     <string name="themeText">Tema oscuro</string>
     <string name="settingsFile">setings</string>
+    <string name="ac_heat">Calor</string>
+    <string name="ac_cool">Frio</string>
+    <string name="ac_fan">Ventilador</string>
+    <string name="brillo">Brillo</string>
+    <string name="routine_description">Tarjeta de rutina</string>
+    <string name="current_color">Color actual</string>
+    <string name="percentage" translatable="false">(%)</string>
+    <string name="notificactions_message_fav_true">El dispositivo fue agregado a favoritos</string>
+    <string name="notificactions_message_fav_false">El dispositivo fue removido de  favoritos</string>
+    <string name="notificactions_message_room.name">El dispositivo ahora se encuentra registrado en la habitacion %1$s</string>
+    <string name="notificactions_message_room.home.name">El dispositivo ahora se encuentra registrado en el hogar %1$s</string>
+    <string name="notificactions_message_name">El dispositivo cambio de nombre, ahora se llama %1$s</string>
+    <string name="notificactions_message_device.added">El dispositivo fue agregaEl dispositivo fue agregado y esta disponible para usardo a los dispositivos disponibles</string>
+    <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
+    <string name="night_mode_boolean" translatable="false">NightModeBoolean</string>
+    <string name="mop">Trapear</string>
     <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
     <!--    <string name="notifications">notifications_key</string>-->
 </resources>

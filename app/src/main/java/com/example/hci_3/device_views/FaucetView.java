@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
@@ -102,7 +103,7 @@ public class FaucetView extends DeviceView {
         model.addPollingState(device.getValue(), 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
 
         extendBtn.setOnClickListener(v -> {
-            if (expandableLayout.getVisibility() == View.GONE){
+            if (expandableLayout.getVisibility() == View.GONE) {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
                 expandableLayout.setVisibility(View.VISIBLE);
                 extendBtn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
@@ -165,16 +166,18 @@ public class FaucetView extends DeviceView {
         executeAction("dispense",aux,this::handleError);
     }
 
-    private void updateFrequentlyUpdatingState(DeviceState uncastedState){
+    private void updateFrequentlyUpdatingState(DeviceState uncastedState) {
         FaucetState state = (FaucetState) uncastedState;
-        Log.v("quantity", String.valueOf(mSeekBar.getProgress()));
+
 
         mState.setText(getResources().getString(R.string.state,
                 state.getStatus().equals("opened")? state.getDispensedQuantity() != null? getResources().getString(R.string.dispensando, state.getDispensedQuantity().intValue(), state.getUnit()) : getResources().getString(R.string.abierto) : getResources().getString(R.string.cerrado)));
 
-        if (state.getStatus().equals("opened") ) {
+        if (state.getStatus().equals("opened")) {
             flag = true;
-            mDispense.setBackgroundColor(Color.parseColor("#71A69A"));
+            mDispense.setClickable(false);
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mDispense.setBackgroundColor(Color.parseColor(colorHex));
             if(state.getDispensedQuantity() == null)
                 mState.setText(getResources().getString(R.string.abierto));
             else {
@@ -184,9 +187,10 @@ public class FaucetView extends DeviceView {
                 mAmount.setText(getResources().getString(R.string.faucet_amount, aux, mUnitSpinner.getSelectedItem()));
                 mUnitSpinner.setEnabled(false);
             }
-        }else {
+        } else {
             mState.setText(getResources().getString(R.string.cerrado));
-            mDispense.setBackgroundColor(Color.parseColor("#72E1C7"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mDispense.setBackgroundColor(Color.parseColor(colorHex));
             if(flag) {
                 mAmount.setText(getResources().getString(R.string.faucet_amount, aux == 0 ? 1 : aux, mUnitSpinner.getSelectedItem()));
                 flag=false;

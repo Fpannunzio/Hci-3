@@ -27,15 +27,17 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class NotificationBroadcastReceiver extends BroadcastReceiver {
-    private Gson gson;
-    private SharedPreferences storedDevicesSP, notificationIDsSP, settingsSP;
+    private boolean favoriteDevicesNotifications, defaultDevicesNotifications;
+    private SharedPreferences storedDevicesSP;
+    private SharedPreferences notificationIDsSP;
     private NotificationManagerCompat notificationManager;
-    Map<String, Device> storedDevices, newDevices;
-    Map<String,Integer> notificationIDs;
-    Integer lastNotificationID;
-    Context context;
-    ExecutorService executorService;
-    boolean favoriteDevicesNotifications, defaultDevicesNotifications;
+    private Map<String, Device> storedDevices, newDevices;
+    private Map<String,Integer> notificationIDs;
+    private ExecutorService executorService;
+    private String favoriteChannelID, defaultChannelID;
+    private Integer lastNotificationID;
+    private Context context;
+    private Gson gson;
 
     public NotificationBroadcastReceiver() {
         super();
@@ -48,7 +50,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        settingsSP = context.getSharedPreferences(context.getString(R.string.settingsFile), Context.MODE_PRIVATE);
+        SharedPreferences settingsSP = context.getSharedPreferences(context.getString(R.string.settingsFile), Context.MODE_PRIVATE);
 
         boolean notificationsActive = settingsSP.getBoolean(String.valueOf(R.id.allNotificationsSwitch), true);
 
@@ -60,6 +62,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
             return;
 
         init(context);
+
         ApiClient.getInstance().getDevices(list -> executorService.execute(() -> handleApiRequest(list)), (m, c) -> Log.w("uncriticalError", "NBR - Failed to get devices: " + m + " Code: " + c));
     }
 
@@ -80,6 +83,9 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
 
         newDevices = new HashMap<>();
 
+        favoriteChannelID = context.getString(R.string.notifications_favorite_channel_ID);
+        defaultChannelID = context.getString(R.string.notifications_standar_channel_ID);
+
         this.context = context;
     }
 
@@ -90,38 +96,18 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 Device olderDev = storedDevices.get(device.getId());
 
                 if( olderDev == null ) {
-                    emitNotification(device,context.getString(R.string.notifications_device_added, device.getParsedName()),"device.added");
+                    emitNotification( device, getMessage(device,"device.added",null),"device.added");
                     newDevices.put(device.getId(),device);
                 } else {
                     final Map<String, String> comparision = olderDev.compareToNewerVersion(device);
 
                     for(Map.Entry<String,String> change : comparision.entrySet()) {
-                        String event, value;
-                        int eventID, valueID;
-                        if(change.getKey().startsWith("state")){
-                            String[] aux = change.getKey().split("\\.");
-                            eventID = context.getResources().getIdentifier(aux[aux.length - 1],"string", context.getPackageName());
-                        } else{
-                            eventID = context.getResources().getIdentifier(change.getKey(),"string", context.getPackageName());
-                        }
-
-                        if(eventID == 0)
-                            event = change.getKey();
-                        else
-                            event = context.getString(eventID);
-
-                        valueID = context.getResources().getIdentifier(change.getValue(),"string", context.getPackageName());
-                        if(!change.getValue().matches("-?[0-9]+") && valueID != 0)
-                            value = context.getString(valueID);
-                        else
-                            value = change.getValue();
-
-                        emitNotification(device, context.getString(R.string.notifications_device_stated_changed, event, value), change.getKey());
+                        emitNotification(device, getMessage(device,change.getKey(),change.getValue()), change.getKey());
                     }
 
                     if(!comparision.isEmpty()){
                         emitSummary(device);
-                        newDevices.put(device.getId(),device);
+                        newDevices.put(device.getId(), device);
                     }
                 }
             }
@@ -132,7 +118,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         for(Device storedDevice : storedDevices.values()){
             if(validateSendNotification(storedDevice)){
                 if(!newDevIDs.contains(storedDevice.getId())){
-                    emitNotification(storedDevice,context.getString(R.string.notifications_device_deleted, storedDevice.getParsedName()), "device.deleted");
+                    emitNotification(storedDevice,getMessage(storedDevice,"device.deleted",null), "device.deleted");
                     newDevices.put(storedDevice.getId(),null);
                 }
             }
@@ -140,10 +126,21 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         finish();
     }
 
-    private boolean validateSendNotification(Device device) {
-        if(device.isFav())
-            return favoriteDevicesNotifications;
-        return defaultDevicesNotifications;
+    private void emitNotification(Device device, String message, String event){
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, getChannelID(device))
+                .setSmallIcon(R.drawable.smartify_logo)
+                .setContentTitle(device.getParsedName())
+                .setContentText(message)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(getIntent(device))
+                .setAutoCancel(true)
+                .setGroup(device.getId())
+                .setOnlyAlertOnce(true);
+
+        notificationManager.notify(getNotificationID(device.getId(),event), builder.build());
     }
 
     private void emitSummary(Device device) {
@@ -152,7 +149,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.smartify_logo)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setStyle(new NotificationCompat.InboxStyle()
-                    .setSummaryText(device.getParsedName()))
+                        .setSummaryText(device.getParsedName()))
                 .setGroupSummary(true)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(getIntent(device))
@@ -161,6 +158,91 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 .setOnlyAlertOnce(true);
 
         notificationManager.notify(getNotificationID(device.getId(),"summary"), builder.build());
+    }
+
+    private boolean validateSendNotification(Device device) {
+        if(device.isFav())
+            return favoriteDevicesNotifications;
+        return defaultDevicesNotifications;
+    }
+
+    private String getEvent(Map.Entry<String,String> change){
+        String event;
+        int eventID;
+        if(change.getKey().startsWith("state")){
+            String[] aux = change.getKey().split("\\.");
+            eventID = context.getResources().getIdentifier(aux[aux.length - 1],"string", context.getPackageName());
+        } else{
+            eventID = context.getResources().getIdentifier(change.getKey(),"string", context.getPackageName());
+        }
+
+        if(eventID == 0)
+            event = change.getKey();
+        else
+            event = context.getString(eventID);
+        return event;
+    }
+
+    private String getValue(Map.Entry<String,String> change){
+        String value;
+        int valueID = context.getResources().getIdentifier(change.getValue(),"string", context.getPackageName());
+
+        if(!change.getValue().matches("-?[0-9]+") && valueID != 0)
+            value = context.getString(valueID);
+        else
+            value = change.getValue();
+        return value;
+    }
+
+    private String getMessage(Device device, String event, String value){
+        if(event.matches("meta.fav")){
+            if(Boolean.parseBoolean(value))
+                return context.getString(R.string.notificactions_message_fav_true);
+            else
+                return context.getString(R.string.notificactions_message_fav_false);
+        }
+        if(!event.startsWith("state")){
+            int messageID = context.getResources().getIdentifier("notificactions_message_" + event,"string", context.getPackageName());
+            if(event.matches("(device\\.deleted|device\\.added)"))
+                return context.getString(messageID);
+            return context.getString(messageID,value);
+        } else {
+            String[] aux = event.split("\\.");
+
+            int messageID = context.getResources().getIdentifier(aux[aux.length - 1],"string", context.getPackageName());
+            int valueID = context.getResources().getIdentifier(value,"string", context.getPackageName());
+
+            String state = context.getString(messageID);
+
+            if(!value.matches("-?[0-9]+") && valueID != 0)
+                value = context.getString(valueID);
+
+            return context.getString(R.string.notificactions_message_device_stated_changed, state, value);
+        }
+    }
+
+    private Integer getNotificationID(String deviceID, String event){
+        String notificationIDKey = deviceID + "." + event;
+        Integer notificationID = notificationIDs.get(notificationIDKey);
+        if(notificationID == null) {
+            notificationID = lastNotificationID++;
+            notificationIDs.put(notificationIDKey, notificationID);
+        }
+        return notificationID;
+    }
+
+    private PendingIntent getIntent(Device device){
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setAction("notifications"); //TODO: pasar a R.Strings
+        intent.putExtra("roomID", device.getRoom().getId());
+        intent.putExtra("roomName", device.getRoom().getParsedName());
+        intent.putExtra("homeName", device.getRoom().getHome().getName());
+        return PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
+    }
+
+    private String getChannelID(Device device) {
+        return device.isFav() ? favoriteChannelID : defaultChannelID;
     }
 
     private void finish() {
@@ -190,52 +272,5 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         }
 
         preferencesEditor.apply();
-    }
-
-    private Map<String, Device> getSharedPreferences(SharedPreferences preferences){
-        return preferences.getAll().entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> gson.fromJson((String) e.getValue(), Device.class)));
-    }
-
-    private Integer getNotificationID(String deviceID, String event){
-        String notificationIDKey = deviceID + "." + event;
-        Integer notificationID = notificationIDs.get(notificationIDKey);
-        if(notificationID == null) {
-            notificationID = lastNotificationID++;
-            notificationIDs.put(notificationIDKey, notificationID);
-        }
-        return notificationID;
-    }
-
-    private PendingIntent getIntent(Device device){
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.setAction("notifications"); //TODO: pasar a R.Strings
-        intent.putExtra("roomID", device.getRoom().getId());
-        intent.putExtra("roomName", device.getRoom().getParsedName() + device.getRoom().getHome().getName());
-        //intent.putExtra("homeName", );
-        return PendingIntent.getActivity(context, 0, intent, 0);
-    }
-
-    private void emitNotification(Device device, String message, String event){
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, getChannelID(device))
-                .setSmallIcon(R.drawable.smartify_logo)
-                .setContentTitle(device.getParsedName())
-                .setContentText(message)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                // Set the intent that will fire when the user taps the notification
-                .setContentIntent(getIntent(device))
-                .setAutoCancel(true)
-                .setGroup(device.getId())
-                .setOnlyAlertOnce(true);
-
-        notificationManager.notify(getNotificationID(device.getId(),event), builder.build());
-    }
-
-    private String getChannelID(Device device) {
-        return device.isFav() ? context.getString(R.string.notifications_favorite_channel_ID) : context.getString(R.string.notifications_standar_channel_ID);
     }
 }

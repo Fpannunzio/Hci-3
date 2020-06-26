@@ -1,6 +1,5 @@
 package com.example.hci_3.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,6 @@ import java.util.List;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     private List<Room> rooms;
-
-
 
     public RoomAdapter() {
         rooms = new ArrayList<>();
@@ -58,7 +55,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         private TextView mRoomName;
         private String roomId, roomName, homeName;
 
-
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
             mRoomName = itemView.findViewById(R.id.room_name);
@@ -67,34 +63,28 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             cardView.setOnClickListener(this);
         }
 
-
-
         public void setRoom(Room room) {
             roomId = room.getId();
-            roomName = getParsedName(room.getName());
-            if(room.getHome() != null)
-                Log.v("homename", room.getHome().getName());
+            roomName = room.getParsedName();
             mRoomName.setText(roomName);
+            homeName = room.getHome().getName();
         }
 
-        private String getParsedName(String fullName){
-            String[] aux = fullName.split("_");
-            return aux[aux.length - 1];
-        }
         public String getRoomId() {
             return roomId;
         }
+
         public String getRoomName() {
             return roomName;
         }
-        public String getHomeNameName() {
+
+        public String getHomeName() {
             return homeName;
         }
 
-
         @Override
         public void onClick(View v) {
-            Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(getRoomId(), getRoomName(),getHomeNameName()));
+            Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(getRoomId(), getRoomName(), getHomeName()));
         }
     }
 }

@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import com.example.hci_3.R;
@@ -119,23 +121,27 @@ public class BlindsView extends DeviceView {
 
         if (state.getStatus().equals("opened")) {
             mState.setText(getResources().getString(R.string.state, getResources().getString(R.string.abierta)));
-            mOpen.setBackgroundColor(Color.parseColor("#71A69A"));
-            mClose.setBackgroundColor(Color.parseColor("#72E1C7"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
+            colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
             mSeekBar.setEnabled(true);
         }
         else if (state.getStatus().equals("closing") || state.getStatus().equals("opening")) {
             mState.setText(getResources().getString(R.string.blinds_state, state.getStatus().equals("opening")?
                             getResources().getString(R.string.abriendose): getResources().getString(R.string.cerrandose), state.getCurrentLevel()) + "%");
-            mClose.setBackgroundColor(Color.parseColor("#71A69A"));
-            mOpen.setBackgroundColor(Color.parseColor("#71A69A"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
             mSeekBar.setEnabled(false);
             mSeekBar.setProgress(state.getCurrentLevel());
             mLevel.setText(getResources().getString(R.string.blinds_level, state.getCurrentLevel()) + "%");
         }
         else {
-            mState.setText(getResources().getString(R.string.blinds_state, getResources().getString(R.string.cerrada), state.getCurrentLevel()) + "%");
-            mClose.setBackgroundColor(Color.parseColor("#71A69A"));
-            mOpen.setBackgroundColor(Color.parseColor("#72E1C7"));
+            String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
+            mClose.setBackgroundColor(Color.parseColor(colorHex));
+            colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtons) & 0x00ffffff);
+            mOpen.setBackgroundColor(Color.parseColor(colorHex));
         }
         mOpen.setOnClickListener(v -> {
             if (state.getStatus().equals("closed")) {
@@ -145,7 +151,6 @@ public class BlindsView extends DeviceView {
         });
         mClose.setOnClickListener(v -> {
             if (state.getStatus().equals("opened")) {
-                Log.v("progressClose", String.valueOf(level));
                 setLevel(level);
                 close();
             } else

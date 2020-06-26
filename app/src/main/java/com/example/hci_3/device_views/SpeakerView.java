@@ -192,15 +192,40 @@ public class SpeakerView extends DeviceView {
         executeAction("getPlaylist", ((success, response) -> {
             List<Map<String, Object>> map;
             map = parseGetPlaylistResult(response);
+
             ArrayList<String> toPlaylist = new ArrayList<>();
             playlistAdapter.clear();
-            for (Map<String, Object> song : map){
-                //noinspection ConstantConditions
-                toPlaylist.add(song.get("artist").toString().concat(" - ").concat(song.get("title").toString()));
+            String currentSong = state.getSong().getTitle();
+            boolean flag = false;
+
+            while (toPlaylist.size() < 3){
+
+                for (Map<String, Object> song : map){
+                    //noinspection ConstantConditions
+                    if (song.get("title").toString().equals(currentSong) && toPlaylist.size() < 3){
+                        flag = true;
+                    }
+                    if (flag){
+                        toPlaylist.add(song.get("artist").toString().concat(" - ").concat(song.get("title").toString()));
+                        if (toPlaylist.size() == 3)
+                            flag = false;
+                    }
+                }
+
+                for (String s : toPlaylist){
+                    Log.v("toplaylist", s);
+                }
             }
+
             playlistAdapter.addAll(toPlaylist);
             playlistAdapter.notifyDataSetChanged();
         }),this::handleError);
+
+        mPlaylist.setOnItemClickListener((parent,v,pos,id) ->{
+            for (int i = 0; i < pos; i++)
+                nextSong();
+
+        });
     }
 
     @Override
@@ -220,6 +245,39 @@ public class SpeakerView extends DeviceView {
         mSeekBar.setProgress(state.getVolume());
 
         // TODO: 6/23/2020 Falta la lista de reproduccion y traer el genero desde la api cuando arranca
+
+        executeAction("getPlaylist", ((success, response) -> {
+            List<Map<String, Object>> map;
+            map = parseGetPlaylistResult(response);
+
+            ArrayList<String> toPlaylist = new ArrayList<>();
+            playlistAdapter.clear();
+            String currentSong = state.getSong().getTitle();
+            boolean flag = false;
+
+            while (toPlaylist.size() < 3){
+
+                for (Map<String, Object> song : map){
+                    //noinspection ConstantConditions
+                    if (song.get("title").toString().equals(currentSong) && toPlaylist.size() < 3){
+                        flag = true;
+                    }
+                    if (flag){
+                        toPlaylist.add(song.get("artist").toString().concat(" - ").concat(song.get("title").toString()));
+                        if (toPlaylist.size() == 3)
+                            flag = false;
+                    }
+                }
+
+                for (String s : toPlaylist){
+                    Log.v("toplaylist", s);
+                }
+            }
+
+            playlistAdapter.addAll(toPlaylist);
+            playlistAdapter.notifyDataSetChanged();
+        }),this::handleError);
+
     }
 
     private void disableControlButtons() {

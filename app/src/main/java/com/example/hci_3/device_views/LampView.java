@@ -1,6 +1,7 @@
 package com.example.hci_3.device_views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
@@ -71,13 +72,17 @@ public class LampView extends DeviceView {
 
         mDevName.setText(getParsedName(device.getName()));
 
-        mState.setText(getResources().getString(R.string.lamp_state, state.getStatus().equals("on") ? getResources().getString(R.string.prendido):getResources().getString(R.string.apagado)));
+        mState.setText(getResources().getString(R.string.lamp_state, state.getStatus().equals("on") ? getResources().getString(R.string.prendido)
+                + " - " + getResources().getString(R.string.brillo) + ": " + state.getBrightness() + "%"
+                :getResources().getString(R.string.apagado)));
 
         mSwitch.setChecked(state.getStatus().equals("on"));
 
         mBrightness.setProgress(state.getBrightness());
 
-//        currentColor.setBackgroundColor(Integer.parseInt(state.getColor(), 16));
+        colorPickerView.selectByHsv(getColor(state.getColor()));
+
+        currentColor.setBackgroundColor(getColor(state.getColor()));
 
         mLocation.setText(getResources().getString(R.string.disp_location,
                 getParsedName(device.getRoom().getName()),
@@ -91,8 +96,6 @@ public class LampView extends DeviceView {
         @SuppressWarnings("ConstantConditions")
         LampState state = (LampState) device.getValue().getState();
 
-        // Aca se cargan la funcionalidad de los elementos UI
-
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
@@ -105,15 +108,13 @@ public class LampView extends DeviceView {
             }
         });
 
-        colorPickerView.setColorListener(new ColorListener() {
-            @Override
-            public void onColorSelected(int color, boolean fromUser) {
-                currentColor.setBackgroundColor(color);
-                color &= 0x00FFFFFF; // Mascara para sacar el alpha al color
-                String hexColor = Integer.toHexString(color);
-                setColor(hexColor);
-                state.setColor(hexColor);
-            }
+        colorPickerView.setColorListener((ColorListener) (color, fromUser) -> {
+            if(color == -260)
+                color = getColor(((LampState) device.getValue().getState()).getColor());
+
+            color &= 0x00FFFFFF; // Mascara para sacar el alpha al color
+            String hexColor = Integer.toHexString(color);
+            setColor(hexColor);
         });
 
         mSwitch.setOnCheckedChangeListener(((buttonView, isChecked) -> {
@@ -126,7 +127,7 @@ public class LampView extends DeviceView {
         mBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                state.setBrightness(progress);
+                ((LampState) device.getValue().getState()).setBrightness(progress);
                 setBrightness(progress);
             }
 
@@ -156,5 +157,15 @@ public class LampView extends DeviceView {
 
     private void setBrightness(int value){
         executeAction("setBrightness", new ArrayList<>(Collections.singletonList(value)), this::handleError);
+    }
+
+    private int getColor(String hex){
+        StringBuilder hexBuilder = new StringBuilder(hex);
+
+        while(hexBuilder.length() < 6)
+            hexBuilder.insert(0, '0');
+        hexBuilder.insert(0, "#");
+
+        return Color.parseColor(hexBuilder.toString());
     }
 }

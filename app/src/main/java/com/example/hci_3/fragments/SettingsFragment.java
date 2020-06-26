@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -30,7 +31,7 @@ public class SettingsFragment extends Fragment {
 
     TextView notificationsText, allNotificationsText, favoriteNotificationsText, defaultNotificationsText, extraSettingsText, themeText;
     Switch allNotificationsSwitch, favoriteNotificationsSwitch, defaultNotificationsSwitch, themeSwitch;
-    boolean allNotificationsChecked, favoriteNotificationsChecked, defaultNotificationsChecked;
+    boolean allNotificationsChecked, favoriteNotificationsChecked, defaultNotificationsChecked, nightModeChecked;
     View view;
     SharedPreferences sharedPreferences;
     public SettingsFragment() {
@@ -75,6 +76,7 @@ public class SettingsFragment extends Fragment {
         allNotificationsChecked = sharedPreferences.getBoolean(String.valueOf(R.id.allNotificationsSwitch),true);
         favoriteNotificationsChecked = sharedPreferences.getBoolean(String.valueOf(R.id.favoriteNotificationsSwitch),true);
         defaultNotificationsChecked = sharedPreferences.getBoolean(String.valueOf(R.id.defaultNotificationsSwitch),true);
+        nightModeChecked = sharedPreferences.getBoolean(getString(R.string.night_mode_boolean), false);
 
         allNotificationsSwitch.setOnCheckedChangeListener(this::handleSwitch);
         allNotificationsSwitch.setChecked(allNotificationsChecked);
@@ -84,6 +86,9 @@ public class SettingsFragment extends Fragment {
 
         defaultNotificationsSwitch.setOnCheckedChangeListener(this::handleSwitch);
         defaultNotificationsSwitch.setChecked(defaultNotificationsChecked);
+
+        themeSwitch.setOnCheckedChangeListener(this::handleNightModeSwitch);
+        themeSwitch.setChecked(nightModeChecked);
 
         updateSwitches();
     }
@@ -103,10 +108,23 @@ public class SettingsFragment extends Fragment {
     }
 
     private void handleSwitch(CompoundButton compoundButton, boolean b) {
-        SharedPreferences.Editor editor = getContext().getSharedPreferences(getString(R.string.settingsFile), Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(String.valueOf(compoundButton.getId()),b);
         editor.apply();
         updateSwitches();
+    }
+
+    private void handleNightModeSwitch(CompoundButton compoundButton, boolean b) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (b){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor.putBoolean(getString(R.string.night_mode_boolean), true);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putBoolean(getString(R.string.night_mode_boolean), false);
+        }
+        editor.apply();
     }
 
     private void updateSwitches(){

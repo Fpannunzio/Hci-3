@@ -1,83 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">Smartify</string>
     <string name="error_message">Algo salio mal: %1$s [%2$d]</string>
-    <string name="prendido">Prendido</string>
-    <string name="apagado">Apagado</string>
-    <string name="cargandose">Activa</string>
-    <string name="activa" translatable="false">Activa</string>
-    <string name="apagada">Apagada</string>
-    <string name="pausado">Pausado</string>
-    <string name="parado">Apagado</string>
-    <string name="abierto">Abierto</string>
-    <string name="cerrado">Cerrado</string>
-    <string name="abierta">Abierta</string>
-    <string name="cerrada">Cerrada</string>
-    <string name="abrir">Abrir</string>
-    <string name="cerrar">Cerrar</string>
-    <string name="abriendose">Abriendose</string>
-    <string name="cerrandose">Cerrandose</string>
-    <string name="desbloqueada">Desbloqueada</string>
-    <string name="bloqueada">Bloqueada</string>
-    <string name="desbloquer">Desbloquear</string>
-    <string name="bloquear">Bloquear</string>
-    <string name="reproduciendo">Reproduciendo</string>
-    <string name="batery_state">Bateria: %1$d</string>
-    <string name="invalid_temp">Valor de temperatura invalido</string>
-    <string name="stopped_error">El parlante esta apagado, para reproducir música debes prenderlo</string>
-    <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
-    <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
-    <string name="blinds_open_error">La persiana no puede abrirse en este momento</string>
-    <string name="blinds_close_error">La persiana no puede cerrarse en este momento</string>
-    <string name="dispense_error">El dispositivo ya esta dispensando</string>
-    <string name="persiana">Persiana</string>
-    <string name="extend_arrow">Flecha para ampliar tarjeta</string>
-    <string name="bajar">Bajar</string>
-    <string name="subir">Subir</string>
-    <string name="seleccione_nivel">Seleccione nivel:</string>
-    <string name="vacuum">Imagen de aspiradora</string>
-    <string name="blinds">Imagen de Persiana</string>
-    <string name="prender">Prender</string>
-    <string name="cargar">Cargar</string>
-    <string name="apagar">Apagar</string>
-    <string name="aspirar">Aspirar</string>
-    <string name="trapear">Trapear</string>
-    <string name="ubicacion">Ubicación:</string>
-    <string name="ac">Imagen de Aire Acondicionado</string>
-    <string name="minus_button">Boton menos</string>
-    <string name="plus_button">Boton mas</string>
-    <string name="frio">Frio</string>
-    <string name="calor">Calor</string>
-    <string name="ventilacion">Ventilacion</string>
-    <string name="modo">Modo</string>
-    <string name="desplazamiento_aspas">Desplazamiento de aspas</string>
-    <string name="vertical">Vertical:</string>
-    <string name="auto">Auto</string>
-    <string name="horizontal">Horizontal:</string>
-    <string name="velocidad_ventilador">Velocidad del ventilador:</string>
-    <string name="speaker">Imagen de parlante</string>
-    <string name="previous">Boton canción anterior</string>
-    <string name="play">Boton de play y pausa</string>
-    <string name="next">Boton canción siguiente</string>
-    <string name="genero">Genero:</string>
-    <string name="volumen">Volumen</string>
-    <string name="oven">Imagen Horno</string>
-    <string name="fuenteDeCalor">Fuente de calor:</string>
-    <string name="modoGrill">Modo Grill</string>
-    <string name="modoConveccion">Modo de conveccion</string>
-    <string name="door">Imagen de puerta</string>
-    <string name="faucet">Imagen de regador</string>
-    <string name="dispensar">Dispensar</string>
-    <string name="cantidad">Cantidad</string>
-    <string name="seleccione_hogar">Seleccione Hogar:</string>
-    <string name="habitacion">Habitacion:</string>
-    <string name="favoritos">Favoritos</string>
-    <string name="rutinas">Rutinas</string>
-    <string name="hogares">Hogares</string>
-    <string name="buscar">Buscar</string>
-    <string name="modoNocturno">Modo Nocturno</string>
-    <string name="search">Busqueda: %1$s</string>
-    <string name="ajustes">Ajustes</string>
-    <string name="dispensando">Dispensado %1$d %2$s</string>
     <string-array name="fuente_calor">
         <item>Convencional</item>
         <item>Abajo</item>
@@ -105,19 +28,128 @@
         <item>l</item>
     </string-array>
     <string-array name="genres">
-        <item>Pop</item>
-        <item>Country</item>
-        <item>Rock</item>
-        <item>Clasica</item>
-        <item>Dance</item>
-        <item>Latina</item>
+        <item>pop</item>
+        <item>country</item>
+        <item>rock</item>
+        <item>classical</item>
+        <item>dance</item>
+        <item>latina</item>
     </string-array>
+    <string name="prendido">Prendido</string>
+    <string name="apagado">Apagado</string>
+    <string name="activa">Activa</string>
+    <string name="cargandose">Activa</string>
+    <string name="apagada">Apagada</string>
+    <string name="pausado">Pausado</string>
+    <string name="parado">Apagado</string>
+    <string name="abierto">Abierto</string>
+    <string name="cerrado">Cerrado</string>
+    <string name="abierta">Abierta</string>
+    <string name="cerrada">Cerrada</string>
+    <string name="abrir">Abrir</string>
+    <string name="cerrar">Cerrar</string>
+    <string name="abriendose">Abriendose</string>
+    <string name="cerrandose">Cerrandose</string>
+    <string name="desbloqueada">Desbloqueada</string>
+    <string name="bloqueada">Bloqueada</string>
+    <string name="desbloquer">Desbloquear</string>
+    <string name="bloquear">Bloquear</string>
+    <string name="reproduciendo">Reproduciendo</string>
+
+
+    <string name="temp" translatable="false"> %1$s°C </string>
+    <string name="state" translatable="false">%1$s</string>
+    <string name="door_state" translatable="false">%1$s - %2$s</string>
+    <string name="lamp_state" translatable="false">%1s -</string>
+    <string name="temp_state" translatable="false">%1$s - %2$s - %3$d°C</string>
+    <string name="speaker_state" translatable="false">%1$s: %2$s</string>
+    <string name="blinds_state" translatable="false">%1$s-%2$d</string>
+    <string name="batery_state">Bateria: %1$d</string>
+    <string name="disp_location" translatable="false">%1$s | %2$s</string>
+    <string name="faucet_amount" translatable="false">%1$d %2$s</string>
+    <string name="blinds_level" translatable="false">%1$d</string>
+
+    <string name="invalid_temp">Valor de temperatura invalido</string>
+    <string name="stopped_error">El parlante esta apagado, para reproducir musica debes prenderlo</string>
+    <string name="block_error">No puedes bloquear la puerta si esta abierta</string>
+    <string name="open_error">No se puede abrir la puerta si esta bloqueada</string>
+    <string name="blinds_open_error">La persiana ya esta abierta</string>
+    <string name="blinds_close_error">La persiana ya esta cerrada</string>
+    <string name="dispense_error">El dispositivo ya esta dispensando</string>
+    <string name="persiana">Persiana</string>
+    <string name="extend_arrow">Flecha para ampliar tarjeta</string>
+    <string name="bajar">Bajar</string>
+    <string name="subir">Subir</string>
+    <string name="seleccione_nivel">Seleccione nivel:</string>
+    <string name="vacuum">Imagen de aspiradora</string>
+    <string name="blinds">Imagen de Persiana</string>
+    <string name="prender">Prender</string>
+    <string name="cargar">Cargar</string>
+    <string name="apagar">Apagar</string>
+    <string name="aspirar">Aspirar</string>
+    <string name="trapear">Trapear</string>
+    <string name="ubicacion">Ubicacion:</string>
+    <string name="ac">Imagen de Aire Acondicionado</string>
+    <string name="minus_button">Boton menos</string>
+    <string name="plus_button">Boton mas</string>
+    <string name="frio">Frio</string>
+    <string name="calor">Calor</string>
+    <string name="ventilacion">Ventilacion</string>
+    <string name="modo">Modo</string>
+    <string name="desplazamiento_aspas">Desplazamiento de aspas</string>
+    <string name="vertical">Vertical:</string>
+    <string name="auto">auto</string>
+    <string name="veintidos" translatable="false">22</string>
+    <string name="cuarentaycinco" translatable="false">45</string>
+    <string name="sesentaysiete" translatable="false">67</string>
+    <string name="noventa" translatable="false">90</string>
+    <string name="horizontal">Horizontal:</string>
+    <string name="menosNoventa" translatable="false">-90</string>
+    <string name="menoscuarentaycinco" translatable="false">-45</string>
+    <string name="cero" translatable="false">0</string>
+    <string name="velocidad_ventilador">Velocidad del ventilador:</string>
+    <string name="veinticinco" translatable="false">25</string>
+    <string name="cincuenta" translatable="false">50</string>
+    <string name="setentaycinco" translatable="false">75</string>
+    <string name="cien" translatable="false">100</string>
+    <string name="speaker">Imagen de parlante</string>
+    <string name="previous">Boton cancion anterior</string>
+    <string name="play">Boton de play y pausa</string>
+    <string name="next">Boton cancion siguiente</string>
+    <string name="genero">Genero:</string>
+    <string name="volumen">Volumen</string>
+    <string name="oven">Imagen Horno</string>
+    <string name="fuenteDeCalor">Fuente de calor:</string>
+    <string name="modoGrill">Modo Grill</string>
+    <string name="modoConveccion">Modo de conveccion</string>
+    <string name="door">Imagen de puerta</string>
+    <string name="faucet">Imagen de regador</string>
+    <string name="dispensar">Dispensar</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="seleccione_hogar">Seleccione Hogar:</string>
+    <string name="habitacion">Habitacion:</string>
     <string name="notifications_channel_name">Generales</string>
     <string name="notifications_channel_description">Mensajes generales de la aplicacion</string>
-    <string name="rutina_exitosa">La rutina fue ejecutada correctamente</string>
+    <string name="notifications_standar_channel_ID" translatable="false">standarNotificationsChannelID</string>
+    <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
+    <!--    <string name="notifications">notifications_key</string>-->
+    <string name="favoritos">Favoritos</string>
+    <string name="rutinas">Rutinas</string>
+    <string name="hogares">Hogares</string>
+    <string name="rutina_exitosa">Rutina exitosa</string>
+    <string name="buscar">Buscar</string>
+    <string name="modoNocturno">Modo Nocturno</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="search">Busqueda: %1$s</string>
+    <string name="ajustes">Ajustes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="stored_devices_SP_key" translatable="false">storedDevicesSPKey</string>
+    <string name="notification_IDs_SP_key" translatable="false">notificationsIDsSPKey</string>
+    <string name="last_notification_ID" translatable="false">lastNotificationID</string>
     <string name="notificactions_message_device_stated_changed">Se modifico %1$s, el valor actual es %2$s</string>
     <string name="notifications_device_added">%1$s fue agregado.</string>
     <string name="notifications_device_deleted">El dispositivo %1$s fue borrado</string>
+    <string name="notifications_favorite_channel_ID" translatable="false">favoriteNorificationChannelID</string>
     <string name="grill">Modo de grill</string>
     <string name="heat">Modo de calor</string>
     <string name="status">Estado</string>
@@ -126,7 +158,7 @@
     <string name="fanSpeed">Velocidad de ventilador</string>
     <string name="horizontalSwing">Desplazamiento horizontal</string>
     <string name="verticalSwing">Desplazamiento vertical</string>
-    <string name="level">Nivel máximo</string>
+    <string name="level">Nivel maximo</string>
     <string name="currentLevel">Nivel actual</string>
     <string name="lock">Traba</string>
     <string name="batteryLevel">Nivel de bateria</string>
@@ -138,56 +170,12 @@
     <string name="convection">Conveccion</string>
     <string name="genre">Genero</string>
     <string name="volume">Volumen</string>
-    <string name="song">Canción</string>
+    <string name="song">Cancion</string>
     <string name="name">Nombre</string>
     <string name="meta.fav">Favorito</string>
     <string name="room.name">Nombre de la habitacion</string>
     <string name="room.home.name">Nombre del hogar</string>
     <string name="spinner_invalid_home_name">El hogar seleccionado fue eliminado, o su nombre fue modificado</string>
-    <string name="invalid_vacuum_location">La habitacion a la cual estaba asignada la aspiradora ah sido borrada. Será asignada a su habitacion.</string>
-    <string name="classical">Clasica</string>
-    <string name="opened">Abierta</string>
-    <string name="opening">Abriendose</string>
-    <string name="closing">Cerrandose</string>
-    <string name="closed">Cerada</string>
-    <string name="on">Prendido</string>
-    <string name="conventional">Convencional</string>
-    <string name="bottom">Abajo</string>
-    <string name="top">Arriba</string>
-    <string name="large">Completo</string>
-    <string name="eco">Economico</string>
-    <string name="off">Apagado</string>
-    <string name="normal">Normal</string>
-    <string name="cool">Frio</string>
-    <string name="unlocked">Desbloqueada</string>
-    <string name="locked">Bloqueada</string>
-    <string name="docked">Trapear</string>
-    <string name="inactive">Inactiva</string>
-    <string name="active">Activa</string>
-    <string name="playing">Reproduciendo</string>
-    <string name="paused">Pausado</string>
-    <string name="abajo">Abajo</string>
-    <string name="arriba">Arriba</string>
-    <string name="completo">Completo</string>
-    <string name="settingsFile">setings</string>
-    <string name="notificationsTitle">Notificaciones</string>
-    <string name="allNotificationsText">Todas las notificaciones</string>
-    <string name="favoriteNotificationsText">Dispositivos favoritos</string>
-    <string name="defaultNotificationsText">Dispositivos no favoritos</string>
-    <string name="extraSettingsText">Ajustes Extra</string>
-    <string name="themeText">Tema oscuro</string>
-    <string name="ac_heat">Calor</string>
-    <string name="ac_cool">Frio</string>
-    <string name="ac_fan">Ventilador</string>
-    <string name="brillo">Brillo</string>
-    <string name="routine_description">Tarjeta de rutina</string>
-    <string name="current_color">Color actual</string>
-    <string name="notificactions_message_fav_true">El dispositivo fue agregado a favoritos</string>
-    <string name="notificactions_message_fav_false">El dispositivo fue removido de  favoritos</string>
-    <string name="notificactions_message_room.name">El dispositivo ahora se encuentra registrado en la habitacion %1$s</string>
-    <string name="notificactions_message_room.home.name">El dispositivo ahora se encuentra registrado en el hogar %1$s</string>
-    <string name="notificactions_message_name">El dispositivo cambio de nombre, ahora se llama %1$s</string>
-    <string name="notificactions_message_device.added">El dispositivo fue agregado y esta disponible para usar</string>
-    <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
-    <string name="mop">Trapear</string>
+    <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
+    <!--    <string name="notifications">notifications_key</string>-->
 </resources>

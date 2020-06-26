@@ -1,7 +1,9 @@
 package com.example.hci_3;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String ACTION_ALARM = "com.example.hci_3.ALARM";
     public static final String ACTION_ALARM_HANDLE = "com.example.hci_3.ALARM_HANDLE";
-    public static final int INTERVAL = 30000;
+    public static final int INTERVAL = 60000;
 
     BroadcastReceiver dataSyncBroadcastReceiver;
     ActivityViewModel model;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         model = new ViewModelProvider(this).get(ActivityViewModel.class);
 
-        model.updateDevices();
+        model.startPollingDevices();
 
         DeviceRepository.getInstance().updateDevices();
 
@@ -54,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.appBackgroundColor));
+
+        boolean isNightModeOn = getSharedPreferences(getString(R.string.settingsFile), 0).getBoolean(getString(R.string.night_mode_boolean), false);
+
+        if (isNightModeOn){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
@@ -65,14 +77,16 @@ public class MainActivity extends AppCompatActivity {
         Log.v("notif1", "estoy aca");
         if(intent.getAction() != null && intent.getAction().equals("notifications")) {
             Log.v("notif2", "estoy aca2");
-            String roomName = intent.getStringExtra("roomName");
-            String roomId = intent.getStringExtra("roomID");
-            Log.v("homename", roomName);
-            //String homeName = intent.getStringExtra("homeName");
-            //navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName), Objects.requireNonNull(homeName)));
+            Bundle extras = intent.getExtras();
+            String roomName = extras.getString("roomName");
+            String roomId = extras.getString("roomID");
+            String homeName = extras.getString("homeName");
+            Log.v("homename", "male");
+            Log.v("homename", homeName);
+            navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName), Objects.requireNonNull(homeName)));
         }
 
-        dataSyncBroadcastReceiver = new DataSyncBroadcastReceiver();
+        dataSyncBroadcastReceiver = new KillNotificationBroadcastReceiver();
 
         setAlarm();
     }
@@ -81,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        model.startPollingDevices();
         IntentFilter filter = new IntentFilter(ACTION_ALARM_HANDLE);
         filter.setPriority(2);
         registerReceiver(dataSyncBroadcastReceiver, filter);
@@ -90,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
+        model.stopPollingDevices();
         unregisterReceiver(dataSyncBroadcastReceiver);
     }
 
@@ -110,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
     private void setAlarm(){
         boolean alarmUp = PendingIntent.getBroadcast(this, 0,
                 new Intent(ACTION_ALARM), PendingIntent.FLAG_NO_CREATE) != null;
-
-        Log.v("pruebabroadcast", String.valueOf(alarmUp));
 
         if(alarmUp)
             return;
@@ -143,14 +157,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static class DataSyncBroadcastReceiver extends BroadcastReceiver {
+    public static class KillNotificationBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.v("pruebaBroadcast", "dataSyncBroadcast");
-
-            DeviceRepository.getInstance().updateDevices();
-
             abortBroadcast();
         }
     }
