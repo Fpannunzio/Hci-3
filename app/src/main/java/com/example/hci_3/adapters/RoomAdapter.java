@@ -57,9 +57,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
         public RoomViewHolder(@NonNull View itemView) {
             super(itemView);
+
             mRoomName = itemView.findViewById(R.id.room_name);
             CardView cardView = itemView.findViewById(R.id.room_card);
-
             cardView.setOnClickListener(this);
         }
 
@@ -70,21 +70,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             homeName = room.getHome().getName();
         }
 
-        public String getRoomId() {
-            return roomId;
-        }
-
-        public String getRoomName() {
-            return roomName;
-        }
-
-        public String getHomeName() {
-            return homeName;
-        }
-
         @Override
         public void onClick(View v) {
-            Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(getRoomId(), getRoomName(), getHomeName()));
+            Navigation.findNavController(v).navigate(HomesFragmentDirections.homesToRoom(roomId, roomName, homeName));
         }
     }
 }

@@ -81,15 +81,13 @@ public class DoorView extends DeviceView {
     public void onDeviceRefresh(Device device) {
         DoorState state = (DoorState) device.getState();
 
-        mDevName.setText(getParsedName(device.getName()));
-
+        mDevName.setText(device.getParsedName());
 
         mState.setText(getResources().getString(R.string.door_state,
                 state.getStatus().equals("opened")? getResources().getString(R.string.abierta) : getResources().getString(R.string.cerrada), state.getLock().equals("locked")? getResources().getString(R.string.bloqueada) : getResources().getString(R.string.desbloqueada)));
 
-
         mLocation.setText(getResources().getString(R.string.disp_location,
-                getParsedName(device.getRoom().getName()),
+                device.getRoom().getParsedName(),
                 device.getRoom().getHome().getName()));
 
         if(state.getStatus().equals("opened")) {
@@ -123,7 +121,7 @@ public class DoorView extends DeviceView {
                     close();
             }
             else
-                Toast.makeText(context, getResources().getString(R.string.open_error), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.open_error), Toast.LENGTH_SHORT).show();
         });
 
         mOpen.setText(getResources().getString(R.string.state,
@@ -139,15 +137,17 @@ public class DoorView extends DeviceView {
                     unlock();
             }
             else
-                Toast.makeText(context, getResources().getString(R.string.block_error), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, getResources().getString(R.string.block_error), Toast.LENGTH_SHORT).show();
         });
 
         mBlock.setText(getResources().getString(R.string.state,
                 state.getLock().equals("locked")? getResources().getString(R.string.desbloquer) : getResources().getString(R.string.bloquear)));
     }
+
     private void open(){
         executeAction("open", this::handleError);
     }
+
     private void close(){
         executeAction("close", this::handleError);
     }
@@ -155,9 +155,8 @@ public class DoorView extends DeviceView {
     private void lock(){
         executeAction("lock", this::handleError);
     }
+
     private void unlock(){
         executeAction("unlock", this::handleError);
     }
-
-
 }

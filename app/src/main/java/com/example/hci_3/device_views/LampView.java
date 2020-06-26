@@ -71,7 +71,7 @@ public class LampView extends DeviceView {
     public void onDeviceRefresh(Device device) {
         LampState state = (LampState) device.getState();
 
-        mDevName.setText(getParsedName(device.getName()));
+        mDevName.setText(device.getParsedName());
 
         mState.setText(getResources().getString(R.string.lamp_state, state.getStatus().equals("on") ? getResources().getString(R.string.prendido)
                 + " - " + getResources().getString(R.string.brillo) + ": " + state.getBrightness() + "%"
@@ -86,10 +86,8 @@ public class LampView extends DeviceView {
         currentColor.setBackgroundColor(getColor(state.getColor()));
 
         mLocation.setText(getResources().getString(R.string.disp_location,
-                getParsedName(device.getRoom().getName()),
+                device.getRoom().getParsedName(),
                 device.getRoom().getHome().getName()));
-
-        Log.v("lamp", System.currentTimeMillis() + " - " + this.device.toString());
     }
 
     @Override
@@ -99,9 +97,6 @@ public class LampView extends DeviceView {
         if(isDeviceSetted > 1)
             return;
         isDeviceSetted++;
-
-        @SuppressWarnings("ConstantConditions")
-        LampState state = (LampState) device.getValue().getState();
 
         extendBtn.setOnClickListener(v -> {
             if (expandableLayout.getVisibility() == View.GONE){

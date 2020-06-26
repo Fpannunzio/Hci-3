@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="error_message">Algo salio mal: %1$s [%2$d]</string>
+    <string name="error_message">Hubo un problema al realizar la operación. Por favor intenta de nuevo mas tarde.</string>
     <string name="prendido">Prendido</string>
     <string name="apagado">Apagado</string>
     <string name="cargandose">Activa</string>
@@ -202,5 +202,8 @@
     <string name="latina">Latina</string>
     <string name="rock">Rock</string>
     <string name="pop">Pop</string>
-    <string name="turn_on_vacuum_error">La aspiradora no puede ser prendida con el nivel actual de bateria</string>
+    <string name="turn_on_vacuum_error">La aspiradora no puede ser prendida con menos de 5% de bateria.</string>
+    <string name="error_rutina">Hubo un problema ejecutando la rutina. Es posible que alguno de los dispositivos involucrados haya sido eliminado</string>
+    <string name="notifications_favorite_channel_name">Favoritos</string>
+    <string name="notifications_favorite_channel_description">Mensajes para los dispositivios favoritos</string>
 </resources>

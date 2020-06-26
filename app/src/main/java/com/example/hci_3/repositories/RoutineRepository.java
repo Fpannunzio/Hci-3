@@ -12,7 +12,7 @@ import java.util.List;
 
 public class RoutineRepository {
 
-    private static final int pollingDelay = 60000;
+    private static final int POLLING_DELAY = 60000;
 
     private static RoutineRepository instance;
     private ApiClient apiClient;
@@ -42,9 +42,9 @@ public class RoutineRepository {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                handler.postDelayed(this, pollingDelay);
+                handler.postDelayed(this, POLLING_DELAY);
                 updateRoutines();
-            }}, pollingDelay);
+            }}, POLLING_DELAY);
     }
 
     public void stopPolling(){

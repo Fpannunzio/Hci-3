@@ -42,7 +42,6 @@ public class RoomDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,13 +54,14 @@ public class RoomDetailsFragment extends Fragment {
 
         adapter = new DeviceAdapter(model);
 
-        model.getDevices().observe(requireActivity(), adapter::setDevices);
+        model.getDevices().observe(this, adapter::setDevices);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_room, container, false);
+
         setHasOptionsMenu(true);
 
         rv = view.findViewById(R.id.room_recycler);
@@ -86,6 +86,7 @@ public class RoomDetailsFragment extends Fragment {
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
 
         String roomName = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getRoomName();
+
         String homeName = RoomDetailsFragmentArgs.fromBundle(requireArguments()).getHomeName();
 
         Objects.requireNonNull(actionBar).setTitle(getResources().getString(R.string.room_title, homeName, roomName));
@@ -106,10 +107,13 @@ public class RoomDetailsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
         MenuItem settingsItem = menu.findItem(R.id.settings);
 
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -122,6 +126,7 @@ public class RoomDetailsFragment extends Fragment {
                 return false;
             }
         });
+
         settingsItem.setOnMenuItemClickListener(item -> {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(RoomDetailsFragmentDirections.actionRoomToSettingsFragment());
             return false;
@@ -132,5 +137,23 @@ public class RoomDetailsFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) ) ||
         super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        model.continuePollingStates();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        model.pausePollingStates();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        model.stopPollingStates();
     }
 }

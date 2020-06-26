@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="error_message">Something went wrong: %1$s [%2$d]</string>
+    <string name="error_message">There was a problem processing the command. Please, try again later.</string>
     <string name="prendido">On</string>
     <string name="apagado">Off</string>
     <string name="cargandose">Charging</string>
@@ -202,4 +202,8 @@
     <string name="latina">Latina</string>
     <string name="rock">Rock</string>
     <string name="pop">Pop2</string>
+    <string name="turn_on_vacuum_error">The vacuum cannot be turned on with less than 5% battery.</string>
+    <string name="error_rutina">There was a problem executing the routine. It is possible one of the devices involved was eliminated.</string>
+    <string name="notifications_favorite_channel_name">Favorites</string>
+    <string name="notifications_favorite_channel_description">Messages for favorite devices</string>
 </resources>

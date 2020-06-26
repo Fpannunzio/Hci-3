@@ -9,9 +9,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,18 +20,21 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.hci_3.R;
-import com.example.hci_3.SpacesItemDecoration;
 
 import java.util.Objects;
 
 
 public class SettingsFragment extends Fragment {
 
-    TextView notificationsText, allNotificationsText, favoriteNotificationsText, defaultNotificationsText, extraSettingsText, themeText;
+    TextView notificationsText, allNotificationsText, favoriteNotificationsText,
+            defaultNotificationsText, extraSettingsText, themeText;
+
     Switch allNotificationsSwitch, favoriteNotificationsSwitch, defaultNotificationsSwitch, themeSwitch;
     boolean allNotificationsChecked, favoriteNotificationsChecked, defaultNotificationsChecked, nightModeChecked;
     View view;
     SharedPreferences sharedPreferences;
+
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -45,10 +46,12 @@ public class SettingsFragment extends Fragment {
         }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_settings, container, false);
+
         setHasOptionsMenu(true);
+
         ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
 
         Objects.requireNonNull(actionBar).setTitle(R.string.ajustes);
@@ -60,6 +63,7 @@ public class SettingsFragment extends Fragment {
         sharedPreferences = getContext().getSharedPreferences(getString(R.string.settingsFile), Context.MODE_PRIVATE);
 
         findViews();
+
         loadInitialValues();
 
         return view;
@@ -142,6 +146,4 @@ public class SettingsFragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.menu_settings, menu);
     }
-
-
 }

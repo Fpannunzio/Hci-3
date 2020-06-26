@@ -42,10 +42,15 @@ public abstract class DeviceViewModel extends ViewModel {
     }
 
     public LiveData<DeviceState> addPollingState(Device device, int interval){
+
         StatePollingHandler statePollingInfo = new StatePollingHandler(device, interval);
+
         LiveData<DeviceState> state = statePollingInfo.getState();
+
         statePollingHandlers.add(statePollingInfo);
+
         statePollingInfo.startPolling();
+
         return state;
     }
 
@@ -61,7 +66,6 @@ public abstract class DeviceViewModel extends ViewModel {
         pausePollingStates();
         statePollingHandlers.clear();
     }
-
 
 
     private class StatePollingHandler {

@@ -17,7 +17,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.Menu;
 
 import com.example.hci_3.fragments.FavoritesFragmentDirections;
@@ -25,8 +24,6 @@ import com.example.hci_3.repositories.DeviceRepository;
 import com.example.hci_3.view_models.ActivityViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 
@@ -59,13 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().getDecorView().setBackgroundColor(ContextCompat.getColor(this, R.color.appBackgroundColor));
 
-        boolean isNightModeOn = getSharedPreferences(getString(R.string.settingsFile), 0).getBoolean(getString(R.string.night_mode_boolean), false);
+        boolean isNightModeOn = getSharedPreferences(getString(R.string.settingsFile), Context.MODE_PRIVATE).getBoolean(getString(R.string.night_mode_boolean), false);
 
-        if (isNightModeOn){
+        if (isNightModeOn)
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else{
+        else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
@@ -74,18 +70,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         Intent intent = getIntent();
-        Log.v("notif1", "estoy aca");
+
         if(intent.getAction() != null && intent.getAction().equals("notifications")) {
-            Log.v("notif2", "estoy aca2");
+
             Bundle extras = intent.getExtras();
             String roomName = extras.getString("roomName");
             String roomId = extras.getString("roomID");
             String homeName = extras.getString("homeName");
-            Log.v("homename", "male");
-            Log.v("homename", homeName);
+
             navController.navigate(FavoritesFragmentDirections.actionFavoritosToRoom(Objects.requireNonNull(roomId), Objects.requireNonNull(roomName), Objects.requireNonNull(homeName)));
         }
-
         dataSyncBroadcastReceiver = new KillNotificationBroadcastReceiver();
 
         setAlarm();
@@ -118,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
 
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -142,15 +135,12 @@ public class MainActivity extends AppCompatActivity {
                 SystemClock.elapsedRealtime() + INTERVAL,
                 INTERVAL,
                 notificationReceiverPendingIntent);
-
-        Log.d("pruebaBroadcast", "Single alarm set on:" + DateFormat.getDateTimeInstance().format(new Date()));
     }
 
     public static class AlarmHandlerBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.v("pruebaBroadcast", "alarmHandlerBroadcast");
             Intent newIntent = new Intent(MainActivity.ACTION_ALARM_HANDLE);
             newIntent.setPackage(context.getPackageName());
             context.sendOrderedBroadcast(newIntent, null);
@@ -158,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class KillNotificationBroadcastReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             abortBroadcast();

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class DeviceRepository {
 
-    private static final int pollingDelay = 10000;
+    private static final int POLLING_DELAY = 10000;
 
     private static DeviceRepository instance;
     private ApiClient apiClient;
@@ -46,9 +46,9 @@ public class DeviceRepository {
             @Override
             public void run(){
                 updateDevices();
-                handler.postDelayed(this, pollingDelay);
+                handler.postDelayed(this, POLLING_DELAY);
             }
-        }, pollingDelay);
+        }, POLLING_DELAY);
     }
 
     public void stopPolling(){
@@ -120,7 +120,7 @@ public class DeviceRepository {
 
     private void updateDeviceList(List<Device> devs){
         if(application == null)
-            throw new RuntimeException("Device Roepository Application was not set");
+            throw new RuntimeException("Device Repository Application was not set");
 
         SharedPreferences.Editor preferencesEditor = application.getSharedPreferences(application.getString(R.string.stored_devices_SP_key), Application.MODE_PRIVATE).edit();
         preferencesEditor.clear();

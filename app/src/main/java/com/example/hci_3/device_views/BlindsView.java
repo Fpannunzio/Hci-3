@@ -26,6 +26,7 @@ import com.example.hci_3.api.DeviceStates.DeviceState;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 public class BlindsView extends DeviceView {
 
@@ -70,6 +71,8 @@ public class BlindsView extends DeviceView {
     public void setDevice(LiveData<Device> device) {
         super.setDevice(device);
 
+        BlindsState state = (BlindsState) Objects.requireNonNull(device.getValue()).getState();
+
         if(isDeviceSetted > 1)
             return;
         isDeviceSetted++;
@@ -86,31 +89,20 @@ public class BlindsView extends DeviceView {
             }
         });
 
-
+        if(!state.getStatus().equals("opened")){
+            mSeekBar.setEnabled(false);
+        }
 
         model.addPollingState(device.getValue(), 1000).observe(getLifecycleOwner(), this::updateFrequentlyUpdatingState);
     }
 
     @Override
     public void onDeviceRefresh(Device device) {
-        BlindsState state = (BlindsState) device.getState();
-
-        mDevName.setText(getParsedName(device.getName()));
+        mDevName.setText(device.getParsedName());
 
         mLocation.setText(getResources().getString(R.string.disp_location,
-                getParsedName(device.getRoom().getName()),
+                device.getRoom().getParsedName(),
                 device.getRoom().getHome().getName()));
-
-    }
-    private void open(){
-        executeAction("open", this::handleError);
-    }
-
-    private void close(){
-        executeAction("close", this::handleError);
-    }
-
-    private void setLevel(int level){ executeAction("setLevel", new ArrayList<>(Collections.singletonList(level)),this::handleError);
     }
 
     private void updateFrequentlyUpdatingState(DeviceState uncastedState){
@@ -131,7 +123,7 @@ public class BlindsView extends DeviceView {
         }
         else if (state.getStatus().equals("closing") || state.getStatus().equals("opening")) {
             mState.setText(getResources().getString(R.string.blinds_state, state.getStatus().equals("opening")?
-                            getResources().getString(R.string.abriendose): getResources().getString(R.string.cerrandose), state.getCurrentLevel()) + "%");
+                    getResources().getString(R.string.abriendose): getResources().getString(R.string.cerrandose), state.getCurrentLevel()) + "%");
             String colorHex = "#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorButtonsDisabled) & 0x00ffffff);
             mClose.setBackgroundColor(Color.parseColor(colorHex));
             mOpen.setBackgroundColor(Color.parseColor(colorHex));
@@ -180,7 +172,16 @@ public class BlindsView extends DeviceView {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
     }
 
+    private void open(){
+        executeAction("open", this::handleError);
+    }
+
+    private void close(){
+        executeAction("close", this::handleError);
+    }
+
+    private void setLevel(int level){ executeAction("setLevel", new ArrayList<>(Collections.singletonList(level)),this::handleError);
+    }
 }

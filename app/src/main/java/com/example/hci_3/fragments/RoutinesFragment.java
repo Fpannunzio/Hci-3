@@ -49,10 +49,10 @@ public class RoutinesFragment extends Fragment {
 
         model = new ViewModelProvider(this).get(RoutineViewModel.class);
 
-
         adapter = new RoutineAdapter(model);
 
         model.startPolling();
+
         model.getRoutines().observe(this, this::refreshRoutines);
     }
 
@@ -93,10 +93,15 @@ public class RoutinesFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+
         super.onCreateOptionsMenu(menu, inflater);
+
         MenuItem searchItem = menu.findItem(R.id.action_search);
+
         MenuItem settingsItem = menu.findItem(R.id.settings);
+
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -109,6 +114,7 @@ public class RoutinesFragment extends Fragment {
                 return false;
             }
         });
+
         settingsItem.setOnMenuItemClickListener(item -> {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(RoutinesFragmentDirections.actionRutinasToSettingsFragment());
             return false;
