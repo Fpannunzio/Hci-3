@@ -23,13 +23,19 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/noDevices"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
             <TextView
                 android:layout_width="wrap_content"
-                android:text="@string/noDevicesFavoritesMessage"
                 android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:text="@string/noDevicesSearchMessage"
+                android:paddingHorizontal="15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

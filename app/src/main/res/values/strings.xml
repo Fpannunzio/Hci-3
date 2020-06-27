@@ -136,19 +136,14 @@
     <string name="notifications_channel_name">Generales</string>
     <string name="notifications_channel_description">Mensajes generales de la aplicacion</string>
     <string name="notifications_standar_channel_ID" translatable="false">standarNotificationsChannelID</string>
-    <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
-    <!--    <string name="notifications">notifications_key</string>-->
     <string name="favoritos">Favoritos</string>
     <string name="rutinas">Rutinas</string>
     <string name="hogares">Hogares</string>
     <string name="rutina_exitosa">Rutina exitosa</string>
     <string name="buscar">Buscar</string>
     <string name="modoNocturno">Modo Nocturno</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="search">Busqueda: %1$s</string>
     <string name="ajustes">Ajustes</string>
-    <!-- TODO: Remove or change this placeholder text -->
-
     <string name="stored_devices_SP_key" translatable="false">storedDevicesSPKey</string>
     <string name="notification_IDs_SP_key" translatable="false">notificationsIDsSPKey</string>
     <string name="last_notification_ID" translatable="false">lastNotificationID</string>
@@ -190,10 +185,7 @@
     <string name="opening">Abriendose</string>
     <string name="closing">Cerrandose</string>
     <string name="closed">Cerada</string>
-<!--    <string name="true">Verdadero</string>-->
-<!--    <string name="false">Falso</string>-->
     <string name="on">Prendido</string>
-<!--    <string name="off">Apagado</string>-->
     <string name="conventional">Convencional</string>
     <string name="bottom">Abajo</string>
     <string name="top">Arriba</string>
@@ -202,10 +194,8 @@
     <string name="off">Apagado</string>
     <string name="normal">Normal</string>
     <string name="cool">Frio</string>
-<!--    <string name="heat">Calor</string>-->
     <string name="locked">Bloqueada</string>
     <string name="unlocked">Desbloqueada</string>
-<!--    <string name="vacuum">Aspirar</string>-->
     <string name="docked">Trapear</string>
     <string name="inactive">Inactiva</string>
     <string name="active">Activa</string>
@@ -244,7 +234,7 @@
     <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
     <string name="night_mode_boolean" translatable="false">NightModeBoolean</string>
     <string name="mop">Trapear</string>
-    <string name="playlist">Lista de reproducción:</string>
+    <string name="playlist">Proximas canciones:</string>
     <string name="off_status_speaker" translatable="false">stopped</string>
     <string name="oven_conventional">Convencional</string>
     <string name="oven_top">Arriba</string>
@@ -253,7 +243,9 @@
     <string name="error_rutina">Hubo un problema ejecutando la rutina. Es posible que alguno de los dispositivos involucrados haya sido eliminado</string>
     <string name="notifications_favorite_channel_name">Favoritos</string>
     <string name="notifications_favorite_channel_description">Mensajes para los dispositivios favoritos</string>
-    <string name="noDevicesFavoritesMessage">No hay dispositivos marcados como favoritos</string>
-    <!--    <string name="sharedPreferences">com.example.hci_3.shared_preferences</string>-->
-    <!--    <string name="notifications">notifications_key</string>-->
+    <string name="noDevicesFavoritesMessage">No hay dispositivos marcados como favoritos. Diríjase a la pagina web y marque como favoritos aquellos dispositivos que desee visualizar en esta pantalla.</string>
+    <string name="noDevicesSearchMessage">No se encontró ninguna casa, habitación o dispositivo con este nombre.</string>
+    <string name="noDevicesHomesMessage">No hay casas registradas en el sistema. Para comenzar a utilizar la aplicación necesita registrar sus dispositivos desde la pagina web.</string>
+    <string name="noDevicesRoomsMessage">No quedan dispositivos registrados en esta habitación. Parece que ha sido eliminada.</string>
+    <string name="noDevicesRutinasMessage">No hay rutinas registradas en el sistema. Diríjase a la pagina web para poder crearlas.</string>
 </resources>

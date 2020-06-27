@@ -19,7 +19,7 @@
     <string name="bloqueada">Locked</string>
     <string name="desbloquer">Unlock</string>
     <string name="bloquear">Lock</string>
-    <string name="reproduciendo">Reproducing</string>
+    <string name="reproduciendo">Playing</string>
     <string name="batery_state">Battery: %1$d</string>
     <string name="invalid_temp">Invalid temperature value</string>
     <string name="stopped_error">The speaker is off, to play music you must turn it on</string>
@@ -193,7 +193,7 @@
     <string name="notificactions_message_device.added">The device was added and is ready to use</string>
     <string name="notificactions_message_device.deleted">The device was removed from the system</string>
     <string name="mop">Mop</string>
-    <string name="playlist">Playlist:</string>
+    <string name="playlist">Next Songs:</string>
     <string name="oven_conventional">Conventional</string>
     <string name="oven_top">Top</string>
     <string name="oven_bottom">Bottom</string>
@@ -206,4 +206,9 @@
     <string name="error_rutina">There was a problem executing the routine. It is possible one of the devices involved was eliminated.</string>
     <string name="notifications_favorite_channel_name">Favorites</string>
     <string name="notifications_favorite_channel_description">Messages for favorite devices</string>
+    <string name="noDevicesFavoritesMessage">There are no devices flaged as favorites. Reach the website to select the ones you prefer.</string>
+    <string name="noDevicesSearchMessage">There is no home, room or device that matches the search.</string>
+    <string name="noDevicesHomesMessage">There are no homes loaded in the system. To start using the app go to the web page and load your devices.</string>
+    <string name="noDevicesRoomsMessage">There are no devices left in this room. It seems that the roomm was deleted.</string>
+    <string name="noDevicesRutinasMessage">There are no rutines registered. Reach the website to create them.</string>
 </resources>

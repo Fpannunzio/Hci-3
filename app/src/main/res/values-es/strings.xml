@@ -193,7 +193,7 @@
     <string name="notificactions_message_device.added">El dispositivo fue agregado y esta disponible para usar</string>
     <string name="notificactions_message_device.deleted">El dispositivo fue eliminado del sistema</string>
     <string name="mop">Trapear</string>
-    <string name="playlist">Lista de reproducción:</string>
+    <string name="playlist">Proximas canciones:</string>
     <string name="oven_conventional">Convencional</string>
     <string name="oven_top">Arriba</string>
     <string name="oven_bottom">Abajo</string>
@@ -206,4 +206,9 @@
     <string name="error_rutina">Hubo un problema ejecutando la rutina. Es posible que alguno de los dispositivos involucrados haya sido eliminado</string>
     <string name="notifications_favorite_channel_name">Favoritos</string>
     <string name="notifications_favorite_channel_description">Mensajes para los dispositivios favoritos</string>
+    <string name="noDevicesFavoritesMessage">No hay dispositivos marcados como favoritos. Dirijase a la página web y marque como favoritos aquellos dispositivos que desee visualizar en esta pantalla.</string>
+    <string name="noDevicesSearchMessage">No se encontro ninguna casa, habitacion o dispositivo con este nombre.</string>
+    <string name="noDevicesHomesMessage">No hay casas registradas en el sistema. Para comenzar a utilizar la aplicacion necesita registrar sus dispositivos desde la página web.</string>
+    <string name="noDevicesRoomsMessage">No quedan dispositivos registrados en esta habitacion. Parece que ha sido eliminada.</string>
+    <string name="noDevicesRutinasMessage">No hay rutinas registradas en el sistema. Diríjase a la página web para poder crearlas.</string>
 </resources>
