@@ -28,7 +28,6 @@ import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
-    //private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
 
     public static final String ACTION_ALARM = "com.example.hci_3.ALARM";

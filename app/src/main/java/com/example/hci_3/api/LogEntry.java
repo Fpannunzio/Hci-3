@@ -90,10 +90,7 @@ public class LogEntry {
     public String toString() {
         return "LogEntry{" +
                 "timestamp=" + timestamp +
-//                ", deviceId='" + deviceId + '\'' +
                 ", action='" + action + '\'' +
-//                ", params=" + params +
-//                ", result=" + result +
                 '}';
     }
 }

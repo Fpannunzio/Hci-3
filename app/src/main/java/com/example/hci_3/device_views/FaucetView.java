@@ -215,7 +215,6 @@ public class FaucetView extends DeviceView {
             mUnitSpinner.setSelection(unitAdapter.getPosition(state.getUnit()));
         }
         mOpen.setOnClickListener(v -> {
-            //FaucetState aux = (FaucetState) device.getState();
             if (state.getStatus().equals("closed")) {
                 open();
             } else {

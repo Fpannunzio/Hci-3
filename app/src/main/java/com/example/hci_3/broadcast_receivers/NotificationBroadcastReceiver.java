@@ -157,7 +157,6 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
                 .setStyle(new NotificationCompat.InboxStyle()
                         .setSummaryText(device.getParsedName()))
                 .setGroupSummary(true)
-                // Set the intent that will fire when the user taps the notification
                 .setContentIntent(getIntent(device))
                 .setAutoCancel(true)
                 .setGroup(device.getId())

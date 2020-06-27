@@ -95,15 +95,6 @@ public class FaucetState implements DeviceState {
         else if(!getStatus().equals(fState.getStatus()))
             ans.put("status", fState.getStatus());
 
-//        if((getQuantity() == null && fState.getQuantity() != null) || (getQuantity() != null && !getQuantity().equals(fState.getQuantity())))
-//            ans.put("quantity", fState.getQuantity().toString());
-//
-//        if((getUnit() == null && fState.getUnit() != null) || (getUnit() != null && !getUnit().equals(fState.getUnit())))
-//            ans.put("unit", fState.getUnit());
-//
-//        if((getDispensedQuantity() == null && fState.getDispensedQuantity() != null) || (getDispensedQuantity() != null && !getDispensedQuantity().equals(fState.getDispensedQuantity())))
-//            ans.put("dispensedQuantity", fState.getDispensedQuantity().toString());
-
         return ans;
     }
 }
