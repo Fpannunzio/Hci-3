@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -38,6 +37,7 @@ public class RoutinesFragment extends Fragment {
     RecyclerView rv;
     RoutineViewModel model;
     RoutineAdapter adapter;
+    View emptyView;
 
     public RoutinesFragment() {
         // Required empty public constructor
@@ -63,6 +63,8 @@ public class RoutinesFragment extends Fragment {
         setHasOptionsMenu(true);
 
         rv = view.findViewById(R.id.recyclerView);
+
+        emptyView = view.findViewById(R.id.noDevices);
 
         int screenSize = getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK;
@@ -134,6 +136,11 @@ public class RoutinesFragment extends Fragment {
     }
 
     private void refreshRoutines(List<Routine> routines) {
+        boolean noDevices = routines.isEmpty();
+
+        emptyView.setVisibility(noDevices ? View.VISIBLE : View.GONE);
+        rv.setVisibility(noDevices ? View.GONE : View.VISIBLE);
+
         adapter.setRoutines(routines);
     }
 

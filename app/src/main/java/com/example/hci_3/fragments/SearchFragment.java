@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -26,8 +27,10 @@ import android.view.ViewGroup;
 import com.example.hci_3.R;
 import com.example.hci_3.SpacesItemDecoration;
 import com.example.hci_3.adapters.DeviceAdapter;
+import com.example.hci_3.api.Device;
 import com.example.hci_3.view_models.SearchViewModel;
 
+import java.util.List;
 import java.util.Objects;
 
 public class SearchFragment extends Fragment {
@@ -36,6 +39,7 @@ public class SearchFragment extends Fragment {
     SearchViewModel model;
     DeviceAdapter adapter;
     String query;
+    View emptyView;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -49,9 +53,11 @@ public class SearchFragment extends Fragment {
 
         query = SearchFragmentArgs.fromBundle(requireArguments()).getSearchInput();
 
-        model.setNewSearchParam(query).observe(this, adapter::setDevices);
+        model.setNewSearchParam(query);
 
         adapter = new DeviceAdapter(model);
+
+        model.getDevices().observe(this, this::refreshDevices);
     }
 
     @Override
@@ -60,6 +66,8 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         rv = view.findViewById(R.id.search_rv);
+
+        emptyView = view.findViewById(R.id.noDevices);
 
         int screenSize = getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK;
@@ -123,7 +131,15 @@ public class SearchFragment extends Fragment {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(SearchFragmentDirections.actionSearchFragmentToSettingsFragment());
             return false;
         });
+    }
 
+    private void refreshDevices(List<MutableLiveData<Device>> devices){
+        boolean noDevices = devices.isEmpty();
+
+        emptyView.setVisibility(noDevices ? View.VISIBLE : View.GONE);
+        rv.setVisibility(noDevices ? View.GONE : View.VISIBLE);
+
+        adapter.setDevices(devices);
     }
 
     @Override

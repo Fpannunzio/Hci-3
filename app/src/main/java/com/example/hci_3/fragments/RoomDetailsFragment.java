@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.Navigation;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.navigation.ui.NavigationUI;
 
@@ -27,8 +27,10 @@ import android.view.ViewGroup;
 import com.example.hci_3.R;
 import com.example.hci_3.SpacesItemDecoration;
 import com.example.hci_3.adapters.DeviceAdapter;
+import com.example.hci_3.api.Device;
 import com.example.hci_3.view_models.RoomDetailsViewModel;
 
+import java.util.List;
 import java.util.Objects;
 
 public class RoomDetailsFragment extends Fragment {
@@ -36,6 +38,7 @@ public class RoomDetailsFragment extends Fragment {
     RecyclerView rv;
     RoomDetailsViewModel model;
     DeviceAdapter adapter;
+    View emptyView;
 
 
     public RoomDetailsFragment() {
@@ -54,7 +57,7 @@ public class RoomDetailsFragment extends Fragment {
 
         adapter = new DeviceAdapter(model);
 
-        model.getDevices().observe(this, adapter::setDevices);
+        model.getDevices().observe(this, this::refreshDevices);
     }
 
     @Override
@@ -65,6 +68,8 @@ public class RoomDetailsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         rv = view.findViewById(R.id.room_recycler);
+
+        emptyView = view.findViewById(R.id.noDevices);
 
         int screenSize = getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK;
@@ -137,6 +142,15 @@ public class RoomDetailsFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return NavigationUI.onNavDestinationSelected(item, Navigation.findNavController(requireActivity(), R.id.nav_host_fragment) ) ||
         super.onOptionsItemSelected(item);
+    }
+
+    private void refreshDevices(List<MutableLiveData<Device>> devices){
+        boolean noDevices = devices.isEmpty();
+
+        emptyView.setVisibility(noDevices ? View.VISIBLE : View.GONE);
+        rv.setVisibility(noDevices ? View.GONE : View.VISIBLE);
+
+        adapter.setDevices(devices);
     }
 
     @Override

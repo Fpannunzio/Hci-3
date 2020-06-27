@@ -34,7 +34,6 @@ public class ApiClient {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
 
-        // Adding custom deserializers
         gsonBuilder.registerTypeAdapter(Device.class, new DeviceDeserializer());
         Gson gson = gsonBuilder
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -164,7 +163,6 @@ public class ApiClient {
 
     private <T> Callback<Result<T>> getStandardCallback(SuccessHandler<T> responseHandler, ErrorHandler errorHandler){
         return new Callback<Result<T>>(){
-
             @Override
             public void onResponse(@NonNull Call<Result<T>> call, @NonNull Response<Result<T>> response){
 

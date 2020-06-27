@@ -9,6 +9,7 @@ import com.example.hci_3.api.ApiClient;
 import com.example.hci_3.api.Home;
 import com.example.hci_3.api.Room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoomRepository {
@@ -64,9 +65,16 @@ public class RoomRepository {
     }
 
     private void updateRooms(Home home){
+        if(home == null)
+            return;
+
         apiClient.getHomeRooms(home.getId(),
                 rooms -> updateRoomList(rooms, home),
-                (m, c) -> Log.w("uncriticalError", "Failed to get homes: " + m + " Code: " + c)
+                (m, c) -> {
+                    Log.w("uncriticalError", "Failed to get homes: " + m + " Code: " + c);
+                    updateRoomList(new ArrayList<>(), home);
+                }
+
         );
     }
 

@@ -50,6 +50,7 @@ public class HomesFragment extends Fragment {
     RoomAdapter recyclerAdapter;
     SharedPreferences sharedPreferences;
     String spinnerValue = null;
+    View emptyView, spinnerLabel;
 
 
     public HomesFragment() {
@@ -85,6 +86,10 @@ public class HomesFragment extends Fragment {
         adapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item);
 
         spinner = view.findViewById(R.id.homes_spinner);
+
+        spinnerLabel = view.findViewById(R.id.textView2);
+
+        emptyView = view.findViewById(R.id.noDevices);
 
         spinner.setAdapter(adapter);
 
@@ -182,10 +187,18 @@ public class HomesFragment extends Fragment {
         adapter.addAll(homes.stream().map(Home::getName).collect(Collectors.toList()));
         adapter.notifyDataSetChanged();
 
-        if(adapter.getCount() == 0){
-            // Que mostramos si no hay casas??
+        if(adapter.getCount() == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+            rv.setVisibility(View.GONE);
+            spinner.setVisibility(View.GONE);
+            spinnerLabel.setVisibility(View.GONE);
             updateSpinnerValue(null);
             return;
+        } else {
+            emptyView.setVisibility(View.GONE);
+            rv.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.VISIBLE);
+            spinnerLabel.setVisibility(View.VISIBLE);
         }
 
         int newPosition = -1;

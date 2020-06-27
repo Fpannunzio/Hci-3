@@ -13,9 +13,8 @@ public class SearchViewModel extends DeviceViewModel {
 
     String searchParam;
 
-    public LiveData<List<MutableLiveData<Device>>> setNewSearchParam(String searchParam){
+    public void setNewSearchParam(String searchParam){
         this.searchParam = searchParam;
-        return getDevices();
     }
 
     @SuppressWarnings("ConstantConditions")
